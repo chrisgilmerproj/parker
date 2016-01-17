@@ -5,6 +5,7 @@ understand how it was done.  All credit here:
 https://github.com/bspaans/python-mingus/blob/mingus-oo/mingus/notes.py
 """
 
+import copy
 import re
 
 # Notes should be formated with three pieces of information
@@ -85,6 +86,7 @@ class Note(object):
         result = (int(self._octave) + 1) * 12
         result += NOTE_OFFSETS[self._base_name]
         result += self._accidentals
+        return result
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -92,6 +94,9 @@ class Note(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def clone(self):
+        return copy.deepcopy(self)
 
     def set_note(self, note):
         if type(note) == int:
