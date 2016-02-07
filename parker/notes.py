@@ -1,13 +1,8 @@
-"""
-This is mostly a reconstruction of work from another library so I can
-understand how it was done.  All credit here:
-
-https://github.com/bspaans/python-mingus/blob/mingus-oo/mingus/notes.py
-"""
-
 import copy
 import re
 
+
+from mixins import TransposeMixin
 # Notes should be formated with three pieces of information
 # The first group is the note, always capitalized from A to G
 # The second group is the accidentals, any number of # or b symbols
@@ -66,7 +61,7 @@ LOOKUP_FLATS = {
 }
 
 
-class Note(object):
+class Note(TransposeMixin, AugmentDiminishMixin):
     _base_name = 'A'
     _octave = 4
     _accidentals = 0
@@ -105,6 +100,8 @@ class Note(object):
             self.set_from_string(note)
         elif isinstance(note, Note):
             self.set_from_note(note)
+        elif note is None:
+            self.set_from_string('A4')
 
     def set_from_int(self, note, use_sharps=True):
         """
@@ -184,10 +181,20 @@ class Note(object):
     def set_duration(self, duration):
         self._duration = duration
 
-    def augment(self):
+    def set_transpose(self, amount):
+        acc = self._accidentals
+        transpose_amount = amount if type(amount) == int else amount.amount
+        use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
+        self.from_int(int(self) - acc + transpose_amount, use_sharps)
+        self._accidentals += acc
+        if type(amount) != int:
+            amount.update(self)
+        return self
+
+    def set_augment(self):
         self._accidentals += 1
         return self
 
-    def diminish(self):
+    def set_diminish(self):
         self._accidentals -= 1
         return self
