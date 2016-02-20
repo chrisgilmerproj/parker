@@ -2,6 +2,8 @@ import re
 
 
 from mixins import AugmentDiminishMixin
+from mixins import Aug
+from mixins import Dim
 from mixins import CloneMixin
 from mixins import CommonEqualityMixin
 from mixins import NotesMixin
@@ -182,14 +184,20 @@ class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
 
     def set_transpose(self, amount):
         acc = self._accidentals
-        transpose_amount = amount if type(amount) == int else amount.amount
+        transpose_amount = None
+        if isinstance(amount, int):
+            transpose_amount = amount
+        elif isinstance(amount, (Aug, Dim)):
+            transpose_amount = amount.amount
+        else:
+            raise Exception("Cannot transpose from '{}'".format(amount))
         use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
         self.set_from_int(int(self) - acc + transpose_amount, use_sharps)
         self._accidentals += acc
 
-        # Not sure what this is for here
-        # if type(amount) != int:
-        #     amount.update(self)
+        # The amount to update could given by a Aug or Dim class
+        if isinstance(amount, (Aug, Dim)):
+            amount.update(self)
         return self
 
     def set_augment(self):
