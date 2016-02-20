@@ -16,6 +16,24 @@ class AugmentDiminishMixin(object):
         return self.clone().set_diminish()
 
 
+class Aug(object):
+
+    def __init__(self, transpose_amount):
+        self.amount = transpose_amount
+
+    def update(self, note):
+        return note.set_augment()
+
+
+class Dim(object):
+
+    def __init__(self, transpose_amount):
+        self.amount = transpose_amount
+
+    def update(self, note):
+        return note.set_diminish()
+
+
 class CloneMixin(object):
     def clone(self):
         return copy.deepcopy(self)
@@ -54,6 +72,9 @@ class TransposeMixin(object):
 
     def transpose(self, amount):
         return self.clone().set_transpose(amount)
+
+    def transpose_list(self, lst):
+        return [self.transpose(amount) for amount in lst]
 
     # IMMUTABLE TRANSPOSE UP
     def minor_second_up(self):
