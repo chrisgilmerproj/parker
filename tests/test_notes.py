@@ -5,12 +5,6 @@ from parker.notes import Note
 
 class TestNote(unittest.TestCase):
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test_constructor_from_int(self):
         self.assertEqual(Note(), Note(69))
         self.assertEqual(Note('C0'), Note(12))
@@ -86,124 +80,124 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('B4').get_octave(), 4)
         self.assertEqual(Note('Cb5').get_octave(), 5)
 
-#    def test_Note_transpose(self):
-#        n = Note('C4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('F4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('G3')))
-#        assert_that(n, equal_to(Note('C4')))
-#    
-#        n = Note('C#4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('F#4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('G#3')))
-#    
-#        n = Note('C##4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('F##4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('G##3')))
-#    
-#        n = Note('C###4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('F###4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('G###3')))
-#    
-#        n = Note('Cb4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('Fb4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('Gb3')))
-#    
-#        n = Note('Cbb4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('Fbb4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('Gbb3')))
-#    
-#        n = Note('Cbbb4')
-#        assert_that(n.perfect_fourth_up(), equal_to(Note('Fbbb4')))
-#        assert_that(n.perfect_fourth_down(), equal_to(Note('Gbbb3')))
-#    
-#    def test_Note_transpose_up_no_accidentals():
-#        assert_that(Note('C4').minor_second_up(), equal_to(Note('Db4')))
-#        assert_that(Note('C4').major_second_up(), equal_to(Note('D4')))
-#        assert_that(Note('C4').minor_third_up(), equal_to(Note('Eb4')))
-#        assert_that(Note('C4').major_third_up(), equal_to(Note('E4')))
-#        assert_that(Note('C4').major_fourth_up(), equal_to(Note('F4')))
-#        assert_that(Note('C4').minor_fifth_up(), equal_to(Note('Gb4')))
-#        assert_that(Note('C4').major_fifth_up(), equal_to(Note('G4')))
-#        assert_that(Note('C4').minor_sixth_up(), equal_to(Note('Ab4')))
-#        assert_that(Note('C4').major_sixth_up(), equal_to(Note('A4')))
-#        assert_that(Note('C4').minor_seventh_up(), equal_to(Note('Bb4')))
-#        assert_that(Note('C4').major_seventh_up(), equal_to(Note('B4')))
-#        assert_that(Note('C4').octave_up(), equal_to(Note('C5')))
-#    
-#    def test_Note_transpose_up_no_accidentals():
-#        assert_that(Note('G4').minor_second_up(), equal_to(Note('Ab4')))
-#        assert_that(Note('G4').major_second_up(), equal_to(Note('A4')))
-#        assert_that(Note('G4').minor_third_up(), equal_to(Note('Bb4')))
-#        assert_that(Note('G4').major_third_up(), equal_to(Note('B4')))
-#        assert_that(Note('G4').major_fourth_up(), equal_to(Note('C5')))
-#        assert_that(Note('G4').minor_fifth_up(), equal_to(Note('Db5')))
-#        assert_that(Note('G4').major_fifth_up(), equal_to(Note('D5')))
-#        assert_that(Note('G4').minor_sixth_up(), equal_to(Note('Eb5')))
-#        assert_that(Note('G4').major_sixth_up(), equal_to(Note('E5')))
-#        assert_that(Note('G4').minor_seventh_up(), equal_to(Note('F5')))
-#        assert_that(Note('G4').major_seventh_up(), equal_to(Note('F#5')))
-#        assert_that(Note('G4').octave_up(), equal_to(Note('G5')))
-#    
-#    def test_Note_transpose_up_no_accidentals():
-#        assert_that(Note('F4').minor_second_up(), equal_to(Note('Gb4')))
-#        assert_that(Note('F4').major_second_up(), equal_to(Note('G4')))
-#        assert_that(Note('F4').minor_third_up(), equal_to(Note('Ab4')))
-#        assert_that(Note('F4').major_third_up(), equal_to(Note('A4')))
-#        assert_that(Note('F4').major_fourth_up(), equal_to(Note('Bb4')))
-#        assert_that(Note('Bb4').minor_fifth_up(), equal_to(Note('Fb5')))
-#        assert_that(Note('F4').minor_fifth_up(), equal_to(Note('Cb4')))
-#        assert_that(Note('F4').major_fifth_up(), equal_to(Note('C5')))
-#        assert_that(Note('F4').minor_sixth_up(), equal_to(Note('Db5')))
-#        assert_that(Note('F4').major_sixth_up(), equal_to(Note('D5')))
-#        assert_that(Note('F4').minor_seventh_up(), equal_to(Note('Eb5')))
-#        assert_that(Note('F4').major_seventh_up(), equal_to(Note('E5')))
-#        assert_that(Note('F4').octave_up(), equal_to(Note('F5')))
-#    
-#    def test_Note_transpose_up_sharp():
-#        assert_that(Note('C#4').minor_second_up(), equal_to(Note('Db#4')))
-#        assert_that(Note('C#4').major_second_up(), equal_to(Note('D#4')))
-#        assert_that(Note('C#4').minor_third_up(), equal_to(Note('Eb#4')))
-#        assert_that(Note('C#4').major_third_up(), equal_to(Note('E#4')))
-#        assert_that(Note('C#4').major_fourth_up(), equal_to(Note('F#4')))
-#        assert_that(Note('C#4').minor_fifth_up(), equal_to(Note('Gb#4')))
-#        assert_that(Note('C#4').major_fifth_up(), equal_to(Note('G#4')))
-#        assert_that(Note('C#4').minor_sixth_up(), equal_to(Note('Ab#4')))
-#        assert_that(Note('C#4').major_sixth_up(), equal_to(Note('A#4')))
-#        assert_that(Note('C#4').minor_seventh_up(), equal_to(Note('Bb#4')))
-#        assert_that(Note('C#4').major_seventh_up(), equal_to(Note('B#4')))
-#        assert_that(Note('C#4').octave_up(), equal_to(Note('C#5')))
-#    
-#    def test_Note_transpose_up_flat():
-#        assert_that(Note('Cb4').minor_second_up(), equal_to(Note('Dbb4')))
-#        assert_that(Note('Cb4').major_second_up(), equal_to(Note('Db4')))
-#        assert_that(Note('Cb4').minor_third_up(), equal_to(Note('Ebb4')))
-#        assert_that(Note('Cb4').major_third_up(), equal_to(Note('Eb4')))
-#        assert_that(Note('Cb4').major_fourth_up(), equal_to(Note('Fb4')))
-#        assert_that(Note('Cb4').minor_fifth_up(), equal_to(Note('Gbb4')))
-#        assert_that(Note('Cb4').major_fifth_up(), equal_to(Note('Gb4')))
-#        assert_that(Note('Cb4').minor_sixth_up(), equal_to(Note('Abb4')))
-#        assert_that(Note('Cb4').major_sixth_up(), equal_to(Note('Ab4')))
-#        assert_that(Note('Cb4').minor_seventh_up(), equal_to(Note('Bbb4')))
-#        assert_that(Note('Cb4').major_seventh_up(), equal_to(Note('Bb4')))
-#        assert_that(Note('Cb4').octave_up(), equal_to(Note('Cb5')))
-#    
-#    def test_Note_transpose_by_int():
-#        assert_that(Note('C4').transpose(0), equal_to(Note('C4')))
-#        assert_that(Note('C4').transpose(1), equal_to(Note('Db4')))
-#        assert_that(Note('C4').transpose(2), equal_to(Note('D4')))
-#        assert_that(Note('C4').transpose(3), equal_to(Note('Eb4')))
-#        assert_that(Note('C4').transpose(4), equal_to(Note('E4')))
-#        assert_that(Note('C4').transpose(5), equal_to(Note('F4')))
-#        assert_that(Note('C4').transpose(6), equal_to(Note('Gb4')))
-#        assert_that(Note('C4').transpose(7), equal_to(Note('G4')))
-#        assert_that(Note('C4').transpose(8), equal_to(Note('Ab4')))
-#        assert_that(Note('C4').transpose(9), equal_to(Note('A4')))
-#        assert_that(Note('C4').transpose(10), equal_to(Note('Bb4')))
-#        assert_that(Note('C4').transpose(11), equal_to(Note('B4')))
-#        assert_that(Note('C4').transpose(12), equal_to(Note('C5')))
-#    
-#    def test_Note_set_transpose():
-#        n = Note(60)
-#        assert_that(n.set_transpose(5), equal_to(Note(65)))
-#        assert_that(n.set_transpose(-10), equal_to(Note(55)))
-#        assert_that(n, equal_to(Note(55)))
+    def test_transpose(self):
+        n = Note('C4')
+        self.assertEqual(n.perfect_fourth_up(), Note('F4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('G3'))
+        self.assertEqual(n, Note('C4'))
+
+        n = Note('C#4')
+        self.assertEqual(n.perfect_fourth_up(), Note('F#4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('G#3'))
+
+        n = Note('C##4')
+        self.assertEqual(n.perfect_fourth_up(), Note('F##4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('G##3'))
+
+        n = Note('C###4')
+        self.assertEqual(n.perfect_fourth_up(), Note('F###4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('G###3'))
+
+        n = Note('Cb4')
+        self.assertEqual(n.perfect_fourth_up(), Note('Fb4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('Gb3'))
+
+        n = Note('Cbb4')
+        self.assertEqual(n.perfect_fourth_up(), Note('Fbb4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('Gbb3'))
+
+        n = Note('Cbbb4')
+        self.assertEqual(n.perfect_fourth_up(), Note('Fbbb4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('Gbbb3'))
+
+    def test_transpose_up_no_accidentals_C4(self):
+        self.assertEqual(Note('C4').minor_second_up(), Note('Db4'))
+        self.assertEqual(Note('C4').major_second_up(), Note('D4'))
+        self.assertEqual(Note('C4').minor_third_up(), Note('Eb4'))
+        self.assertEqual(Note('C4').major_third_up(), Note('E4'))
+        self.assertEqual(Note('C4').major_fourth_up(), Note('F4'))
+        self.assertEqual(Note('C4').minor_fifth_up(), Note('Gb4'))
+        self.assertEqual(Note('C4').major_fifth_up(), Note('G4'))
+        self.assertEqual(Note('C4').minor_sixth_up(), Note('Ab4'))
+        self.assertEqual(Note('C4').major_sixth_up(), Note('A4'))
+        self.assertEqual(Note('C4').minor_seventh_up(), Note('Bb4'))
+        self.assertEqual(Note('C4').major_seventh_up(), Note('B4'))
+        self.assertEqual(Note('C4').octave_up(), Note('C5'))
+
+    def test_transpose_up_no_accidentals_G4(self):
+        self.assertEqual(Note('G4').minor_second_up(), Note('Ab4'))
+        self.assertEqual(Note('G4').major_second_up(), Note('A4'))
+        self.assertEqual(Note('G4').minor_third_up(), Note('Bb4'))
+        self.assertEqual(Note('G4').major_third_up(), Note('B4'))
+        self.assertEqual(Note('G4').major_fourth_up(), Note('C5'))
+        self.assertEqual(Note('G4').minor_fifth_up(), Note('Db5'))
+        self.assertEqual(Note('G4').major_fifth_up(), Note('D5'))
+        self.assertEqual(Note('G4').minor_sixth_up(), Note('Eb5'))
+        self.assertEqual(Note('G4').major_sixth_up(), Note('E5'))
+        self.assertEqual(Note('G4').minor_seventh_up(), Note('F5'))
+        self.assertEqual(Note('G4').major_seventh_up(), Note('F#5'))
+        self.assertEqual(Note('G4').octave_up(), Note('G5'))
+
+    def test_transpose_up_no_accidentals_F4(self):
+        self.assertEqual(Note('F4').minor_second_up(), Note('Gb4'))
+        self.assertEqual(Note('F4').major_second_up(), Note('G4'))
+        self.assertEqual(Note('F4').minor_third_up(), Note('Ab4'))
+        self.assertEqual(Note('F4').major_third_up(), Note('A4'))
+        self.assertEqual(Note('F4').major_fourth_up(), Note('Bb4'))
+        self.assertEqual(Note('Bb4').minor_fifth_up(), Note('Fb5'))
+        self.assertEqual(Note('F4').minor_fifth_up(), Note('Cb4'))
+        self.assertEqual(Note('F4').major_fifth_up(), Note('C5'))
+        self.assertEqual(Note('F4').minor_sixth_up(), Note('Db5'))
+        self.assertEqual(Note('F4').major_sixth_up(), Note('D5'))
+        self.assertEqual(Note('F4').minor_seventh_up(), Note('Eb5'))
+        self.assertEqual(Note('F4').major_seventh_up(), Note('E5'))
+        self.assertEqual(Note('F4').octave_up(), Note('F5'))
+
+    def test_transpose_up_sharp(self):
+        self.assertEqual(Note('C#4').minor_second_up(), Note('Db#4'))
+        self.assertEqual(Note('C#4').major_second_up(), Note('D#4'))
+        self.assertEqual(Note('C#4').minor_third_up(), Note('Eb#4'))
+        self.assertEqual(Note('C#4').major_third_up(), Note('E#4'))
+        self.assertEqual(Note('C#4').major_fourth_up(), Note('F#4'))
+        self.assertEqual(Note('C#4').minor_fifth_up(), Note('Gb#4'))
+        self.assertEqual(Note('C#4').major_fifth_up(), Note('G#4'))
+        self.assertEqual(Note('C#4').minor_sixth_up(), Note('Ab#4'))
+        self.assertEqual(Note('C#4').major_sixth_up(), Note('A#4'))
+        self.assertEqual(Note('C#4').minor_seventh_up(), Note('Bb#4'))
+        self.assertEqual(Note('C#4').major_seventh_up(), Note('B#4'))
+        self.assertEqual(Note('C#4').octave_up(), Note('C#5'))
+
+    def test_transpose_up_flat(self):
+        self.assertEqual(Note('Cb4').minor_second_up(), Note('Dbb4'))
+        self.assertEqual(Note('Cb4').major_second_up(), Note('Db4'))
+        self.assertEqual(Note('Cb4').minor_third_up(), Note('Ebb4'))
+        self.assertEqual(Note('Cb4').major_third_up(), Note('Eb4'))
+        self.assertEqual(Note('Cb4').major_fourth_up(), Note('Fb4'))
+        self.assertEqual(Note('Cb4').minor_fifth_up(), Note('Gbb4'))
+        self.assertEqual(Note('Cb4').major_fifth_up(), Note('Gb4'))
+        self.assertEqual(Note('Cb4').minor_sixth_up(), Note('Abb4'))
+        self.assertEqual(Note('Cb4').major_sixth_up(), Note('Ab4'))
+        self.assertEqual(Note('Cb4').minor_seventh_up(), Note('Bbb4'))
+        self.assertEqual(Note('Cb4').major_seventh_up(), Note('Bb4'))
+        self.assertEqual(Note('Cb4').octave_up(), Note('Cb5'))
+
+    def test_transpose_by_int(self):
+        self.assertEqual(Note('C4').transpose(0), Note('C4'))
+        self.assertEqual(Note('C4').transpose(1), Note('Db4'))
+        self.assertEqual(Note('C4').transpose(2), Note('D4'))
+        self.assertEqual(Note('C4').transpose(3), Note('Eb4'))
+        self.assertEqual(Note('C4').transpose(4), Note('E4'))
+        self.assertEqual(Note('C4').transpose(5), Note('F4'))
+        self.assertEqual(Note('C4').transpose(6), Note('Gb4'))
+        self.assertEqual(Note('C4').transpose(7), Note('G4'))
+        self.assertEqual(Note('C4').transpose(8), Note('Ab4'))
+        self.assertEqual(Note('C4').transpose(9), Note('A4'))
+        self.assertEqual(Note('C4').transpose(10), Note('Bb4'))
+        self.assertEqual(Note('C4').transpose(11), Note('B4'))
+        self.assertEqual(Note('C4').transpose(12), Note('C5'))
+
+    def test_set_transpose(self):
+        n = Note(60)
+        self.assertEqual(n.set_transpose(5), Note(65))
+        self.assertEqual(n.set_transpose(-10), Note(55))
+        self.assertEqual(n, Note(55))

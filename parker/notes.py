@@ -2,14 +2,16 @@ import copy
 import re
 
 
+from mixins import AugmentDiminishMixin
 from mixins import TransposeMixin
+
 # Notes should be formated with three pieces of information
 # The first group is the note, always capitalized from A to G
 # The second group is the accidentals, any number of # or b symbols
 # The third group is the octave, which must be a digit between 0 and 9
 NOTE_MATCHER = re.compile("^(A|B|C|D|E|F|G)([#|b]*)([0-9]*)$")
 
-# 
+#
 NOTE_OFFSETS = {
     'C': 0,
     'D': 2,
@@ -185,10 +187,12 @@ class Note(TransposeMixin, AugmentDiminishMixin):
         acc = self._accidentals
         transpose_amount = amount if type(amount) == int else amount.amount
         use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
-        self.from_int(int(self) - acc + transpose_amount, use_sharps)
+        self.set_from_int(int(self) - acc + transpose_amount, use_sharps)
         self._accidentals += acc
-        if type(amount) != int:
-            amount.update(self)
+
+        # Not sure what this is for here
+        # if type(amount) != int:
+        #     amount.update(self)
         return self
 
     def set_augment(self):
