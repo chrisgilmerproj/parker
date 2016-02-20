@@ -305,11 +305,25 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.set_transpose(-10), Note(55))
         self.assertEqual(n, Note(55))
 
+    def test_augment(self):
+        n = Note('C4')
+        self.assertEqual(n._accidentals, 0)
+        n2 = n.augment()
+        self.assertEqual(n._accidentals, 0)
+        self.assertEqual(n2._accidentals, 1)
+
     def test_set_augment(self):
         n = Note('C4')
         self.assertEqual(n._accidentals, 0)
         n.set_augment()
         self.assertEqual(n._accidentals, 1)
+
+    def test_diminish(self):
+        n = Note('C4')
+        self.assertEqual(n._accidentals, 0)
+        n2 = n.diminish()
+        self.assertEqual(n._accidentals, 0)
+        self.assertEqual(n2._accidentals, -1)
 
     def test_set_diminish(self):
         n = Note('C4')
