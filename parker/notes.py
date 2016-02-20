@@ -168,10 +168,10 @@ class Note(TransposeMixin, AugmentDiminishMixin):
         return self._octave
 
     def set_octave(self, octave):
-        if not type(octave, int):
+        if not isinstance(octave, int):
             try:
                 octave = int(octave)
-            except NameError:
+            except ValueError:
                 raise Exception("Unknown octave format: {}".format(octave))
         if not (0 < octave < 9):
             raise Exception("Octave must be 0 through 9")

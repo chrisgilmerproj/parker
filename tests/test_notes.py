@@ -80,6 +80,32 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('B4').get_octave(), 4)
         self.assertEqual(Note('Cb5').get_octave(), 5)
 
+    def test_set_octave_from_int(self):
+        n = Note('C4')
+        self.assertEqual(n.get_octave(), 4)
+        n.set_octave(3)
+        self.assertEqual(n.get_octave(), 3)
+        self.assertEqual(str(n), 'C3')
+
+    def test_set_octave_from_str(self):
+        n = Note('C4')
+        self.assertEqual(n.get_octave(), 4)
+        n.set_octave('3')
+        self.assertEqual(n.get_octave(), 3)
+        self.assertEqual(str(n), 'C3')
+
+    def test_set_octave_from_bad_value(self):
+        n = Note('C4')
+        self.assertEqual(n.get_octave(), 4)
+        with self.assertRaises(Exception):
+            n.set_octave('3b')
+
+    def test_set_octave_from_int_outside_range(self):
+        n = Note('C4')
+        self.assertEqual(n.get_octave(), 4)
+        with self.assertRaises(Exception):
+            n.set_octave(12)
+
     def test_transpose(self):
         n = Note('C4')
         self.assertEqual(n.perfect_fourth_up(), Note('F4'))
@@ -201,3 +227,15 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.set_transpose(5), Note(65))
         self.assertEqual(n.set_transpose(-10), Note(55))
         self.assertEqual(n, Note(55))
+
+    def test_set_augment(self):
+        n = Note('C4')
+        self.assertEqual(n._accidentals, 0)
+        n.set_augment()
+        self.assertEqual(n._accidentals, 1)
+
+    def test_set_diminish(self):
+        n = Note('C4')
+        self.assertEqual(n._accidentals, 0)
+        n.set_diminish()
+        self.assertEqual(n._accidentals, -1)
