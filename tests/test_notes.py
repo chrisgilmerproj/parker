@@ -75,6 +75,9 @@ class TestNote(unittest.TestCase):
         self.assertEqual(str(Note('C6')), 'C6')
         self.assertEqual(str(Note('C7')), 'C7')
 
+    def test_Note_to_repr(self):
+        self.assertEqual(repr(Note()), 'Note(A4)')
+
     def test_clone(self):
         note = Note('C4')
         self.assertNotEqual(id(note), id(note.clone()))
@@ -388,9 +391,20 @@ class TestNoteGroup(unittest.TestCase):
         self.assertEqual(NoteGroup(note).get_notes()[0], note)
         self.assertNotEqual(id(NoteGroup(note).get_notes()[0]), id(note))
 
+    def test_constructor_from_NoteGroup(self):
+        n1 = Note(30)
+        n2 = Note(35)
+        ng = NoteGroup(NoteGroup([n1, n2]))
+        self.assertEqual(ng.get_notes()[0], n1)
+
     def test_constructor_from_mixed_types(self):
         notes = [Note(60), 60, 'C4']
-        self.assertEqual(str(NoteGroup(notes).get_notes()), '[C4, C4, C4]')
+        self.assertEqual(str(NoteGroup(notes).get_notes()),
+                         '[Note(C4), Note(C4), Note(C4)]')
+
+    def test_constructor_raises(self):
+        with self.assertRaises(Exception):
+            NoteGroup({'C': 4})
 
     def test_add(self):
         n1 = Note('C4')
@@ -452,3 +466,15 @@ class TestNoteGroup(unittest.TestCase):
         self.assertEqual(ng.get_notes()[1], n1)
         self.assertEqual(ng[0], n2)
         self.assertEqual(ng[1], n1)
+
+    def test_NoteGroup_to_str(self):
+        n1 = Note('G4')
+        n2 = Note('C4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(str(ng), '[Note(C4), Note(G4)]')
+
+    def test_NoteGroup_to_repr(self):
+        n1 = Note('G4')
+        n2 = Note('C4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(repr(ng), 'NoteGroup([Note(C4), Note(G4)])')
