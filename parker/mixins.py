@@ -4,13 +4,13 @@ import copy
 class AugmentDiminishMixin(object):
 
     def set_augment(self):
-        pass
+        raise NotImplementedError
 
     def augment(self):
         return self.clone().set_augment()
 
     def set_diminish(self):
-        pass
+        raise NotImplementedError
 
     def diminish(self):
         return self.clone().set_diminish()
@@ -21,16 +21,19 @@ class CloneMixin(object):
         return copy.deepcopy(self)
 
 
+class CommonEqualityMixin(object):
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__)
+                and self.__dict__ == other.__dict__)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
 class NotesMixin(object):
 
     def get_notes(self):
         return []
-
-    def set_change_duration(self, duration):
-        return self
-
-    def change_duration(self, duration):
-        return self.clone().set_change_duration(duration)
 
     def lowest_note(self):
         return self.get_notes()[0]
@@ -51,9 +54,6 @@ class TransposeMixin(object):
 
     def transpose(self, amount):
         return self.clone().set_transpose(amount)
-
-    def transpose_list(self, lst):
-        return [self.transpose(amount) for amount in lst]
 
     # IMMUTABLE TRANSPOSE UP
     def minor_second_up(self):

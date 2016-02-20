@@ -3,6 +3,7 @@ import re
 
 from mixins import AugmentDiminishMixin
 from mixins import CloneMixin
+from mixins import CommonEqualityMixin
 from mixins import NotesMixin
 from mixins import TransposeMixin
 
@@ -64,7 +65,8 @@ LOOKUP_FLATS = {
 }
 
 
-class Note(TransposeMixin, CloneMixin, AugmentDiminishMixin):
+class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
+           AugmentDiminishMixin):
     """Representation of a single note."""
     _base_name = 'A'
     _octave = 4
@@ -86,13 +88,6 @@ class Note(TransposeMixin, CloneMixin, AugmentDiminishMixin):
         result += NOTE_OFFSETS[self._base_name]
         result += self._accidentals
         return result
-
-    def __eq__(self, other):
-        return (isinstance(other, self.__class__)
-                and self.__dict__ == other.__dict__)
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
 
     def set_note(self, note):
         if type(note) == int:
@@ -230,7 +225,8 @@ class NotesParser(object):
         raise Exception("Cannot parse notes: {}".format(str(notes)))
 
 
-class NoteGroup(TransposeMixin, CloneMixin, AugmentDiminishMixin, NotesMixin):
+class NoteGroup(TransposeMixin, CloneMixin, CommonEqualityMixin,
+                AugmentDiminishMixin, NotesMixin):
     """
     Representation of a set of notes to be played at the same time.
     An example of a NoteGroup would be a chord (1, 3, 5) played on a piano.

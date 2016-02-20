@@ -391,6 +391,11 @@ class TestNoteGroup(unittest.TestCase):
         self.assertEqual(NoteGroup(note).get_notes()[0], note)
         self.assertNotEqual(id(NoteGroup(note).get_notes()[0]), id(note))
 
+    def test_clone(self):
+        ng = NoteGroup(['C4', 'G4'])
+        self.assertNotEqual(id(ng), id(ng.clone()))
+        self.assertEqual(ng, ng.clone())
+
     def test_constructor_from_NoteGroup(self):
         n1 = Note(30)
         n2 = Note(35)
@@ -478,3 +483,10 @@ class TestNoteGroup(unittest.TestCase):
         n2 = Note('C4')
         ng = NoteGroup([n1, n2])
         self.assertEqual(repr(ng), 'NoteGroup([Note(C4), Note(G4)])')
+
+    def test_highest_lowest_notes(self):
+        n1 = Note('G4')
+        n2 = Note('C4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(ng.lowest_note(), n2)
+        self.assertEqual(ng.highest_note(), n1)
