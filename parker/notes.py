@@ -92,9 +92,9 @@ class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
         return result
 
     def set_note(self, note):
-        if type(note) == int:
+        if isinstance(note, int):
             self.set_from_int(note)
-        elif type(note) == str:
+        elif isinstance(note, str):
             self.set_from_string(note)
         elif isinstance(note, Note):
             self.set_from_note(note)
