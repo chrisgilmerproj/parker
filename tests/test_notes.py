@@ -1,6 +1,7 @@
 import unittest
 
 from parker.notes import Note
+from parker.notes import NoteGroup
 
 
 class TestNote(unittest.TestCase):
@@ -29,6 +30,10 @@ class TestNote(unittest.TestCase):
 
     def test_constructor_from_Note(self):
         self.assertEqual(Note(Note('B9')), Note('B9'))
+
+    def test_constructor_raises(self):
+        with self.assertRaises(Exception):
+            Note('H$5')
 
     def test_flat_sharp_difference(self):
         self.assertNotEqual(Note('Db4'), Note('C#4'))
@@ -75,6 +80,37 @@ class TestNote(unittest.TestCase):
         self.assertNotEqual(id(note), id(note.clone()))
         self.assertEqual(note, note.clone())
 
+    def test_get_base_name(self):
+        note = Note('C4')
+        self.assertEqual(note.get_base_name(), 'C')
+
+    def test_set_base_name(self):
+        note = Note('C4')
+        note.set_base_name('D')
+        self.assertEqual(note.get_base_name(), 'D')
+        self.assertEqual(str(note), 'D4')
+
+    def test_set_base_name_raises(self):
+        note = Note('C4')
+        with self.assertRaises(Exception):
+            note.set_base_name('H')
+
+    def test_get_accidentals(self):
+        note = Note('C4')
+        self.assertEquals(note.get_accidentals(), 0)
+
+    def test_get_accidentals_as_string(self):
+        note = Note('Cbb4')
+        self.assertEquals(note.get_accidentals(), -2)
+        note = Note('C###4')
+        self.assertEquals(note.get_accidentals(), 3)
+
+    def test_set_accidentals(self):
+        note = Note('C4')
+        note.set_accidentals(2)
+        self.assertEquals(note.get_accidentals(), 2)
+        self.assertEquals(str(note), 'C##4')
+
     def test_get_octave(self):
         self.assertEqual(Note('C4').get_octave(), 4)
         self.assertEqual(Note('B4').get_octave(), 4)
@@ -105,6 +141,15 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.get_octave(), 4)
         with self.assertRaises(Exception):
             n.set_octave(12)
+
+    def test_get_duration(self):
+        n = Note('C4')
+        self.assertEqual(n.get_duration(), 0)
+
+    def test_set_duration(self):
+        n = Note('C4')
+        n.set_duration(500)
+        self.assertEqual(n.get_duration(), 500)
 
     def test_transpose(self):
         n = Note('C4')
@@ -330,3 +375,80 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n._accidentals, 0)
         n.set_diminish()
         self.assertEqual(n._accidentals, -1)
+
+
+class TestNoteGroup(unittest.TestCase):
+
+    def test_constructor(self):
+        ng = NoteGroup()
+        self.assertEqual(ng.get_notes(), [])
+
+    def test_constructor_from_Note(self):
+        note = Note(30)
+        self.assertEqual(NoteGroup(note).get_notes()[0], note)
+        self.assertNotEqual(id(NoteGroup(note).get_notes()[0]), id(note))
+
+    def test_constructor_from_mixed_types(self):
+        notes = [Note(60), 60, 'C4']
+        self.assertEqual(str(NoteGroup(notes).get_notes()), '[C4, C4, C4]')
+
+    def test_add(self):
+        n1 = Note('C4')
+        n2 = Note('G4')
+        n3 = Note('F4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(len(ng), 2)
+        self.assertFalse(n3 in ng.get_notes())
+        ng.add(n3)
+        self.assertEqual(len(ng), 3)
+        self.assertTrue(n3 in ng.get_notes())
+
+    def test_append(self):
+        n1 = Note('C4')
+        n2 = Note('G4')
+        n3 = Note('F4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(len(ng), 2)
+        self.assertFalse(n3 in ng.get_notes())
+        ng.append(n3)
+        self.assertEqual(len(ng), 3)
+        self.assertTrue(n3 in ng.get_notes())
+
+    def test_transpose(self):
+        n1 = Note('C4')
+        n2 = Note('G4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(ng.transpose(5).get_notes()[0], Note('F4'))
+        self.assertEqual(ng.perfect_fourth_up().get_notes()[0], Note('F4'))
+        self.assertEqual(ng.transpose(5).get_notes()[1], Note('C5'))
+        self.assertEqual(ng.transpose(-5).get_notes()[0], Note('G3'))
+        self.assertEqual(ng.transpose(-5).get_notes()[1], Note('D4'))
+        self.assertEqual(n1, Note('C4'))
+        self.assertEqual(n2, Note('G4'))
+
+    def test_set_transpose(self):
+        ng = NoteGroup([20, 'C4'])
+        self.assertEqual(ng.set_transpose(5).get_notes()[0], Note(25))
+        self.assertEqual(ng.get_notes()[0], Note(25))
+        self.assertEqual(ng.get_notes()[1], Note(65))
+
+    def test_set_augment(self):
+        ng = NoteGroup(['A3', 'C4'])
+        ng.set_augment()
+        self.assertEqual(ng.get_notes()[0], Note('A#3'))
+        self.assertEqual(ng.get_notes()[1], Note('C#4'))
+
+    def test_set_diminish(self):
+        ng = NoteGroup(['A3', 'C4'])
+        ng.set_diminish()
+        self.assertEqual(ng.get_notes()[0], Note('Ab3'))
+        self.assertEqual(ng.get_notes()[1], Note('Cb4'))
+
+    def test_notes_are_sorted(self):
+        n1 = Note('G4')
+        n2 = Note('C4')
+        ng = NoteGroup([n1, n2])
+        self.assertEqual(ng.get_notes()[0], n2)
+        self.assertEqual(ng.get_notes()[1], n1)
+        self.assertEqual(ng[0], n2)
+        self.assertEqual(ng[1], n1)

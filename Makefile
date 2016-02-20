@@ -1,6 +1,6 @@
 #! /usr/bin/make 
 
-PACKAGE_NAME=baby
+PACKAGE_NAME=parker
 
 VENV_DIR?=.venv
 VENV_ACTIVATE=$(VENV_DIR)/bin/activate

@@ -1,8 +1,9 @@
-import copy
 import re
 
 
 from mixins import AugmentDiminishMixin
+from mixins import CloneMixin
+from mixins import NotesMixin
 from mixins import TransposeMixin
 
 # Notes should be formated with three pieces of information
@@ -29,18 +30,18 @@ NOTE_OFFSETS = {
 # integer would be 63, the offset would be 3, returning the note 'D' and the
 # number of accidentals would be 1.
 LOOKUP_SHARPS = {
-  0: ('C', 0),
-  1: ('C', 1),
-  2: ('D', 0),
-  3: ('D', 1),
-  4: ('E', 0),
-  5: ('F', 0),
-  6: ('F', 1),
-  7: ('G', 0),
-  8: ('G', 1),
-  9: ('A', 0),
-  10: ('A', 1),
-  11: ('B', 0),
+    0: ('C', 0),
+    1: ('C', 1),
+    2: ('D', 0),
+    3: ('D', 1),
+    4: ('E', 0),
+    5: ('F', 0),
+    6: ('F', 1),
+    7: ('G', 0),
+    8: ('G', 1),
+    9: ('A', 0),
+    10: ('A', 1),
+    11: ('B', 0),
 }
 
 # Simliar to LOOKUP_SHARPS, this will return the same information except for
@@ -48,22 +49,23 @@ LOOKUP_SHARPS = {
 # then the offset would be 3, returning 'E' and the number of accidentals
 # would be -1.
 LOOKUP_FLATS = {
-  0: ('C', 0),
-  1: ('D', -1),
-  2: ('D', 0),
-  3: ('E', -1),
-  4: ('E', 0),
-  5: ('F', 0),
-  6: ('G', -1),
-  7: ('G', 0),
-  8: ('A', -1),
-  9: ('A', 0),
-  10: ('B', -1),
-  11: ('C', -1),
+    0: ('C', 0),
+    1: ('D', -1),
+    2: ('D', 0),
+    3: ('E', -1),
+    4: ('E', 0),
+    5: ('F', 0),
+    6: ('G', -1),
+    7: ('G', 0),
+    8: ('A', -1),
+    9: ('A', 0),
+    10: ('B', -1),
+    11: ('C', -1),
 }
 
 
-class Note(TransposeMixin, AugmentDiminishMixin):
+class Note(TransposeMixin, CloneMixin, AugmentDiminishMixin):
+    """Representation of a single note."""
     _base_name = 'A'
     _octave = 4
     _accidentals = 0
@@ -91,9 +93,6 @@ class Note(TransposeMixin, AugmentDiminishMixin):
 
     def __ne__(self, other):
         return not self.__eq__(other)
-
-    def clone(self):
-        return copy.deepcopy(self)
 
     def set_note(self, note):
         if type(note) == int:
@@ -139,7 +138,7 @@ class Note(TransposeMixin, AugmentDiminishMixin):
             octave = octave if octave.isdigit() else "4"
             self._octave = int(octave)
             self._accidentals = sum(1 if acc == '#' else -1
-                                   for acc in accidentals)
+                                    for acc in accidentals)
             return
         raise Exception("Unknown note format: {}".format(note))
 
@@ -153,7 +152,10 @@ class Note(TransposeMixin, AugmentDiminishMixin):
         return self._base_name
 
     def set_base_name(self, base_name):
-        self._base_name = base_name
+        if base_name in 'ABCDEFG':
+            self._base_name = base_name
+        else:
+            raise Exception('Unkown base name: {}'.format(base_name))
 
     def get_accidentals(self):
         return self._accidentals
@@ -202,3 +204,69 @@ class Note(TransposeMixin, AugmentDiminishMixin):
     def set_diminish(self):
         self._accidentals -= 1
         return self
+
+
+class NotesParser(object):
+    """
+    Parse notes of any type into a list of notes.
+    Valid notes are: Note, NoteGroup, int, str, list, tuple, set.
+    """
+
+    @staticmethod
+    def parse(notes):
+        if isinstance(notes, Note):
+            return [notes.clone()]
+        elif isinstance(notes, NoteGroup):
+            return notes.clone().get_notes()
+        elif isinstance(notes, (int, str)):
+            return [Note(notes)]
+        elif isinstance(notes, (list, tuple, set)):
+            result = []
+            for n in notes:
+                result.extend(NotesParser.parse(n))
+            return result
+        elif notes is None:
+            return []
+        raise Exception("Cannot parse notes: {}".format(str(notes)))
+
+
+class NoteGroup(TransposeMixin, CloneMixin, AugmentDiminishMixin, NotesMixin):
+    """
+    Representation of a set of notes to be played at the same time.
+    An example of a NoteGroup would be a chord (1, 3, 5) played on a piano.
+    """
+
+    def __init__(self, notes=None):
+        self.notes = []
+        self.add(notes)
+
+    def add(self, notes):
+        self.notes.extend(NotesParser.parse(notes))
+        return self
+
+    def append(self, item):
+        return self.add(item)
+
+    def set_transpose(self, amount):
+        return self.walk(lambda n: n.set_transpose(amount))
+
+    def set_augment(self):
+        return self.walk(lambda n: n.set_augment())
+
+    def set_diminish(self):
+        return self.walk(lambda n: n.set_diminish())
+
+    def get_notes(self):
+        return sorted(self.notes, key=int)
+
+    def __getitem__(self, key):
+        return self.get_notes()[key]
+
+    def __str__(self):
+        return str(self.get_notes())
+
+    def __repr__(self):
+        return "%s <%s>" % (type(self).__name__, str(self))
+
+    def __len__(self):
+        return len(self.notes)

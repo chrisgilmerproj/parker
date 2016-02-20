@@ -1,3 +1,4 @@
+import copy
 
 
 class AugmentDiminishMixin(object):
@@ -13,6 +14,34 @@ class AugmentDiminishMixin(object):
 
     def diminish(self):
         return self.clone().set_diminish()
+
+
+class CloneMixin(object):
+    def clone(self):
+        return copy.deepcopy(self)
+
+
+class NotesMixin(object):
+
+    def get_notes(self):
+        return []
+
+    def set_change_duration(self, duration):
+        return self
+
+    def change_duration(self, duration):
+        return self.clone().set_change_duration(duration)
+
+    def lowest_note(self):
+        return self.get_notes()[0]
+
+    def highest_note(self):
+        return self.get_notes()[-1]
+
+    def walk(self, func):
+        for n in self.get_notes():
+            func(n)
+        return self
 
 
 class TransposeMixin(object):
