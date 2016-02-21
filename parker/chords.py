@@ -7,7 +7,6 @@ from mixins import Dim
 
 class Chord(object):
     note = None
-    chord = None
     group = None
     extension = None
 
@@ -17,7 +16,6 @@ class Chord(object):
         elif isinstance(chord, NoteGroup):
             self.note = chord[0]
             self.group = chord
-            self.chord = str(self.note)
             self.extension = extension or ''
 
     def __len__(self):
@@ -38,12 +36,11 @@ class Chord(object):
         if m is None:
             raise Exception("Unknown chord format: {}".format(chord))
 
-        base_name, accidentals, octave, extension = (m.group(1), m.group(2),
-                                                     m.group(3), m.group(4))
+        root, extension = m.group(1), m.group(2)
         self.extension = self.normalize_extension(extension)
 
-        self.note = Note("%s%s%s" % (base_name, accidentals, octave))
-        chord = self._get_shorthand(self.extension)(self.note)
+        chord = self._get_shorthand(self.extension)(root)
+        self.note = chord.note
         self.group = chord.group
 
     @staticmethod
