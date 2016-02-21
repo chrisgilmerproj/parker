@@ -12,11 +12,25 @@ class Chord(object):
     extension = None
 
     def __init__(self, chord=None):
-        if chord:
+        if isinstance(chord, str):
             self.set_from_string(chord)
+        elif isinstance(chord, NoteGroup):
+            self.note = chord[0]
+            self.group = chord
+            self.chord = str(self.note)
+            self.extension = ''
 
     def __len__(self):
         return len(self.group)
+
+    def __getitem__(self, key):
+        return self.group.get_notes()[key]
+
+    def __str__(self):
+        return str(self.group.get_notes())
+
+    def __repr__(self):
+        return "%s(%s)" % (type(self).__name__, str(self))
 
     def set_from_string(self, chord):
         self.chord = chord
@@ -29,7 +43,8 @@ class Chord(object):
         self.extension = self.normalize_extension(extension)
 
         self.note = Note("%s%s%s" % (base_name, accidentals, octave))
-        self.group = self._get_shorthand(self.extension)(self.note)
+        chord = self._get_shorthand(self.extension)(self.note)
+        self.group = chord.group
 
     @staticmethod
     def normalize_extension(extension):
@@ -42,9 +57,8 @@ class Chord(object):
 
     @staticmethod
     def _create_chord(root, transpose_list):
-        note = Note(root)
-        group = NoteGroup(note.transpose_list(transpose_list))
-        return group
+        group = NoteGroup(Note(root).transpose_list(transpose_list))
+        return Chord(group)
 
     @classmethod
     def major_triad(cls, root):

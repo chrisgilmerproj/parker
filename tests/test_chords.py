@@ -22,17 +22,25 @@ class TestChord(unittest.TestCase):
                                                  Note('E4'),
                                                  Note('G4')]))
         self.assertEqual(chord.extension, '')
-        self._chord_tester(chord.group, ['C4', 'E4', 'G4'])
+        self._chord_tester(chord, ['C4', 'E4', 'G4'])
 
     def test_constructor_from_shorthand(self):
-        self._chord_tester(Chord('Cmaj7').group, ['C4', 'E4', 'G4', 'B4'])
-        self._chord_tester(Chord('C4maj7').group, ['C4', 'E4', 'G4', 'B4'])
-        self._chord_tester(Chord('CM7').group, ['C4', 'E4', 'G4', 'B4'])
-        self._chord_tester(Chord('Cm7').group, ['C4', 'Eb4', 'G4', 'Bb4'])
-        self._chord_tester(Chord('Cmin7').group, ['C4', 'Eb4', 'G4', 'Bb4'])
-        self._chord_tester(Chord('Cmi7').group, ['C4', 'Eb4', 'G4', 'Bb4'])
-        self._chord_tester(Chord('C-7').group, ['C4', 'Eb4', 'G4', 'Bb4'])
-        self._chord_tester(Chord('C3-7').group, ['C3', 'Eb3', 'G3', 'Bb3'])
+        self._chord_tester(Chord('Cmaj7'), ['C4', 'E4', 'G4', 'B4'])
+        self._chord_tester(Chord('C4maj7'), ['C4', 'E4', 'G4', 'B4'])
+        self._chord_tester(Chord('CM7'), ['C4', 'E4', 'G4', 'B4'])
+        self._chord_tester(Chord('Cm7'), ['C4', 'Eb4', 'G4', 'Bb4'])
+        self._chord_tester(Chord('Cmin7'), ['C4', 'Eb4', 'G4', 'Bb4'])
+        self._chord_tester(Chord('Cmi7'), ['C4', 'Eb4', 'G4', 'Bb4'])
+        self._chord_tester(Chord('C-7'), ['C4', 'Eb4', 'G4', 'Bb4'])
+        self._chord_tester(Chord('C3-7'), ['C3', 'Eb3', 'G3', 'Bb3'])
+
+    def test_Chord_to_str(self):
+        self.assertEqual(str(Chord('Cmaj7')),
+                         '[Note(C4), Note(E4), Note(G4), Note(B4)]')
+
+    def test_Chord_to_repr(self):
+        self.assertEqual(repr(Chord('Cmaj7')),
+                         'Chord([Note(C4), Note(E4), Note(G4), Note(B4)])')
 
     def test_major_triad(self):
         chord = Chord.major_triad('C4')
