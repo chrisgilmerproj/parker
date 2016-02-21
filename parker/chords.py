@@ -41,9 +41,7 @@ class Chord(NoteGroupBase):
         if m is None:
             raise Exception("Unknown chord format: {}".format(chord))
 
-        print chord
         root, extension = m.group(1), m.group(2)
-        print root, extension
         self.extension = self.normalize_extension(extension)
 
         chord = self._get_shorthand(self.extension)(root)

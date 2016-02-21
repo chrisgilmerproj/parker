@@ -83,7 +83,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  accidentals: 0
         """
         m = NOTE_MATCHER.match(note)
-        print note, m
         if m is not None:
             name, accidentals, octave = m.group(1), m.group(2), m.group(3)
             self._base_name = name
