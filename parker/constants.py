@@ -5,11 +5,11 @@ import re
 # The first group is the note, always capitalized from A to G
 # The second group is the accidentals, any number of # or b symbols
 # The third group is the octave, which must be a digit between 0 and 9
-NOTE_MATCHER = re.compile("^(A|B|C|D|E|F|G)([#|b]*)([0-9]*)$")
+NOTE_MATCHER = re.compile(r"^(A|B|C|D|E|F|G)([#|b]*)([0-9]*)$")
 
 # Chords are formatted like notes but include a fourth group
 # which defines the type of chord
-CHORD_MATCHER = re.compile("^(A|B|C|D|E|F|G)([#|b]*)([0-9]*)(.*)$")
+CHORD_MATCHER = re.compile(r"^(A|B|C|D|E|F|G)([#|b]*)([0-9]*)(.*)$")
 
 #
 NOTE_OFFSETS = {
