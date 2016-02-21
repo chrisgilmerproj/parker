@@ -11,8 +11,8 @@ class TestChord(unittest.TestCase):
         self.assertEqual(len(chord), len(notes))
         for ix, note in enumerate(notes):
             self.assertEqual(chord[ix], Note(note),
-                             msg="Note {} of {} is {} and should be {}".format(
-                                 ix, str(chord), chord[ix], note))
+                    msg="Note {} of {} doesn't match.\n{} != {}\nGiv: {}\nExp: {}".format(
+                                 ix, str(chord), chord[ix], note, [str(n) for n in chord.group], notes))
 
     def test_constructor(self):
         chord = Chord('C4')

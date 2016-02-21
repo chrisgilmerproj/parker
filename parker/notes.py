@@ -88,6 +88,7 @@ class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
         self._base_name = note._base_name
         self._octave = note._octave
         self._accidentals = note._accidentals
+        # self._duration = note._duration
 
     def get_base_name(self):
         return self._base_name

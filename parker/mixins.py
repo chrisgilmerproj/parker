@@ -17,6 +17,12 @@ class AugmentDiminishMixin(object):
 
 
 class Aug(object):
+    """
+    Augment the transpose amount by one.
+
+    Example: For Aug(7) you would be asking to take the seventh and
+             augment by 1 after it was transposed.
+    """
 
     def __init__(self, transpose_amount):
         self.amount = transpose_amount
@@ -26,6 +32,12 @@ class Aug(object):
 
 
 class Dim(object):
+    """
+    Diminish the transpose amount by one.
+
+    Example: For Dim(7) you would be asking to take the seventh and
+             diminish by 1 after it was transposed.
+    """
 
     def __init__(self, transpose_amount):
         self.amount = transpose_amount

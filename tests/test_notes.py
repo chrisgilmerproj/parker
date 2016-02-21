@@ -1,5 +1,7 @@
 import unittest
 
+from parker.mixins import Aug
+from parker.mixins import Dim
 from parker.notes import Note
 from parker.notes import NoteGroup
 
@@ -352,6 +354,14 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.set_transpose(5), Note(65))
         self.assertEqual(n.set_transpose(-10), Note(55))
         self.assertEqual(n, Note(55))
+
+    def test_set_transpose_Aug_and_Dim(self):
+        n = Note(60)
+        n.set_transpose(Aug(4))
+        self.assertEqual(int(n), 65)
+        n.set_transpose(Dim(4))
+        self.assertEqual(int(n), 68)
+        self.assertEqual(n, Note(68))
 
     def test_set_transpose_raises(self):
         n = Note(60)
