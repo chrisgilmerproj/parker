@@ -11,14 +11,14 @@ class Chord(object):
     group = None
     extension = None
 
-    def __init__(self, chord=None):
+    def __init__(self, chord=None, extension=None):
         if isinstance(chord, str):
             self.set_from_string(chord)
         elif isinstance(chord, NoteGroup):
             self.note = chord[0]
             self.group = chord
             self.chord = str(self.note)
-            self.extension = ''
+            self.extension = extension or ''
 
     def __len__(self):
         return len(self.group)
@@ -27,7 +27,7 @@ class Chord(object):
         return self.group.get_notes()[key]
 
     def __str__(self):
-        return str(self.group.get_notes())
+        return '{}{}'.format(str(self.note), self.extension)
 
     def __repr__(self):
         return "{}({})".format(type(self).__name__, repr(self.chord))
@@ -56,149 +56,149 @@ class Chord(object):
         return extension
 
     @staticmethod
-    def _create_chord(root, transpose_list):
+    def _create_chord(root, transpose_list, extension=None):
         group = NoteGroup(Note(root).transpose_list(transpose_list))
-        return Chord(group)
+        return Chord(group, extension=extension)
 
     @classmethod
     def major_triad(cls, root):
-        return cls._create_chord(root, [0, 4, 7])
+        return cls._create_chord(root, [0, 4, 7], 'M')
 
     @classmethod
     def minor_triad(cls, root):
-        return cls._create_chord(root, [0, 3, 7])
+        return cls._create_chord(root, [0, 3, 7], 'm')
 
     @classmethod
     def diminished_triad(cls, root):
-        return cls._create_chord(root, [0, 3, 6])
+        return cls._create_chord(root, [0, 3, 6], 'dim')
 
     @classmethod
     def augmented_triad(cls, root):
-        return cls._create_chord(root, [0, 4, Aug(7)])
+        return cls._create_chord(root, [0, 4, Aug(7)], 'aug')
 
     @classmethod
     def augmented_minor_seventh(cls, root):
-        return cls._create_chord(root, [0, 4, Aug(7), 10])
+        return cls._create_chord(root, [0, 4, Aug(7), 10], 'm7+')
 
     @classmethod
     def augmented_major_seventh(cls, root):
-        return cls._create_chord(root, [0, 4, Aug(7), 11])
+        return cls._create_chord(root, [0, 4, Aug(7), 11], 'M7+')
 
     @classmethod
     def suspended_triad(cls, root):
-        return cls._create_chord(root, [0, 5, 7])
+        return cls._create_chord(root, [0, 5, 7], 'sus')
 
     @classmethod
     def suspended_fourth_triad(cls, root):
-        return cls._create_chord(root, [0, 5, 7])
+        return cls._create_chord(root, [0, 5, 7], 'sus4')
 
     @classmethod
     def suspended_second_triad(cls, root):
-        return cls._create_chord(root, [0, 2, 7])
+        return cls._create_chord(root, [0, 2, 7], 'sus2')
 
     @classmethod
     def suspended_seventh(cls, root):
-        return cls._create_chord(root, [0, 5, 7, 10])
+        return cls._create_chord(root, [0, 5, 7, 10], 'sus47')
 
     @classmethod
     def suspended_fourth_ninth(cls, root):
-        return cls._create_chord(root, [0, 5, 7, 13])
+        return cls._create_chord(root, [0, 5, 7, 13], 'sus4b9')
 
     @classmethod
     def major_seventh(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 11])
+        return cls._create_chord(root, [0, 4, 7, 11], 'M7')
 
     @classmethod
     def minor_seventh(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 10])
+        return cls._create_chord(root, [0, 3, 7, 10], 'm7')
 
     @classmethod
     def dominant_seventh(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10])
+        return cls._create_chord(root, [0, 4, 7, 10], 'dom7')
 
     @classmethod
     def diminished_seventh(cls, root):
-        return cls._create_chord(root, [0, 3, 6, Dim(10)])
+        return cls._create_chord(root, [0, 3, 6, Dim(10)], 'dim7')
 
     @classmethod
     def half_diminished_seventh(cls, root):
-        return cls._create_chord(root, [0, 3, 6, 10])
+        return cls._create_chord(root, [0, 3, 6, 10], 'm7b5')
 
     @classmethod
     def minor_seventh_flat_five(cls, root):
-        return cls._create_chord(root, [0, 3, 6, 10])
+        return cls._create_chord(root, [0, 3, 6, 10], 'm7b5')
 
     @classmethod
     def minor_major_seventh(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 11])
+        return cls._create_chord(root, [0, 3, 7, 11], 'm/M7')
 
     @classmethod
     def minor_sixth(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 8])
+        return cls._create_chord(root, [0, 3, 7, 8], 'm6')
 
     @classmethod
     def major_sixth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 9])
+        return cls._create_chord(root, [0, 4, 7, 9], 'M6')
 
     @classmethod
     def dominant_sixth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 9, 10])
+        return cls._create_chord(root, [0, 4, 7, 9, 10], '67')
 
     @classmethod
     def sixth_ninth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 9, 14])
+        return cls._create_chord(root, [0, 4, 7, 9, 14], '69')
 
     @classmethod
     def minor_ninth(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 10, 14])
+        return cls._create_chord(root, [0, 3, 7, 10, 14], 'm9')
 
     @classmethod
     def major_ninth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 11, 14])
+        return cls._create_chord(root, [0, 4, 7, 11, 14], 'M9')
 
     @classmethod
     def dominant_ninth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10, 14])
+        return cls._create_chord(root, [0, 4, 7, 10, 14], '9')
 
     @classmethod
     def dominant_flat_ninth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10, 13])
+        return cls._create_chord(root, [0, 4, 7, 10, 13], '7b9')
 
     @classmethod
     def dominant_sharp_ninth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10, Aug(14)])
+        return cls._create_chord(root, [0, 4, 7, 10, Aug(14)], '7#9')
 
     @classmethod
     def eleventh(cls, root):
-        return cls._create_chord(root, [0, 7, 10, 17])
+        return cls._create_chord(root, [0, 7, 10, 17], '11')
 
     @classmethod
     def minor_eleventh(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 10, 17])
+        return cls._create_chord(root, [0, 3, 7, 10, 17], 'm11')
 
     @classmethod
     def lydian_dominant_seventh(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10, Aug(17)])
+        return cls._create_chord(root, [0, 4, 7, 10, Aug(17)], '7#11')
 
     @classmethod
     def minor_thirteenth(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 10, 14, 21])
+        return cls._create_chord(root, [0, 3, 7, 10, 14, 21], 'm13')
 
     @classmethod
     def major_thirteenth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 11, 14, 21])
+        return cls._create_chord(root, [0, 4, 7, 11, 14, 21], 'M13')
 
     @classmethod
     def dominant_thirteenth(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10, 14, 21])
+        return cls._create_chord(root, [0, 4, 7, 10, 14, 21], '13')
 
     @classmethod
     def dominant_flat_five(cls, root):
-        return cls._create_chord(root, [0, 4, 6, 10])
+        return cls._create_chord(root, [0, 4, 6, 10], '7b5')
 
     @classmethod
     def hendrix_chord(cls, root):
-        return cls._create_chord(root, [0, 4, 7, 10, 15])
+        return cls._create_chord(root, [0, 4, 7, 10, 15], '7b12')
 
     def _get_shorthand(self, shorthand):
         SHORTHAND = {
@@ -257,6 +257,8 @@ class Chord(object):
             '7b5': self.dominant_flat_five,
             'hendrix': self.hendrix_chord,
             '7b12': self.hendrix_chord,
+
+            'm7b5': self.half_diminished_seventh,
         }
         if shorthand not in SHORTHAND:
             raise Exception("Unknown chord extensions: {}".format(shorthand))
