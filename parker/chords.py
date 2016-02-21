@@ -6,6 +6,9 @@ from mixins import Dim
 
 
 class Chord(object):
+    """
+    Source Material: https://en.wikipedia.org/wiki/Chord_(music)
+    """
     note = None
     group = None
     extension = None
