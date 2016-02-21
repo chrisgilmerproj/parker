@@ -30,7 +30,7 @@ class Chord(object):
         return str(self.group.get_notes())
 
     def __repr__(self):
-        return "%s(%s)" % (type(self).__name__, str(self))
+        return "{}({})".format(type(self).__name__, repr(self.chord))
 
     def set_from_string(self, chord):
         self.chord = chord

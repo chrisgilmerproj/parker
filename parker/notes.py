@@ -27,7 +27,7 @@ class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
         return "{}{}{}".format(self._base_name, accidentals, self._octave)
 
     def __repr__(self):
-        return "%s(%s)" % (type(self).__name__, str(self))
+        return "{}('{}')".format(type(self).__name__, str(self))
 
     def __int__(self):
         result = (int(self._octave) + 1) * 12
@@ -214,7 +214,7 @@ class NoteGroup(TransposeMixin, CloneMixin, CommonEqualityMixin,
         return str(self.get_notes())
 
     def __repr__(self):
-        return "%s(%s)" % (type(self).__name__, str(self))
+        return "{}({})".format(type(self).__name__, str(self))
 
     def __len__(self):
         return len(self.notes)

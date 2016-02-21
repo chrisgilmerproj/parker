@@ -36,11 +36,10 @@ class TestChord(unittest.TestCase):
 
     def test_Chord_to_str(self):
         self.assertEqual(str(Chord('Cmaj7')),
-                         '[Note(C4), Note(E4), Note(G4), Note(B4)]')
+                         "[Note('C4'), Note('E4'), Note('G4'), Note('B4')]")
 
     def test_Chord_to_repr(self):
-        self.assertEqual(repr(Chord('Cmaj7')),
-                         'Chord([Note(C4), Note(E4), Note(G4), Note(B4)])')
+        self.assertEqual(repr(Chord('Cmaj7')), "Chord('Cmaj7')")
 
     def test_major_triad(self):
         chord = Chord.major_triad('C4')

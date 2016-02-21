@@ -76,7 +76,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(str(Note('C7')), 'C7')
 
     def test_Note_to_repr(self):
-        self.assertEqual(repr(Note()), 'Note(A4)')
+        self.assertEqual(repr(Note()), "Note('A4')")
 
     def test_clone(self):
         note = Note('C4')
@@ -405,7 +405,7 @@ class TestNoteGroup(unittest.TestCase):
     def test_constructor_from_mixed_types(self):
         notes = [Note(60), 60, 'C4']
         self.assertEqual(str(NoteGroup(notes).get_notes()),
-                         '[Note(C4), Note(C4), Note(C4)]')
+                         "[Note('C4'), Note('C4'), Note('C4')]")
 
     def test_constructor_raises(self):
         with self.assertRaises(Exception):
@@ -476,13 +476,13 @@ class TestNoteGroup(unittest.TestCase):
         n1 = Note('G4')
         n2 = Note('C4')
         ng = NoteGroup([n1, n2])
-        self.assertEqual(str(ng), '[Note(C4), Note(G4)]')
+        self.assertEqual(str(ng), "[Note('C4'), Note('G4')]")
 
     def test_NoteGroup_to_repr(self):
         n1 = Note('G4')
         n2 = Note('C4')
         ng = NoteGroup([n1, n2])
-        self.assertEqual(repr(ng), 'NoteGroup([Note(C4), Note(G4)])')
+        self.assertEqual(repr(ng), "NoteGroup([Note('C4'), Note('G4')])")
 
     def test_highest_lowest_notes(self):
         n1 = Note('G4')
