@@ -12,14 +12,14 @@ class TestChord(unittest.TestCase):
         for ix, note in enumerate(notes):
             self.assertEqual(chord[ix], Note(note),
                     msg="Note {} of {} doesn't match.\n{} != {}\nGiv: {}\nExp: {}".format(
-                                 ix, str(chord), chord[ix], note, [str(n) for n in chord.group], notes))
+                                 ix, str(chord), chord[ix], note, [str(n) for n in chord.notes], notes))
 
     def test_constructor(self):
         chord = Chord('C4')
-        self.assertEqual(chord.group, NoteGroup([Note('C4'),
-                                                 Note('E4'),
-                                                 Note('G4')]))
-        self.assertEqual(chord.extension, '')
+        self.assertEqual(chord.notes, [Note('C4'),
+                                       Note('E4'),
+                                       Note('G4')])
+        self.assertEqual(chord.extension, 'M')
         self._chord_tester(chord, ['C4', 'E4', 'G4'])
 
     def test_constructor_from_shorthand(self):

@@ -1,32 +1,33 @@
 from constants import CHORD_MATCHER
 from notes import Note
-from notes import NoteGroup
+from notes import NoteGroupBase
+from notes import NotesParser
 from mixins import Aug
 from mixins import Dim
 
 
-class Chord(object):
+class Chord(NoteGroupBase):
     """
     Source Material: https://en.wikipedia.org/wiki/Chord_(music)
     """
-    group = None
-    extension = None
 
-    def __init__(self, chord=None, extension=None):
+    def __init__(self, chord=None, notes=None, extension=None):
+        """
+        Create chords either from a chord name or from a set
+        of notes.  The notes should be a list of Note() objects.
+        The extension is optional and helpful only for string
+        representation.
+        """
+        self.notes = []
+        self.extension = ''
         if isinstance(chord, str):
             self.set_from_string(chord)
-        elif isinstance(chord, NoteGroup):
-            self.group = chord
+        elif notes:
+            self.notes.extend(NotesParser.parse(notes))
             self.extension = extension or ''
 
-    def __len__(self):
-        return len(self.group)
-
-    def __getitem__(self, key):
-        return self.group.get_notes()[key]
-
     def __str__(self):
-        return '{}{}'.format(str(self.group[0]), self.extension)
+        return '{}{}'.format(str(self.notes[0]), self.extension)
 
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))
@@ -40,7 +41,8 @@ class Chord(object):
         self.extension = self.normalize_extension(extension)
 
         chord = self._get_shorthand(self.extension)(root)
-        self.group = chord.group
+        self.notes = chord.notes
+        self.extension = chord.extension
 
     @staticmethod
     def normalize_extension(extension):
@@ -51,10 +53,10 @@ class Chord(object):
         extension = extension.replace("ma", "M")
         return extension
 
-    @staticmethod
-    def _create_chord(root, transpose_list, extension=None):
-        group = NoteGroup(Note(root).transpose_list(transpose_list))
-        return Chord(group, extension=extension)
+    @classmethod
+    def _create_chord(cls, root, transpose_list, extension=None):
+        return cls(notes=Note(root).transpose_list(transpose_list),
+                   extension=extension)
 
     @classmethod
     def major_triad(cls, root):
