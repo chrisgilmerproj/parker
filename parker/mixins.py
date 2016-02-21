@@ -53,8 +53,8 @@ class CloneMixin(object):
 
 class CommonEqualityMixin(object):
     def __eq__(self, other):
-        return (isinstance(other, self.__class__)
-                and self.__dict__ == other.__dict__)
+        return (isinstance(other, self.__class__) and
+                self.__dict__ == other.__dict__)
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -63,7 +63,7 @@ class CommonEqualityMixin(object):
 class NotesMixin(object):
 
     def get_notes(self):
-        return []
+        raise NotImplementedError
 
     def lowest_note(self):
         return self.get_notes()[0]
@@ -80,7 +80,7 @@ class NotesMixin(object):
 class TransposeMixin(object):
 
     def set_transpose(self, amount):
-        return self
+        raise NotImplementedError
 
     def transpose(self, amount):
         return self.clone().set_transpose(amount)
