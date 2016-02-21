@@ -237,3 +237,18 @@ class TestChord(unittest.TestCase):
         chord = Chord.hendrix_chord('C4')
         self.assertEqual(str(chord), 'C47b12')
         self._chord_tester(chord, ['C4', 'E4', 'G4', 'Bb4', 'Eb5'])
+
+    def test_transpose_chord(self):
+        chord = Chord('C4')
+        self.assertEqual(chord.notes, [Note('C4'),
+                                       Note('E4'),
+                                       Note('G4')])
+        self.assertEqual(chord.extension, 'M')
+        self._chord_tester(chord, ['C4', 'E4', 'G4'])
+
+        new_chord = chord.transpose(5)
+        self.assertEqual(new_chord.notes, [Note('F4'),
+                                           Note('A4'),
+                                           Note('C5')])
+        self.assertEqual(new_chord.extension, 'M')
+        self._chord_tester(new_chord, ['F4', 'A4', 'C5'])
