@@ -188,23 +188,17 @@ class NotesParser(object):
         raise Exception("Cannot parse notes: {}".format(str(notes)))
 
 
-class NoteGroup(TransposeMixin, CommonEqualityMixin,
-                AugmentDiminishMixin, NotesMixin):
+class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
+                    AugmentDiminishMixin, NotesMixin):
     """
     Representation of a set of notes to be played at the same time.
     An example of a NoteGroup would be a chord (1, 3, 5) played on a piano.
+
+    The base class does not let you add notes.
     """
 
-    def __init__(self, notes=None):
+    def __init__(self):
         self.notes = []
-        self.add(notes)
-
-    def add(self, notes):
-        self.notes.extend(NotesParser.parse(notes))
-        return self
-
-    def append(self, item):
-        return self.add(item)
 
     def set_transpose(self, amount):
         return self.walk(lambda n: n.set_transpose(amount))
@@ -229,3 +223,20 @@ class NoteGroup(TransposeMixin, CommonEqualityMixin,
 
     def __len__(self):
         return len(self.notes)
+
+
+class NoteGroup(NoteGroupBase):
+    """
+    A mutable set of notes to be played at the same time.
+    """
+
+    def __init__(self, notes=None):
+        self.notes = []
+        self.add(notes)
+
+    def add(self, notes):
+        self.notes.extend(NotesParser.parse(notes))
+        return self
+
+    def append(self, item):
+        return self.add(item)

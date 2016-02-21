@@ -9,7 +9,6 @@ class Chord(object):
     """
     Source Material: https://en.wikipedia.org/wiki/Chord_(music)
     """
-    note = None
     group = None
     extension = None
 
@@ -17,7 +16,6 @@ class Chord(object):
         if isinstance(chord, str):
             self.set_from_string(chord)
         elif isinstance(chord, NoteGroup):
-            self.note = chord[0]
             self.group = chord
             self.extension = extension or ''
 
@@ -28,7 +26,7 @@ class Chord(object):
         return self.group.get_notes()[key]
 
     def __str__(self):
-        return '{}{}'.format(str(self.note), self.extension)
+        return '{}{}'.format(str(self.group[0]), self.extension)
 
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))
@@ -42,7 +40,6 @@ class Chord(object):
         self.extension = self.normalize_extension(extension)
 
         chord = self._get_shorthand(self.extension)(root)
-        self.note = chord.note
         self.group = chord.group
 
     @staticmethod

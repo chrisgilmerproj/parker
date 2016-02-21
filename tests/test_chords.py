@@ -16,7 +16,6 @@ class TestChord(unittest.TestCase):
 
     def test_constructor(self):
         chord = Chord('C4')
-        self.assertEqual(chord.note, Note('C4'))
         self.assertEqual(chord.group, NoteGroup([Note('C4'),
                                                  Note('E4'),
                                                  Note('G4')]))
