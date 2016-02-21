@@ -25,9 +25,13 @@ class Chord(NoteGroupBase):
         elif notes:
             self.notes.extend(NotesParser.parse(notes))
             self.extension = extension or ''
+        else:
+            raise Exception('Must instantiate Chord() object with a chord '
+                            'name or a set of notes in a list')
 
     def __str__(self):
-        return '{}{}'.format(str(self.notes[0]), self.extension)
+        return '{}{}'.format(str(self.notes[0]) if self.notes else '',
+                             self.extension)
 
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))

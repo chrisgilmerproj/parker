@@ -197,9 +197,6 @@ class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
     The base class does not let you add notes.
     """
 
-    def __init__(self):
-        self.notes = []
-
     def set_transpose(self, amount):
         return self.walk(lambda n: n.set_transpose(amount))
 

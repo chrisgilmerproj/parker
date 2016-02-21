@@ -32,7 +32,11 @@ class TestChord(unittest.TestCase):
         self._chord_tester(Chord('C-7'), ['C4', 'Eb4', 'G4', 'Bb4'])
         self._chord_tester(Chord('C3-7'), ['C3', 'Eb3', 'G3', 'Bb3'])
 
-    def test_constructor_raises(self):
+    def test_constructor_raises_with_no_input(self):
+        with self.assertRaises(Exception):
+            Chord()
+
+    def test_constructor_raises_with_bad_chord(self):
         with self.assertRaises(Exception):
             Chord('_C4%G6')
 
