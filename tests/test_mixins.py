@@ -115,3 +115,13 @@ class TestTransposeMixin(unittest.TestCase):
         tm = TransposeMixin()
         with self.assertRaises(NotImplementedError):
             tm.set_transpose(7)
+
+    def test_transpose_raises(self):
+        tm = TransposeMixin()
+        with self.assertRaises(NotImplementedError):
+            tm.transpose(7)
+
+    def test_transpose_list_raises(self):
+        tm = TransposeMixin()
+        with self.assertRaises(NotImplementedError):
+            tm.transpose_list([0, 3, 5, 7])
