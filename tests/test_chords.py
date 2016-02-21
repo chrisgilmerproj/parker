@@ -40,6 +40,13 @@ class TestChord(unittest.TestCase):
 
     def test_Chord_to_repr(self):
         self.assertEqual(repr(Chord('Cmaj7')), "Chord('Cmaj7')")
+        self.assertEqual(repr(Chord('C4maj7')), "Chord('C4maj7')")
+        self.assertEqual(repr(Chord('CM7')), "Chord('CM7')")
+        self.assertEqual(repr(Chord('Cm7')), "Chord('Cm7')")
+        self.assertEqual(repr(Chord('Cmin7')), "Chord('Cmin7')")
+        self.assertEqual(repr(Chord('Cmi7')), "Chord('Cmi7')")
+        self.assertEqual(repr(Chord('C-7')), "Chord('C-7')")
+        self.assertEqual(repr(Chord('C3-7')), "Chord('C3-7')")
 
     def test_major_triad(self):
         chord = Chord.major_triad('C4')
