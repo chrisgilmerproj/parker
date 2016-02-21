@@ -1,8 +1,8 @@
 import unittest
 
 from parker.chords import Chord
+from parker.chords import produce_all_chords
 from parker.notes import Note
-from parker.notes import NoteGroup
 
 
 class TestChord(unittest.TestCase):
@@ -256,3 +256,13 @@ class TestChord(unittest.TestCase):
                                            Note('C5')])
         self.assertEqual(new_chord.extension, 'M')
         self._chord_tester(new_chord, ['F4', 'A4', 'C5'])
+
+
+class TestAllChords(unittest.TestCase):
+
+    def setUp(self):
+        self.chord_info = produce_all_chords('C4')
+
+    def test_produce_all_chords(self):
+        expected = {'dominant_flat_ninth': Chord('C47b9'), 'minor_sixth': Chord('C4m6'), 'suspended_fourth_ninth': Chord('C4sus4b9'), 'major_ninth': Chord('C4M9'), 'eleventh': Chord('C411'), 'suspended_seventh': Chord('C4sus47'), 'minor_major_seventh': Chord('C4m/M7'), 'minor_seventh_flat_five': Chord('C4m7b5'), 'augmented_major_seventh': Chord('C4M7+'), 'major_sixth': Chord('C4M6'), 'suspended_triad': Chord('C4sus'), 'hendrix_chord': Chord('C47b12'), 'dominant_sharp_ninth': Chord('C47#9'), 'minor_seventh': Chord('C4m7'), 'major_seventh': Chord('C4M7'), 'sixth_ninth': Chord('C469'), 'suspended_fourth_triad': Chord('C4sus4'), 'major_thirteenth': Chord('C4M13'), 'diminished_triad': Chord('C4dim'), 'dominant_ninth': Chord('C49'), 'dominant_thirteenth': Chord('C413'), 'half_diminished_seventh': Chord('C4m7b5'), 'dominant_seventh': Chord('C4dom7'), 'dominant_flat_five': Chord('C47b5'), 'minor_thirteenth': Chord('C4m13'), 'augmented_triad': Chord('C4aug'), 'augmented_minor_seventh': Chord('C4m7+'), 'minor_triad': Chord('C4m'), 'suspended_second_triad': Chord('C4sus2'), 'minor_ninth': Chord('C4m9'), 'dominant_sixth': Chord('C467'), 'minor_eleventh': Chord('C4m11'), 'diminished_seventh': Chord('C4dim7'), 'lydian_dominant_seventh': Chord('C47#11'), 'major_triad': Chord('C4M')}
+        self.assertEqual(self.chord_info, expected)

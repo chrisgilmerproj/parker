@@ -41,7 +41,9 @@ class Chord(NoteGroupBase):
         if m is None:
             raise Exception("Unknown chord format: {}".format(chord))
 
+        print chord
         root, extension = m.group(1), m.group(2)
+        print root, extension
         self.extension = self.normalize_extension(extension)
 
         chord = self._get_shorthand(self.extension)(root)
@@ -265,3 +267,59 @@ class Chord(NoteGroupBase):
         if shorthand not in SHORTHAND:
             raise Exception("Unknown chord extensions: {}".format(shorthand))
         return SHORTHAND[shorthand]
+
+
+def produce_all_chords(root):
+
+    cls = Chord
+    chord_methods = [
+        # Triads
+        cls.minor_triad,
+        cls.major_triad,
+        cls.diminished_triad,
+        # Augmented
+        cls.augmented_triad,
+        cls.augmented_minor_seventh,
+        cls.augmented_major_seventh,
+        # Suspended
+        cls.suspended_fourth_triad,
+        cls.suspended_second_triad,
+        cls.suspended_seventh,
+        cls.suspended_triad,
+        cls.suspended_fourth_ninth,
+        # Sevenths
+        cls.minor_seventh,
+        cls.major_seventh,
+        cls.dominant_seventh,
+        cls.minor_seventh_flat_five,
+        cls.half_diminished_seventh,
+        cls.diminished_seventh,
+        cls.minor_major_seventh,
+        # Sixths
+        cls.minor_sixth,
+        cls.major_sixth,
+        cls.dominant_sixth,
+        # Ninths
+        cls.sixth_ninth,
+        cls.dominant_ninth,
+        cls.dominant_flat_ninth,
+        cls.dominant_sharp_ninth,
+        cls.major_ninth,
+        cls.minor_ninth,
+        # Elevenths
+        cls.eleventh,
+        cls.minor_eleventh,
+        cls.lydian_dominant_seventh,
+        # Thirteenths
+        cls.major_thirteenth,
+        cls.minor_thirteenth,
+        cls.dominant_thirteenth,
+        # Altered chords
+        cls.dominant_flat_five,
+        cls.hendrix_chord,
+    ]
+    chord_info = {}
+    for method in chord_methods:
+        chord = method(root)
+        chord_info[method.__name__] = chord
+    return chord_info
