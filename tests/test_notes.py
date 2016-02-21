@@ -353,6 +353,11 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.set_transpose(-10), Note(55))
         self.assertEqual(n, Note(55))
 
+    def test_set_transpose_raises(self):
+        n = Note(60)
+        with self.assertRaises(Exception):
+            n.set_transpose('5')
+
     def test_augment(self):
         n = Note('C4')
         self.assertEqual(n._accidentals, 0)
