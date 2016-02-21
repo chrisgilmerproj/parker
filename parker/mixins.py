@@ -1,7 +1,14 @@
 import copy
 
 
-class AugmentDiminishMixin(object):
+class CloneMixin(object):
+    """Return a Clone or deepcopy of the object"""
+
+    def clone(self):
+        return copy.deepcopy(self)
+
+
+class AugmentDiminishMixin(CloneMixin):
 
     def set_augment(self):
         raise NotImplementedError
@@ -46,12 +53,8 @@ class Dim(object):
         return note.set_diminish()
 
 
-class CloneMixin(object):
-    def clone(self):
-        return copy.deepcopy(self)
-
-
 class CommonEqualityMixin(object):
+
     def __eq__(self, other):
         return (isinstance(other, self.__class__) and
                 self.__dict__ == other.__dict__)
@@ -77,7 +80,7 @@ class NotesMixin(object):
         return self
 
 
-class TransposeMixin(object):
+class TransposeMixin(CloneMixin):
 
     def set_transpose(self, amount):
         raise NotImplementedError

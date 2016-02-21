@@ -5,13 +5,12 @@ from constants import NOTE_OFFSETS
 from mixins import AugmentDiminishMixin
 from mixins import Aug
 from mixins import Dim
-from mixins import CloneMixin
 from mixins import CommonEqualityMixin
 from mixins import NotesMixin
 from mixins import TransposeMixin
 
 
-class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
+class Note(TransposeMixin, CommonEqualityMixin,
            AugmentDiminishMixin):
     """Representation of a single note."""
     _base_name = 'A'
@@ -189,7 +188,7 @@ class NotesParser(object):
         raise Exception("Cannot parse notes: {}".format(str(notes)))
 
 
-class NoteGroup(TransposeMixin, CloneMixin, CommonEqualityMixin,
+class NoteGroup(TransposeMixin, CommonEqualityMixin,
                 AugmentDiminishMixin, NotesMixin):
     """
     Representation of a set of notes to be played at the same time.
