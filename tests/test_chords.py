@@ -11,13 +11,12 @@ class TestChord(unittest.TestCase):
         self.assertEqual(len(chord), len(notes))
         for ix, note in enumerate(notes):
             self.assertEqual(chord[ix], Note(note),
-                             msg="Note {} of {} should be {}".format(
-                                 ix, str(chord), note))
+                             msg="Note {} of {} is {} and should be {}".format(
+                                 ix, str(chord), chord[ix], note))
 
     def test_constructor(self):
         chord = Chord('C4')
         self.assertEqual(chord.note, Note('C4'))
-        self.assertEqual(chord.chord, 'C4')
         self.assertEqual(chord.group, NoteGroup([Note('C4'),
                                                  Note('E4'),
                                                  Note('G4')]))
@@ -34,18 +33,26 @@ class TestChord(unittest.TestCase):
         self._chord_tester(Chord('C-7'), ['C4', 'Eb4', 'G4', 'Bb4'])
         self._chord_tester(Chord('C3-7'), ['C3', 'Eb3', 'G3', 'Bb3'])
 
+    def test_constructor_raises(self):
+        with self.assertRaises(Exception):
+            Chord('_C4%G6')
+
     def test_Chord_to_str(self):
         self.assertEqual(str(Chord('Cmaj7')), 'C4M7')
 
     def test_Chord_to_repr(self):
-        self.assertEqual(repr(Chord('Cmaj7')), "Chord('Cmaj7')")
-        self.assertEqual(repr(Chord('C4maj7')), "Chord('C4maj7')")
-        self.assertEqual(repr(Chord('CM7')), "Chord('CM7')")
-        self.assertEqual(repr(Chord('Cm7')), "Chord('Cm7')")
-        self.assertEqual(repr(Chord('Cmin7')), "Chord('Cmin7')")
-        self.assertEqual(repr(Chord('Cmi7')), "Chord('Cmi7')")
-        self.assertEqual(repr(Chord('C-7')), "Chord('C-7')")
-        self.assertEqual(repr(Chord('C3-7')), "Chord('C3-7')")
+        self.assertEqual(repr(Chord('Cmaj7')), "Chord('C4M7')")
+        self.assertEqual(repr(Chord('C4maj7')), "Chord('C4M7')")
+        self.assertEqual(repr(Chord('CM7')), "Chord('C4M7')")
+        self.assertEqual(repr(Chord('Cm7')), "Chord('C4m7')")
+        self.assertEqual(repr(Chord('Cmin7')), "Chord('C4m7')")
+        self.assertEqual(repr(Chord('Cmi7')), "Chord('C4m7')")
+        self.assertEqual(repr(Chord('C-7')), "Chord('C4m7')")
+        self.assertEqual(repr(Chord('C3-7')), "Chord('C3m7')")
+
+    def test_get_shorthand_raises(self):
+        with self.assertRaises(Exception):
+            Chord._get_shorthand('fail')
 
     def test_major_triad(self):
         chord = Chord.major_triad('C4')
@@ -201,6 +208,11 @@ class TestChord(unittest.TestCase):
         chord = Chord.minor_ninth('C4')
         self.assertEqual(str(chord), 'C4m9')
         self._chord_tester(chord, ['C4', 'Eb4', 'G4', 'Bb4', 'D5'])
+
+    def test_major_ninth(self):
+        chord = Chord.major_ninth('C4')
+        self.assertEqual(str(chord), 'C4M9')
+        self._chord_tester(chord, ['C4', 'E4', 'G4', 'B4', 'D5'])
 
     def test_dominant_ninth(self):
         chord = Chord.dominant_ninth('C4')

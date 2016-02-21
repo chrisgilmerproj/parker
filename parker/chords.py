@@ -28,10 +28,9 @@ class Chord(object):
         return '{}{}'.format(str(self.note), self.extension)
 
     def __repr__(self):
-        return "{}({})".format(type(self).__name__, repr(self.chord))
+        return "{}('{}')".format(type(self).__name__, str(self))
 
     def set_from_string(self, chord):
-        self.chord = chord
         m = CHORD_MATCHER.match(chord)
         if m is None:
             raise Exception("Unknown chord format: {}".format(chord))
@@ -197,64 +196,65 @@ class Chord(object):
     def hendrix_chord(cls, root):
         return cls._create_chord(root, [0, 4, 7, 10, 15], '7b12')
 
-    def _get_shorthand(self, shorthand):
+    @classmethod
+    def _get_shorthand(cls, shorthand):
         SHORTHAND = {
             # Triads
-            'm': self.minor_triad,
-            'M': self.major_triad,
-            '': self.major_triad,
-            'dim': self.diminished_triad,
+            'm': cls.minor_triad,
+            'M': cls.major_triad,
+            '': cls.major_triad,
+            'dim': cls.diminished_triad,
             # Augmented
-            'aug': self.augmented_triad,
-            '+': self.augmented_triad,
-            '7#5': self.augmented_minor_seventh,
-            'M7+5': self.augmented_minor_seventh,
-            'M7+': self.augmented_major_seventh,
-            'm7+': self.augmented_minor_seventh,
-            '7+': self.augmented_major_seventh,
+            'aug': cls.augmented_triad,
+            '+': cls.augmented_triad,
+            '7#5': cls.augmented_minor_seventh,
+            'M7+5': cls.augmented_minor_seventh,
+            'M7+': cls.augmented_major_seventh,
+            'm7+': cls.augmented_minor_seventh,
+            '7+': cls.augmented_major_seventh,
             # Suspended
-            'sus47': self.suspended_seventh,
-            'sus4': self.suspended_fourth_triad,
-            'sus2': self.suspended_second_triad,
-            'sus': self.suspended_triad,
-            'sus4b9': self.suspended_fourth_ninth,
-            'susb9': self.suspended_fourth_ninth,
+            'sus47': cls.suspended_seventh,
+            'sus4': cls.suspended_fourth_triad,
+            'sus2': cls.suspended_second_triad,
+            'sus': cls.suspended_triad,
+            'sus4b9': cls.suspended_fourth_ninth,
+            'susb9': cls.suspended_fourth_ninth,
             # Sevenths
-            'm7': self.minor_seventh,
-            'M7': self.major_seventh,
-            '7': self.dominant_seventh,
-            'dom7': self.dominant_seventh,
-            'm7b5': self.minor_seventh_flat_five,
-            # 'm7b5': self.half_diminished_seventh,
-            'dim7': self.diminished_seventh,
-            'm/M7': self.minor_major_seventh,
-            'mM7': self.minor_major_seventh,
+            'm7': cls.minor_seventh,
+            'M7': cls.major_seventh,
+            '7': cls.dominant_seventh,
+            'dom7': cls.dominant_seventh,
+            'm7b5': cls.minor_seventh_flat_five,
+            # 'm7b5': cls.half_diminished_seventh,
+            'dim7': cls.diminished_seventh,
+            'm/M7': cls.minor_major_seventh,
+            'mM7': cls.minor_major_seventh,
             # Sixths
-            'm6': self.minor_sixth,
-            'M6': self.major_sixth,
-            '6': self.major_sixth,
-            '6/7': self.dominant_sixth,
-            '67': self.dominant_sixth,
+            'm6': cls.minor_sixth,
+            'M6': cls.major_sixth,
+            '6': cls.major_sixth,
+            '6/7': cls.dominant_sixth,
+            '67': cls.dominant_sixth,
             # Ninths
-            '6/9': self.sixth_ninth,
-            '69': self.sixth_ninth,
-            '9': self.dominant_ninth,
-            '7b9': self.dominant_flat_ninth,
-            '7#9': self.dominant_sharp_ninth,
-            'M9': self.major_ninth,
-            'm9': self.minor_ninth,
+            '6/9': cls.sixth_ninth,
+            '69': cls.sixth_ninth,
+            '9': cls.dominant_ninth,
+            '7b9': cls.dominant_flat_ninth,
+            '7#9': cls.dominant_sharp_ninth,
+            'M9': cls.major_ninth,
+            'm9': cls.minor_ninth,
             # Elevenths
-            '11': self.eleventh,
-            'm11': self.minor_eleventh,
-            '7#11': self.lydian_dominant_seventh,
+            '11': cls.eleventh,
+            'm11': cls.minor_eleventh,
+            '7#11': cls.lydian_dominant_seventh,
             # Thirteenths
-            'M13': self.major_thirteenth,
-            'm13': self.minor_thirteenth,
-            '13': self.dominant_thirteenth,
+            'M13': cls.major_thirteenth,
+            'm13': cls.minor_thirteenth,
+            '13': cls.dominant_thirteenth,
             # Altered chords
-            '7b5': self.dominant_flat_five,
-            'hendrix': self.hendrix_chord,
-            '7b12': self.hendrix_chord,
+            '7b5': cls.dominant_flat_five,
+            'hendrix': cls.hendrix_chord,
+            '7b12': cls.hendrix_chord,
         }
         if shorthand not in SHORTHAND:
             raise Exception("Unknown chord extensions: {}".format(shorthand))
