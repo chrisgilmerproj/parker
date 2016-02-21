@@ -5,18 +5,15 @@ from mixins import Aug
 from mixins import Dim
 
 
-def create_chord(root, chord_name):
-    pass
-
-
 class Chord(object):
     note = None
     chord = None
     group = None
     extension = None
 
-    def __init__(self, chord):
-        self.set_from_string(chord)
+    def __init__(self, chord=None):
+        if chord:
+            self.set_from_string(chord)
 
     def __len__(self):
         return len(self.group)
@@ -32,7 +29,7 @@ class Chord(object):
         self.extension = self.normalize_extension(extension)
 
         self.note = Note("%s%s%s" % (base_name, accidentals, octave))
-        self.group = self._get_shorthand(self.extension)()
+        self.group = self._get_shorthand(self.extension)(self.note)
 
     @staticmethod
     def normalize_extension(extension):
@@ -43,113 +40,151 @@ class Chord(object):
         extension = extension.replace("ma", "M")
         return extension
 
-    def _create_chord(self, transpose_list):
-        return NoteGroup(Note(self.note).transpose_list(transpose_list))
+    @staticmethod
+    def _create_chord(root, transpose_list):
+        note = Note(root)
+        group = NoteGroup(note.transpose_list(transpose_list))
+        return group
 
-    def major_triad(self):
-        return self._create_chord([0, 4, 7])
+    @classmethod
+    def major_triad(cls, root):
+        return cls._create_chord(root, [0, 4, 7])
 
-    def minor_triad(self):
-        return self._create_chord([0, 3, 7])
+    @classmethod
+    def minor_triad(cls, root):
+        return cls._create_chord(root, [0, 3, 7])
 
-    def diminished_triad(self):
-        return self._create_chord([0, 3, 6])
+    @classmethod
+    def diminished_triad(cls, root):
+        return cls._create_chord(root, [0, 3, 6])
 
-    def augmented_triad(self):
-        return self._create_chord([0, 4, Aug(7)])
+    @classmethod
+    def augmented_triad(cls, root):
+        return cls._create_chord(root, [0, 4, Aug(7)])
 
-    def augmented_minor_seventh(self):
-        return self._create_chord([0, 4, Aug(7), 10])
+    @classmethod
+    def augmented_minor_seventh(cls, root):
+        return cls._create_chord(root, [0, 4, Aug(7), 10])
 
-    def augmented_major_seventh(self):
-        return self._create_chord([0, 4, Aug(7), 11])
+    @classmethod
+    def augmented_major_seventh(cls, root):
+        return cls._create_chord(root, [0, 4, Aug(7), 11])
 
-    def suspended_triad(self):
-        return self._create_chord([0, 5, 7])
+    @classmethod
+    def suspended_triad(cls, root):
+        return cls._create_chord(root, [0, 5, 7])
 
-    def suspended_fourth_triad(self):
-        return self._create_chord([0, 5, 7])
+    @classmethod
+    def suspended_fourth_triad(cls, root):
+        return cls._create_chord(root, [0, 5, 7])
 
-    def suspended_second_triad(self):
-        return self._create_chord([0, 2, 7])
+    @classmethod
+    def suspended_second_triad(cls, root):
+        return cls._create_chord(root, [0, 2, 7])
 
-    def suspended_seventh(self):
-        return self._create_chord([0, 5, 7, 10])
+    @classmethod
+    def suspended_seventh(cls, root):
+        return cls._create_chord(root, [0, 5, 7, 10])
 
-    def suspended_fourth_ninth(self):
-        return self._create_chord([0, 5, 7, 13])
+    @classmethod
+    def suspended_fourth_ninth(cls, root):
+        return cls._create_chord(root, [0, 5, 7, 13])
 
-    def major_seventh(self):
-        return self._create_chord([0, 4, 7, 11])
+    @classmethod
+    def major_seventh(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 11])
 
-    def minor_seventh(self):
-        return self._create_chord([0, 3, 7, 10])
+    @classmethod
+    def minor_seventh(cls, root):
+        return cls._create_chord(root, [0, 3, 7, 10])
 
-    def dominant_seventh(self):
-        return self._create_chord([0, 4, 7, 10])
+    @classmethod
+    def dominant_seventh(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10])
 
-    def diminished_seventh(self):
-        return self._create_chord([0, 3, 6, Dim(10)])
+    @classmethod
+    def diminished_seventh(cls, root):
+        return cls._create_chord(root, [0, 3, 6, Dim(10)])
 
-    def half_diminished_seventh(self):
-        return self._create_chord([0, 3, 6, 10])
+    @classmethod
+    def half_diminished_seventh(cls, root):
+        return cls._create_chord(root, [0, 3, 6, 10])
 
-    def minor_seventh_flat_five(self):
-        return self._create_chord([0, 3, 6, 10])
+    @classmethod
+    def minor_seventh_flat_five(cls, root):
+        return cls._create_chord(root, [0, 3, 6, 10])
 
-    def minor_major_seventh(self):
-        return self._create_chord([0, 3, 7, 11])
+    @classmethod
+    def minor_major_seventh(cls, root):
+        return cls._create_chord(root, [0, 3, 7, 11])
 
-    def minor_sixth(self):
-        return self._create_chord([0, 3, 7, 8])
+    @classmethod
+    def minor_sixth(cls, root):
+        return cls._create_chord(root, [0, 3, 7, 8])
 
-    def major_sixth(self):
-        return self._create_chord([0, 4, 7, 9])
+    @classmethod
+    def major_sixth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 9])
 
-    def dominant_sixth(self):
-        return self._create_chord([0, 4, 7, 9, 10])
+    @classmethod
+    def dominant_sixth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 9, 10])
 
-    def sixth_ninth(self):
-        return self._create_chord([0, 4, 7, 9, 14])
+    @classmethod
+    def sixth_ninth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 9, 14])
 
-    def minor_ninth(self):
-        return self._create_chord([0, 3, 7, 10, 14])
+    @classmethod
+    def minor_ninth(cls, root):
+        return cls._create_chord(root, [0, 3, 7, 10, 14])
 
-    def major_ninth(self):
-        return self._create_chord([0, 4, 7, 11, 14])
+    @classmethod
+    def major_ninth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 11, 14])
 
-    def dominant_ninth(self):
-        return self._create_chord([0, 4, 7, 10, 14])
+    @classmethod
+    def dominant_ninth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10, 14])
 
-    def dominant_flat_ninth(self):
-        return self._create_chord([0, 4, 7, 10, 13])
+    @classmethod
+    def dominant_flat_ninth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10, 13])
 
-    def dominant_sharp_ninth(self):
-        return self._create_chord([0, 4, 7, 10, Aug(14)])
+    @classmethod
+    def dominant_sharp_ninth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10, Aug(14)])
 
-    def eleventh(self):
-        return self._create_chord([0, 7, 10, 17])
+    @classmethod
+    def eleventh(cls, root):
+        return cls._create_chord(root, [0, 7, 10, 17])
 
-    def minor_eleventh(self):
-        return self._create_chord([0, 3, 7, 10, 17])
+    @classmethod
+    def minor_eleventh(cls, root):
+        return cls._create_chord(root, [0, 3, 7, 10, 17])
 
-    def lydian_dominant_seventh(self):
-        return self._create_chord([0, 4, 7, 10, Aug(17)])
+    @classmethod
+    def lydian_dominant_seventh(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10, Aug(17)])
 
-    def minor_thirteenth(self):
-        return self._create_chord([0, 3, 7, 10, 14, 21])
+    @classmethod
+    def minor_thirteenth(cls, root):
+        return cls._create_chord(root, [0, 3, 7, 10, 14, 21])
 
-    def major_thirteenth(self):
-        return self._create_chord([0, 4, 7, 11, 14, 21])
+    @classmethod
+    def major_thirteenth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 11, 14, 21])
 
-    def dominant_thirteenth(self):
-        return self._create_chord([0, 4, 7, 10, 14, 21])
+    @classmethod
+    def dominant_thirteenth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10, 14, 21])
 
-    def dominant_flat_five(self):
-        return self._create_chord([0, 4, 6, 10])
+    @classmethod
+    def dominant_flat_five(cls, root):
+        return cls._create_chord(root, [0, 4, 6, 10])
 
-    def hendrix_chord(self):
-        return self._create_chord([0, 4, 7, 10, 15])
+    @classmethod
+    def hendrix_chord(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 10, 15])
 
     def _get_shorthand(self, shorthand):
         SHORTHAND = {
