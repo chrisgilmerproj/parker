@@ -225,6 +225,7 @@ class Chord(object):
             '7': self.dominant_seventh,
             'dom7': self.dominant_seventh,
             'm7b5': self.minor_seventh_flat_five,
+            # 'm7b5': self.half_diminished_seventh,
             'dim7': self.diminished_seventh,
             'm/M7': self.minor_major_seventh,
             'mM7': self.minor_major_seventh,
@@ -254,8 +255,6 @@ class Chord(object):
             '7b5': self.dominant_flat_five,
             'hendrix': self.hendrix_chord,
             '7b12': self.hendrix_chord,
-
-            'm7b5': self.half_diminished_seventh,
         }
         if shorthand not in SHORTHAND:
             raise Exception("Unknown chord extensions: {}".format(shorthand))
