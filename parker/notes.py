@@ -35,6 +35,17 @@ class Note(TransposeMixin, CloneMixin, CommonEqualityMixin,
         result += self._accidentals
         return result
 
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        if self.__dict__ == other.__dict__:
+            return True
+        # Notes are identical if their integer value is the same regardless
+        # of the base_name, accidentals, and octave.
+        if int(self) == int(other):
+            return True
+        return False
+
     def set_note(self, note):
         if isinstance(note, int):
             self.set_from_int(note)

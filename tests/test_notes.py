@@ -37,23 +37,16 @@ class TestNote(unittest.TestCase):
         with self.assertRaises(Exception):
             Note('H$5')
 
-    def test_flat_sharp_difference(self):
-        self.assertNotEqual(Note('Db4'), Note('C#4'))
-        self.assertNotEqual(Note('Eb4'), Note('D#4'))
-        self.assertNotEqual(Note('Gb4'), Note('F#4'))
-        self.assertNotEqual(Note('Ab4'), Note('G#4'))
-        self.assertNotEqual(Note('Bb4'), Note('A#4'))
-
-    def test_flat_enharmonics(self):
-        self.assertEqual(int(Note('Cb4')), int(Note('B3')))
-        self.assertEqual(int(Note('C4')), int(Note('B#3')))
-        self.assertEqual(int(Note('Db4')), int(Note('C#4')))
-        self.assertEqual(int(Note('Eb4')), int(Note('D#4')))
-        self.assertEqual(int(Note('Fb4')), int(Note('E4')))
-        self.assertEqual(int(Note('F4')), int(Note('E#4')))
-        self.assertEqual(int(Note('Gb4')), int(Note('F#4')))
-        self.assertEqual(int(Note('Ab4')), int(Note('G#4')))
-        self.assertEqual(int(Note('Bb4')), int(Note('A#4')))
+    def test_flat_sharp_enharmonics(self):
+        self.assertEqual(Note('Cb4'), Note('B3'))
+        self.assertEqual(Note('C4'), Note('B#3'))
+        self.assertEqual(Note('Db4'), Note('C#4'))
+        self.assertEqual(Note('Eb4'), Note('D#4'))
+        self.assertEqual(Note('Fb4'), Note('E4'))
+        self.assertEqual(Note('F4'), Note('E#4'))
+        self.assertEqual(Note('Gb4'), Note('F#4'))
+        self.assertEqual(Note('Ab4'), Note('G#4'))
+        self.assertEqual(Note('Bb4'), Note('A#4'))
 
     def test_Note_to_str(self):
         self.assertEqual(str(Note()), 'A4')
@@ -79,6 +72,9 @@ class TestNote(unittest.TestCase):
 
     def test_Note_to_repr(self):
         self.assertEqual(repr(Note()), "Note('A4')")
+
+    def test_Note_equality(self):
+        self.assertFalse(Note() == NoteGroup())
 
     def test_clone(self):
         note = Note('C4')
@@ -357,10 +353,8 @@ class TestNote(unittest.TestCase):
 
     def test_set_transpose_Aug_and_Dim(self):
         n = Note(60)
-        n.set_transpose(Aug(4))
-        self.assertEqual(int(n), 65)
-        n.set_transpose(Dim(4))
-        self.assertEqual(int(n), 68)
+        self.assertEqual(n.set_transpose(Aug(4)), Note(65))
+        self.assertEqual(n.set_transpose(Dim(4)), Note(68))
         self.assertEqual(n, Note(68))
 
     def test_set_transpose_raises(self):
