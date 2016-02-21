@@ -76,6 +76,9 @@ class TestNote(unittest.TestCase):
     def test_Note_equality(self):
         self.assertFalse(Note() == NoteGroup())
 
+    def test_Note_inequality(self):
+        self.assertTrue(Note('C4') != Note('F4'))
+
     def test_clone(self):
         note = Note('C4')
         self.assertNotEqual(id(note), id(note.clone()))
