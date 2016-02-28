@@ -1,25 +1,31 @@
 import unittest
 
 from parker.notes import Note
+from parker.scales import Aeolian
+from parker.scales import Diatonic
+from parker.scales import Dorian
+from parker.scales import Ionian
+from parker.scales import Locrian
+from parker.scales import Lydian
+from parker.scales import Mixolydian
+from parker.scales import Phrygian
 from parker.scales import Scale
 
 
-NOTES_SET = set(['C4', 'C#4', 'Db4', 'D4', 'D#4',
-                 'Eb4', 'E4', 'E#4', 'Fb4', 'F#4',
+NOTES_SET = set(['C4', 'C#4', 'Db4', 'D4',
+                 'Eb4', 'E4', 'F4', 'F#4',
                  'Gb4', 'G4', 'G#4', 'Ab4', 'A4',
-                 'A#4', 'Bb4', 'B4', 'B#4', 'Cb5',
-                 'C5'])
+                 'Bb4', 'B4', 'C5'])
 
 
 class TestScale(unittest.TestCase):
 
     def _scale_tester(self, scale, notes_in_scale):
+        self.assertEqual(len(scale), len(notes_in_scale))
+        notes = [str(s) for s in scale.get_notes()]
         for s in notes_in_scale:
-            self.assertTrue(Note(s) in scale,
-                            "Note %s should be part of this scale" % s)
-        for s in NOTES_SET - set(notes_in_scale):
-            self.assertTrue(Note(s) not in scale,
-                            "Note %s should not be part of this scale" % s)
+            msg = "Note {} should be part of the scale {}".format(s, notes)
+            self.assertTrue(Note(s) in scale, msg)
 
     def test_constructor(self):
         scale = Scale('C4')
@@ -31,3 +37,51 @@ class TestScale(unittest.TestCase):
 
     def test_Scale_to_repr(self):
         self.assertEqual(repr(Scale('C4')), "Scale('C4')")
+
+    def test_Diatonic_on_C4(self):
+        scale = Diatonic('C4')
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Diatonic('C4')")
+
+    def test_Ionian_on_C4(self):
+        scale = Ionian('C4')
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Ionian('C4')")
+
+    def test_Dorian_on_C4(self):
+        scale = Dorian(Note('C4'))
+        in_scale = ['C4', 'D4', 'Eb4', 'F4', 'G4', 'A4', 'Bb4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Dorian('C4')")
+
+    def test_Phrygian_on_E4(self):
+        scale = Phrygian(Note('E4'))
+        in_scale = ['E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Phrygian('E4')")
+
+    def test_Lydian_on_F4(self):
+        scale = Lydian(Note('F4'))
+        in_scale = ['F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Lydian('F4')")
+
+    def test_Mixolydian_on_G4(self):
+        scale = Mixolydian(Note('G4'))
+        in_scale = ['G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Mixolydian('G4')")
+
+    def test_Aeolian_on_A4(self):
+        scale = Aeolian(Note('A4'))
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Aeolian('A4')")
+
+    def test_Locrian_on_B4(self):
+        scale = Locrian(Note('B4'))
+        in_scale = ['B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Locrian('B4')")
