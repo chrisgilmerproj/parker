@@ -12,12 +12,6 @@ from parker.scales import Phrygian
 from parker.scales import Scale
 
 
-NOTES_SET = set(['C4', 'C#4', 'Db4', 'D4',
-                 'Eb4', 'E4', 'F4', 'F#4',
-                 'Gb4', 'G4', 'G#4', 'Ab4', 'A4',
-                 'Bb4', 'B4', 'C5'])
-
-
 class TestScale(unittest.TestCase):
 
     def _scale_tester(self, scale, notes_in_scale):
