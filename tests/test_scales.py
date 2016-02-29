@@ -100,7 +100,7 @@ class TestScale(unittest.TestCase):
         in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
         in_scale.reverse()
         self._scale_tester(scale, in_scale)
-        self.assertEqual(repr(scale), "Ionian('C4')")
+        self.assertEqual(repr(scale), "Ionian('C4', order='descending')")
 
     def test_Major_on_C4(self):
         scale = Major('C4')
