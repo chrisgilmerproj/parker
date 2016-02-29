@@ -4,11 +4,14 @@ from parker.notes import Note
 from parker.scales import Aeolian
 from parker.scales import Chromatic
 from parker.scales import Diatonic
+from parker.scales import Dominant
 from parker.scales import Dorian
 from parker.scales import Ionian
 from parker.scales import Locrian
 from parker.scales import Lydian
+from parker.scales import Major
 from parker.scales import Mixolydian
+from parker.scales import NaturalMinor
 from parker.scales import Phrygian
 from parker.scales import Scale
 
@@ -45,6 +48,12 @@ class TestScale(unittest.TestCase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Ionian('C4')")
 
+    def test_Major_on_C4(self):
+        scale = Major('C4')
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Major('C4')")
+
     def test_Dorian_on_C4(self):
         scale = Dorian(Note('C4'))
         in_scale = ['C4', 'D4', 'Eb4', 'F4', 'G4', 'A4', 'Bb4']
@@ -69,11 +78,23 @@ class TestScale(unittest.TestCase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Mixolydian('G4')")
 
+    def test_Dominant_on_G4(self):
+        scale = Dominant(Note('G4'))
+        in_scale = ['G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Dominant('G4')")
+
     def test_Aeolian_on_A4(self):
         scale = Aeolian(Note('A4'))
         in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Aeolian('A4')")
+
+    def test_NaturalMinor_on_A4(self):
+        scale = NaturalMinor(Note('A4'))
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "NaturalMinor('A4')")
 
     def test_Locrian_on_B4(self):
         scale = Locrian(Note('B4'))

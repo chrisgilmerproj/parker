@@ -37,6 +37,10 @@ class Ionian(Diatonic):
     pass
 
 
+class Major(Diatonic):
+    pass
+
+
 class Dorian(Scale):
     def build_scale(self, note):
         self._notes_to_scale_representation([0, 2, 3, 5, 7, 9, 10], note)
@@ -57,9 +61,17 @@ class Mixolydian(Scale):
         self._notes_to_scale_representation([0, 2, 4, 5, 7, 9, 10], note)
 
 
+class Dominant(Mixolydian):
+    pass
+
+
 class Aeolian(Scale):
     def build_scale(self, note):
         self._notes_to_scale_representation([0, 2, 3, 5, 7, 8, 10], note)
+
+
+class NaturalMinor(Aeolian):
+    pass
 
 
 class Locrian(Scale):
