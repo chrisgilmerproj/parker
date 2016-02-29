@@ -1,4 +1,5 @@
 from mixins import Aug
+from mixins import Dim
 from notes import Note
 from notes import NoteGroupBase
 
@@ -98,7 +99,13 @@ class MinorPentatonic(Scale):
         self._notes_to_scale_representation(intervals, note)
 
 
-class Blues(Scale):
+class MajorBlues(Scale):
+    def build_scale(self, note):
+        intervals = [0, 2, Dim(4), 4, 7, 9]
+        self._notes_to_scale_representation(intervals, note)
+
+
+class MinorBlues(Scale):
     def build_scale(self, note):
         intervals = [0, 3, 5, Aug(5), 7, 10]
         self._notes_to_scale_representation(intervals, note)

@@ -2,7 +2,6 @@ import unittest
 
 from parker.notes import Note
 from parker.scales import Aeolian
-from parker.scales import Blues
 from parker.scales import Chromatic
 from parker.scales import Diatonic
 from parker.scales import Dominant
@@ -11,7 +10,9 @@ from parker.scales import Ionian
 from parker.scales import Locrian
 from parker.scales import Lydian
 from parker.scales import Major
+from parker.scales import MajorBlues
 from parker.scales import MajorPentatonic
+from parker.scales import MinorBlues
 from parker.scales import MinorPentatonic
 from parker.scales import Mixolydian
 from parker.scales import NaturalMinor
@@ -124,8 +125,14 @@ class TestScale(unittest.TestCase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "MinorPentatonic('C4')")
 
-    def test_Blues_on_C4(self):
-        scale = Blues(Note('C4'))
+    def test_MajorBlues_on_C4(self):
+        scale = MajorBlues(Note('C4'))
+        in_scale = ['C4', 'D4', 'Eb4', 'E4', 'G4', 'A4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "MajorBlues('C4')")
+
+    def test_MinorBlues_on_C4(self):
+        scale = MinorBlues(Note('C4'))
         in_scale = ['C4', 'Eb4', 'F4', 'F#4', 'G4', 'Bb4']
         self._scale_tester(scale, in_scale)
-        self.assertEqual(repr(scale), "Blues('C4')")
+        self.assertEqual(repr(scale), "MinorBlues('C4')")
