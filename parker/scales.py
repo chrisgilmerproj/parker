@@ -7,6 +7,7 @@ class Scale(NoteGroupBase):
     """
     Source Material: https://en.wikipedia.org/wiki/Scale_(music)
     """
+    tonal_sequence = [2, 2, 1, 2, 2, 2, 1]
 
     def __init__(self, root):
         """
@@ -82,4 +83,16 @@ class Locrian(Scale):
 class Chromatic(Scale):
     def build_scale(self, note):
         intervals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        self._notes_to_scale_representation(intervals, note)
+
+
+class MajorPentatonic(Scale):
+    def build_scale(self, note):
+        intervals = [0, 2, 4, 7, 9]
+        self._notes_to_scale_representation(intervals, note)
+
+
+class MinorPentatonic(Scale):
+    def build_scale(self, note):
+        intervals = [0, 3, 5, 7, 10]
         self._notes_to_scale_representation(intervals, note)

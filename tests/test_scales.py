@@ -10,6 +10,8 @@ from parker.scales import Ionian
 from parker.scales import Locrian
 from parker.scales import Lydian
 from parker.scales import Major
+from parker.scales import MajorPentatonic
+from parker.scales import MinorPentatonic
 from parker.scales import Mixolydian
 from parker.scales import NaturalMinor
 from parker.scales import Phrygian
@@ -108,3 +110,15 @@ class TestScale(unittest.TestCase):
                     'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Chromatic('C4')")
+
+    def test_MajorPentatonic_on_C4(self):
+        scale = MajorPentatonic(Note('C4'))
+        in_scale = ['C4', 'D4', 'E4', 'G4', 'A4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "MajorPentatonic('C4')")
+
+    def test_MinorPentatonic_on_C4(self):
+        scale = MinorPentatonic(Note('C4'))
+        in_scale = ['C4', 'Eb4', 'F4', 'G4', 'Bb4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "MinorPentatonic('C4')")
