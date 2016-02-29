@@ -5,7 +5,7 @@ from notes import NoteGroupBase
 
 class Scale(NoteGroupBase):
     """
-    Source Material:
+    Source Material: https://en.wikipedia.org/wiki/Scale_(music)
     """
 
     def __init__(self, root):
@@ -65,3 +65,9 @@ class Aeolian(Scale):
 class Locrian(Scale):
     def build_scale(self, note):
         self._notes_to_scale_representation([0, 1, 3, 5, 6, 8, 10], note)
+
+
+class Chromatic(Scale):
+    def build_scale(self, note):
+        intervals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        self._notes_to_scale_representation(intervals, note)

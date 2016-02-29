@@ -2,6 +2,7 @@ import unittest
 
 from parker.notes import Note
 from parker.scales import Aeolian
+from parker.scales import Chromatic
 from parker.scales import Diatonic
 from parker.scales import Dorian
 from parker.scales import Ionian
@@ -15,11 +16,11 @@ from parker.scales import Scale
 class TestScale(unittest.TestCase):
 
     def _scale_tester(self, scale, notes_in_scale):
-        self.assertEqual(len(scale), len(notes_in_scale))
         notes = [str(s) for s in scale.get_notes()]
         for s in notes_in_scale:
             msg = "Note {} should be part of the scale {}".format(s, notes)
             self.assertTrue(Note(s) in scale, msg)
+        self.assertEqual(len(scale), len(notes_in_scale))
 
     def test_constructor(self):
         scale = Scale('C4')
@@ -79,3 +80,10 @@ class TestScale(unittest.TestCase):
         in_scale = ['B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Locrian('B4')")
+
+    def test_Chromatic_on_C4(self):
+        scale = Chromatic(Note('C4'))
+        in_scale = ['C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4',
+                    'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Chromatic('C4')")
