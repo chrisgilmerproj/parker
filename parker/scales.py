@@ -96,3 +96,9 @@ class MinorPentatonic(Scale):
     def build_scale(self, note):
         intervals = [0, 3, 5, 7, 10]
         self._notes_to_scale_representation(intervals, note)
+
+
+class Blues(Scale):
+    def build_scale(self, note):
+        intervals = [0, 3, 5, Aug(5), 7, 10]
+        self._notes_to_scale_representation(intervals, note)

@@ -2,6 +2,7 @@ import unittest
 
 from parker.notes import Note
 from parker.scales import Aeolian
+from parker.scales import Blues
 from parker.scales import Chromatic
 from parker.scales import Diatonic
 from parker.scales import Dominant
@@ -122,3 +123,9 @@ class TestScale(unittest.TestCase):
         in_scale = ['C4', 'Eb4', 'F4', 'G4', 'Bb4']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "MinorPentatonic('C4')")
+
+    def test_Blues_on_C4(self):
+        scale = Blues(Note('C4'))
+        in_scale = ['C4', 'Eb4', 'F4', 'F#4', 'G4', 'Bb4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Blues('C4')")
