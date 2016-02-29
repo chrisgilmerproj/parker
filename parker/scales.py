@@ -8,7 +8,7 @@ class Scale(NoteGroupBase):
     """
     Source Material: https://en.wikipedia.org/wiki/Scale_(music)
     """
-    tonal_sequence = [2, 2, 1, 2, 2, 2, 1]
+    intervals = [0]
 
     def __init__(self, root):
         """
@@ -23,16 +23,12 @@ class Scale(NoteGroupBase):
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))
 
-    def _notes_to_scale_representation(self, intervals, root):
-        self.notes = root.transpose_list(intervals)
-
     def build_scale(self, note):
-        self._notes_to_scale_representation([0], note)
+        self.notes = note.transpose_list(self.intervals)
 
 
 class Diatonic(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 2, 4, 5, 7, 9, 11], note)
+    intervals = [0, 2, 4, 5, 7, 9, 11]
 
 
 class Ionian(Diatonic):
@@ -44,23 +40,19 @@ class Major(Diatonic):
 
 
 class Dorian(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 2, 3, 5, 7, 9, 10], note)
+    intervals = [0, 2, 3, 5, 7, 9, 10]
 
 
 class Phrygian(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 1, 3, 5, 7, 8, 10], note)
+    intervals = [0, 1, 3, 5, 7, 8, 10]
 
 
 class Lydian(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 2, 4, Aug(5), 7, 9, 11], note)
+    intervals = [0, 2, 4, Aug(5), 7, 9, 11]
 
 
 class Mixolydian(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 2, 4, 5, 7, 9, 10], note)
+    intervals = [0, 2, 4, 5, 7, 9, 10]
 
 
 class Dominant(Mixolydian):
@@ -68,8 +60,7 @@ class Dominant(Mixolydian):
 
 
 class Aeolian(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 2, 3, 5, 7, 8, 10], note)
+    intervals = [0, 2, 3, 5, 7, 8, 10]
 
 
 class NaturalMinor(Aeolian):
@@ -77,35 +68,24 @@ class NaturalMinor(Aeolian):
 
 
 class Locrian(Scale):
-    def build_scale(self, note):
-        self._notes_to_scale_representation([0, 1, 3, 5, 6, 8, 10], note)
+    intervals = [0, 1, 3, 5, 6, 8, 10]
 
 
 class Chromatic(Scale):
-    def build_scale(self, note):
-        intervals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        self._notes_to_scale_representation(intervals, note)
+    intervals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 
 class MajorPentatonic(Scale):
-    def build_scale(self, note):
-        intervals = [0, 2, 4, 7, 9]
-        self._notes_to_scale_representation(intervals, note)
+    intervals = [0, 2, 4, 7, 9]
 
 
 class MinorPentatonic(Scale):
-    def build_scale(self, note):
-        intervals = [0, 3, 5, 7, 10]
-        self._notes_to_scale_representation(intervals, note)
+    intervals = [0, 3, 5, 7, 10]
 
 
 class MajorBlues(Scale):
-    def build_scale(self, note):
-        intervals = [0, 2, Dim(4), 4, 7, 9]
-        self._notes_to_scale_representation(intervals, note)
+    intervals = [0, 2, Dim(4), 4, 7, 9]
 
 
 class MinorBlues(Scale):
-    def build_scale(self, note):
-        intervals = [0, 3, 5, Aug(5), 7, 10]
-        self._notes_to_scale_representation(intervals, note)
+    intervals = [0, 3, 5, Aug(5), 7, 10]
