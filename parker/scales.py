@@ -11,7 +11,7 @@ def diatonic_interval(tonic):
     for creating a diatonic scale.  It returns only 7 notes instead of
     the full octave.
 
-    Source Reference: https://en.wikipedia.org/wiki/Diatonic_scale#Modes
+    Source: https://en.wikipedia.org/wiki/Diatonic_scale#Modes
     """
     if tonic not in xrange(1, 8):
         raise Exception("Tonic must be a number between 1 and 7")
@@ -24,9 +24,16 @@ def diatonic_interval(tonic):
     return interval[:-1]
 
 
+# def octatonic_interval(tonic):
+#     """
+#     Source: https://en.wikipedia.org/wiki/Octatonic_scale
+#     """
+#     tonal_sequence = [2, 1, 2, 1, 2, 1, 2, 1]
+
+
 class Scale(NoteGroupBase):
     """
-    Source Material: https://en.wikipedia.org/wiki/Scale_(music)
+    Source: https://en.wikipedia.org/wiki/Scale_(music)
     """
     intervals = [0]
 
