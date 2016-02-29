@@ -481,26 +481,24 @@ class TestNoteGroup(unittest.TestCase):
         self.assertEqual(ng.get_notes()[0], Note('Ab3'))
         self.assertEqual(ng.get_notes()[1], Note('Cb4'))
 
-    def test_notes_are_sorted(self):
+    def test_get_notes_are_sorted(self):
         n1 = Note('G4')
         n2 = Note('C4')
         ng = NoteGroup([n1, n2])
         self.assertEqual(ng.get_notes()[0], n2)
         self.assertEqual(ng.get_notes()[1], n1)
-        self.assertEqual(ng[0], n2)
-        self.assertEqual(ng[1], n1)
 
     def test_NoteGroup_to_str(self):
         n1 = Note('G4')
         n2 = Note('C4')
         ng = NoteGroup([n1, n2])
-        self.assertEqual(str(ng), "[Note('C4'), Note('G4')]")
+        self.assertEqual(str(ng), "[Note('G4'), Note('C4')]")
 
     def test_NoteGroup_to_repr(self):
         n1 = Note('G4')
         n2 = Note('C4')
         ng = NoteGroup([n1, n2])
-        self.assertEqual(repr(ng), "NoteGroup([Note('C4'), Note('G4')])")
+        self.assertEqual(repr(ng), "NoteGroup([Note('G4'), Note('C4')])")
 
     def test_highest_lowest_notes(self):
         n1 = Note('G4')

@@ -35,23 +35,31 @@ class Scale(NoteGroupBase):
     """
     Source: https://en.wikipedia.org/wiki/Scale_(music)
     """
+    ORDER_CHOICES = ['ascending', 'descending']
     intervals = [0]
 
-    def __init__(self, root):
+    def __init__(self, root, order='ascending'):
         """
         Create scales
         """
         self.notes = []
-        self.build_scale(Note(root))
+        self.root = Note(root)
+        if order in self.ORDER_CHOICES:
+            self.order = order
+        else:
+            raise Exception("Order must be one of: {}".format(self.ORDER_CHOICES))
+        self.build_scale()
 
     def __str__(self):
-        return str(self.notes[0])
+        return str(self.root)
 
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))
 
-    def build_scale(self, note):
-        self.notes = note.transpose_list(self.intervals)
+    def build_scale(self):
+        self.notes = self.root.transpose_list(self.intervals)
+        if self.order == 'descending':
+            self.notes.reverse()
 
 
 class Ionian(Scale):

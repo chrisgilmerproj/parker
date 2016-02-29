@@ -67,7 +67,8 @@ class TestInterval(unittest.TestCase):
 class TestScale(unittest.TestCase):
 
     def _scale_tester(self, scale, notes_in_scale):
-        notes = [str(s) for s in scale.get_notes()]
+        notes = [str(s) for s in scale.notes]
+        self.assertEqual(notes, notes_in_scale)
         for s in notes_in_scale:
             msg = "Note {} should be part of the scale {}".format(s, notes)
             self.assertTrue(Note(s) in scale, msg)
@@ -78,6 +79,10 @@ class TestScale(unittest.TestCase):
         in_scale = ['C4']
         self._scale_tester(scale, in_scale)
 
+    def test_constructor_order_raises(self):
+        with self.assertRaises(Exception):
+            Scale('C4', order='not_an_order')
+
     def test_Scale_to_str(self):
         self.assertEqual(str(Scale('C4')), 'C4')
 
@@ -87,6 +92,13 @@ class TestScale(unittest.TestCase):
     def test_Ionian_on_C4(self):
         scale = Ionian('C4')
         in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Ionian('C4')")
+
+    def test_Ionian_on_C4_descending(self):
+        scale = Ionian('C4', order='descending')
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        in_scale.reverse()
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Ionian('C4')")
 

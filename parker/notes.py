@@ -179,7 +179,7 @@ class NotesParser(object):
         if isinstance(notes, Note):
             return [notes.clone()]
         elif isinstance(notes, NoteGroup):
-            return notes.clone().get_notes()
+            return notes.clone().notes
         elif isinstance(notes, (int, str)):
             return [Note(notes)]
         elif isinstance(notes, (list, tuple, set)):
@@ -215,10 +215,10 @@ class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
         return sorted(self.notes, key=int)
 
     def __getitem__(self, key):
-        return self.get_notes()[key]
+        return self.notes[key]
 
     def __str__(self):
-        return str(self.get_notes())
+        return str(self.notes)
 
     def __repr__(self):
         return "{}({})".format(type(self).__name__, str(self))
