@@ -4,6 +4,26 @@ from notes import Note
 from notes import NoteGroupBase
 
 
+def diatonic_interval(tonic):
+    """
+    Create the diatonic interval from the tonic.
+    This uses the interavl T-T-s-T-T-T-s (or W-W-h-W-W-W-h) as the basis
+    for creating a diatonic scale.  It returns only 7 notes instead of
+    the full octave.
+
+    Source Reference: https://en.wikipedia.org/wiki/Diatonic_scale#Modes
+    """
+    if tonic not in xrange(1, 8):
+        raise Exception("Tonic must be a number between 1 and 7")
+    rot = tonic - 1
+    tonal_sequence = [2, 2, 1, 2, 2, 2, 1]
+    seq = tonal_sequence[rot:] + tonal_sequence[:rot]
+    interval = [0]
+    for i, s in enumerate(seq):
+        interval.append(s + interval[i])
+    return interval[:-1]
+
+
 class Scale(NoteGroupBase):
     """
     Source Material: https://en.wikipedia.org/wiki/Scale_(music)
@@ -27,32 +47,29 @@ class Scale(NoteGroupBase):
         self.notes = note.transpose_list(self.intervals)
 
 
-class Diatonic(Scale):
-    intervals = [0, 2, 4, 5, 7, 9, 11]
+class Ionian(Scale):
+    intervals = diatonic_interval(1)
 
 
-class Ionian(Diatonic):
-    pass
-
-
-class Major(Diatonic):
+class Major(Ionian):
     pass
 
 
 class Dorian(Scale):
-    intervals = [0, 2, 3, 5, 7, 9, 10]
+    intervals = diatonic_interval(2)
 
 
 class Phrygian(Scale):
-    intervals = [0, 1, 3, 5, 7, 8, 10]
+    intervals = diatonic_interval(3)
 
 
 class Lydian(Scale):
+    # intervals = diatonic_interval(4)
     intervals = [0, 2, 4, Aug(5), 7, 9, 11]
 
 
 class Mixolydian(Scale):
-    intervals = [0, 2, 4, 5, 7, 9, 10]
+    intervals = diatonic_interval(5)
 
 
 class Dominant(Mixolydian):
@@ -60,7 +77,7 @@ class Dominant(Mixolydian):
 
 
 class Aeolian(Scale):
-    intervals = [0, 2, 3, 5, 7, 8, 10]
+    intervals = diatonic_interval(6)
 
 
 class NaturalMinor(Aeolian):
@@ -68,7 +85,7 @@ class NaturalMinor(Aeolian):
 
 
 class Locrian(Scale):
-    intervals = [0, 1, 3, 5, 6, 8, 10]
+    intervals = diatonic_interval(7)
 
 
 class Chromatic(Scale):

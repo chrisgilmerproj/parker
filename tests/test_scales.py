@@ -3,7 +3,6 @@ import unittest
 from parker.notes import Note
 from parker.scales import Aeolian
 from parker.scales import Chromatic
-from parker.scales import Diatonic
 from parker.scales import Dominant
 from parker.scales import Dorian
 from parker.scales import Ionian
@@ -18,6 +17,51 @@ from parker.scales import Mixolydian
 from parker.scales import NaturalMinor
 from parker.scales import Phrygian
 from parker.scales import Scale
+from parker.scales import diatonic_interval
+
+
+class TestInterval(unittest.TestCase):
+
+    def test_diatonic_interval_raises(self):
+        with self.assertRaises(Exception):
+            diatonic_interval(0)
+        with self.assertRaises(Exception):
+            diatonic_interval(8)
+
+    def test_diatonic_interval_tonic_I(self):
+        out = diatonic_interval(1)
+        expected = [0, 2, 4, 5, 7, 9, 11]
+        self.assertEqual(out, expected)
+
+    def test_diatonic_interval_tonic_II(self):
+        out = diatonic_interval(2)
+        expected = [0, 2, 3, 5, 7, 9, 10]
+        self.assertEqual(out, expected)
+
+    def test_diatonic_interval_tonic_III(self):
+        out = diatonic_interval(3)
+        expected = [0, 1, 3, 5, 7, 8, 10]
+        self.assertEqual(out, expected)
+
+    def test_diatonic_interval_tonic_IV(self):
+        out = diatonic_interval(4)
+        expected = [0, 2, 4, 6, 7, 9, 11]
+        self.assertEqual(out, expected)
+
+    def test_diatonic_interval_tonic_V(self):
+        out = diatonic_interval(5)
+        expected = [0, 2, 4, 5, 7, 9, 10]
+        self.assertEqual(out, expected)
+
+    def test_diatonic_interval_tonic_VI(self):
+        out = diatonic_interval(6)
+        expected = [0, 2, 3, 5, 7, 8, 10]
+        self.assertEqual(out, expected)
+
+    def test_diatonic_interval_tonic_VII(self):
+        out = diatonic_interval(7)
+        expected = [0, 1, 3, 5, 6, 8, 10]
+        self.assertEqual(out, expected)
 
 
 class TestScale(unittest.TestCase):
@@ -39,12 +83,6 @@ class TestScale(unittest.TestCase):
 
     def test_Scale_to_repr(self):
         self.assertEqual(repr(Scale('C4')), "Scale('C4')")
-
-    def test_Diatonic_on_C4(self):
-        scale = Diatonic('C4')
-        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
-        self._scale_tester(scale, in_scale)
-        self.assertEqual(repr(scale), "Diatonic('C4')")
 
     def test_Ionian_on_C4(self):
         scale = Ionian('C4')
