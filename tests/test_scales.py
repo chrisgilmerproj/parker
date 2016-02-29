@@ -11,10 +11,10 @@ from parker.scales import Lydian
 from parker.scales import Major
 from parker.scales import MajorBlues
 from parker.scales import MajorPentatonic
+from parker.scales import Minor
 from parker.scales import MinorBlues
 from parker.scales import MinorPentatonic
 from parker.scales import Mixolydian
-from parker.scales import NaturalMinor
 from parker.scales import Phrygian
 from parker.scales import Scale
 from parker.scales import diatonic_interval
@@ -132,11 +132,34 @@ class TestScale(unittest.TestCase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Aeolian('A4')")
 
-    def test_NaturalMinor_on_A4(self):
-        scale = NaturalMinor(Note('A4'))
+    def test_Minor_on_A4(self):
+        scale = Minor(Note('A4'))
         in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
         self._scale_tester(scale, in_scale)
-        self.assertEqual(repr(scale), "NaturalMinor('A4')")
+        self.assertEqual(repr(scale), "Minor('A4')")
+
+    def test_Major_equals_Minor(self):
+        def compare_major_minor(major_root, minor_root):
+            major = Major(major_root)
+            minor = Minor(minor_root)
+            major_notes = [n.get_note_without_octave() for n in major]
+            minor_notes = [n.get_note_without_octave() for n in minor]
+            major_notes.sort()
+            minor_notes.sort()
+            self.assertEqual(major_notes, minor_notes)
+        compare_major_minor('C', 'A')
+        compare_major_minor('G', 'E')
+        compare_major_minor('D', 'B')
+        compare_major_minor('A', 'F#')
+        compare_major_minor('E', 'C#')
+        compare_major_minor('B', 'G#')
+        compare_major_minor('F#', 'D#')
+        compare_major_minor('Gb', 'Eb')
+        compare_major_minor('Db', 'Bb')
+        compare_major_minor('Ab', 'F')
+        compare_major_minor('Eb', 'C')
+        compare_major_minor('Bb', 'G')
+        compare_major_minor('F', 'D')
 
     def test_Locrian_on_B4(self):
         scale = Locrian(Note('B4'))

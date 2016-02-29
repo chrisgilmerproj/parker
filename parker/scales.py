@@ -80,7 +80,7 @@ class Aeolian(Scale):
     intervals = diatonic_interval(6)
 
 
-class NaturalMinor(Aeolian):
+class Minor(Aeolian):
     pass
 
 

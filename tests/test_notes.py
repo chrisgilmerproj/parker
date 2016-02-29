@@ -109,6 +109,12 @@ class TestNote(unittest.TestCase):
         note = Note('C###4')
         self.assertEquals(note.get_accidentals(), 3)
 
+    def test_get_note_without_octave(self):
+        note = Note('Cbb4')
+        self.assertEquals(note.get_note_without_octave(), 'Cbb')
+        note = Note('C###4')
+        self.assertEquals(note.get_note_without_octave(), 'C###')
+
     def test_set_accidentals(self):
         note = Note('C4')
         note.set_accidentals(2)
