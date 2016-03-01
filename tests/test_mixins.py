@@ -45,6 +45,20 @@ class TestAug(unittest.TestCase):
         aug.update(n)
         self.assertEqual(int(n), 70)
 
+    def test_eq(self):
+        self.assertEqual(Aug(7), Aug(7))
+
+    def test_ne(self):
+        self.assertNotEqual(Aug(5), Aug(7))
+
+    def test_str(self):
+        aug = Aug(7)
+        self.assertEqual(str(aug), 'Aug(7)')
+
+    def test_repr(self):
+        aug = Aug(7)
+        self.assertEqual(repr(aug), 'Aug(7)')
+
 
 class TestDim(unittest.TestCase):
 
@@ -57,6 +71,20 @@ class TestDim(unittest.TestCase):
         dim = Dim(7)
         dim.update(n)
         self.assertEqual(int(n), 68)
+
+    def test_eq(self):
+        self.assertEqual(Dim(7), Dim(7))
+
+    def test_ne(self):
+        self.assertNotEqual(Dim(5), Dim(7))
+
+    def test_str(self):
+        aug = Dim(7)
+        self.assertEqual(str(aug), 'Dim(7)')
+
+    def test_repr(self):
+        aug = Dim(7)
+        self.assertEqual(repr(aug), 'Dim(7)')
 
 
 class TestCloneMixin(unittest.TestCase):

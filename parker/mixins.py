@@ -8,6 +8,16 @@ class CloneMixin(object):
         return copy.deepcopy(self)
 
 
+class CommonEqualityMixin(object):
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and
+                self.__dict__ == other.__dict__)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
 class AugmentDiminishMixin(CloneMixin):
 
     def set_augment(self):
@@ -23,7 +33,7 @@ class AugmentDiminishMixin(CloneMixin):
         return self.clone().set_diminish()
 
 
-class Aug(object):
+class Aug(CommonEqualityMixin):
     """
     Augment the transpose amount by one.
 
@@ -37,8 +47,11 @@ class Aug(object):
     def update(self, note):
         return note.set_augment()
 
+    def __repr__(self):
+        return "{}({})".format(type(self).__name__, str(self.amount))
 
-class Dim(object):
+
+class Dim(CommonEqualityMixin):
     """
     Diminish the transpose amount by one.
 
@@ -52,15 +65,8 @@ class Dim(object):
     def update(self, note):
         return note.set_diminish()
 
-
-class CommonEqualityMixin(object):
-
-    def __eq__(self, other):
-        return (isinstance(other, self.__class__) and
-                self.__dict__ == other.__dict__)
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
+    def __repr__(self):
+        return "{}({})".format(type(self).__name__, str(self.amount))
 
 
 class NotesMixin(object):

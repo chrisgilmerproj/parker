@@ -1,8 +1,11 @@
 import unittest
 
+from parker.mixins import Aug
+from parker.mixins import Dim
 from parker.notes import Note
 from parker.scales import Aeolian
 from parker.scales import Chromatic
+from parker.scales import Diatonic
 from parker.scales import Dominant
 from parker.scales import Dorian
 from parker.scales import Ionian
@@ -11,60 +14,84 @@ from parker.scales import Lydian
 from parker.scales import Major
 from parker.scales import MajorBlues
 from parker.scales import MajorPentatonic
+from parker.scales import MedievalLydian
 from parker.scales import Minor
 from parker.scales import MinorBlues
 from parker.scales import MinorPentatonic
 from parker.scales import Mixolydian
+from parker.scales import Octatonic
+from parker.scales import OctatonicModeOne
+from parker.scales import OctatonicModeTwo
 from parker.scales import Phrygian
 from parker.scales import Scale
-from parker.scales import diatonic_interval
+from parker.scales import circle_of_fifths
+from parker.scales import circle_of_fourths
+from parker.scales import major_scales
+from parker.scales import minor_scales
 
 
-class TestInterval(unittest.TestCase):
+class TestDiatonicInterval(unittest.TestCase):
 
-    def test_diatonic_interval_raises(self):
+    def setUp(self):
+        self.scale = Diatonic('C')
+
+    def test_Diatonic_generate_interval_raises(self):
         with self.assertRaises(Exception):
-            diatonic_interval(0)
+            self.scale._generate_intervals(0)
         with self.assertRaises(Exception):
-            diatonic_interval(8)
+            self.scale._generate_intervals(8)
 
-    def test_diatonic_interval_tonic_I(self):
-        out = diatonic_interval(1)
-        expected = [0, 2, 4, 5, 7, 9, 11]
+    def test_Diatonic_generate_interval_tonic_I(self):
+        out = self.scale._generate_intervals(1)
+        expected = [0, 2, 4, 5, 7, 9, 11, 12]
         self.assertEqual(out, expected)
 
-    def test_diatonic_interval_tonic_II(self):
-        out = diatonic_interval(2)
-        expected = [0, 2, 3, 5, 7, 9, 10]
+    def test_Diatonic_generate_interval_tonic_II(self):
+        out = self.scale._generate_intervals(2)
+        expected = [0, 2, 3, 5, 7, 9, 10, 12]
         self.assertEqual(out, expected)
 
-    def test_diatonic_interval_tonic_III(self):
-        out = diatonic_interval(3)
-        expected = [0, 1, 3, 5, 7, 8, 10]
+    def test_Diatonic_generate_interval_tonic_III(self):
+        out = self.scale._generate_intervals(3)
+        expected = [0, 1, 3, 5, 7, 8, 10, 12]
         self.assertEqual(out, expected)
 
-    def test_diatonic_interval_tonic_IV(self):
-        out = diatonic_interval(4)
-        expected = [0, 2, 4, 6, 7, 9, 11]
+    def test_Diatonic_generate_interval_tonic_IV(self):
+        out = self.scale._generate_intervals(4)
+        expected = [0, 2, 4, 6, 7, 9, 11, 12]
         self.assertEqual(out, expected)
 
-    def test_diatonic_interval_tonic_V(self):
-        out = diatonic_interval(5)
-        expected = [0, 2, 4, 5, 7, 9, 10]
+    def test_Diatonic_generate_interval_tonic_IV_aug_3(self):
+        out = self.scale._generate_intervals(4, aug_dim_cls=[(3, Aug)])
+        expected = [0, 2, 4, Aug(5), 7, 9, 11, 12]
         self.assertEqual(out, expected)
 
-    def test_diatonic_interval_tonic_VI(self):
-        out = diatonic_interval(6)
-        expected = [0, 2, 3, 5, 7, 8, 10]
+    def test_Diatonic_generate_interval_tonic_IV_dim_3(self):
+        out = self.scale._generate_intervals(4, aug_dim_cls=[(3, Dim)])
+        expected = [0, 2, 4, Dim(7), 7, 9, 11, 12]
         self.assertEqual(out, expected)
 
-    def test_diatonic_interval_tonic_VII(self):
-        out = diatonic_interval(7)
-        expected = [0, 1, 3, 5, 6, 8, 10]
+    def test_Diatonic_generate_interval_tonic_IV_aug_dim_raises(self):
+        with self.assertRaises(Exception):
+            self.scale._generate_intervals(4, aug_dim_cls=[(3, Note)])
+
+    def test_Diatonic_generate_interval_tonic_V(self):
+        out = self.scale._generate_intervals(5)
+        expected = [0, 2, 4, 5, 7, 9, 10, 12]
+        self.assertEqual(out, expected)
+
+    def test_Diatonic_generate_interval_tonic_VI(self):
+        out = self.scale._generate_intervals(6)
+        expected = [0, 2, 3, 5, 7, 8, 10, 12]
+        self.assertEqual(out, expected)
+
+    def test_Diatonic_generate_interval_tonic_VII(self):
+        out = self.scale._generate_intervals(7)
+        expected = [0, 1, 3, 5, 6, 8, 10, 12]
         self.assertEqual(out, expected)
 
 
-class TestScale(unittest.TestCase):
+class TestScaleBase(unittest.TestCase):
 
     def _scale_tester(self, scale, notes_in_scale):
         notes = [str(s) for s in scale.notes]
@@ -73,6 +100,9 @@ class TestScale(unittest.TestCase):
             msg = "Note {} should be part of the scale {}".format(s, notes)
             self.assertTrue(Note(s) in scale, msg)
         self.assertEqual(len(scale), len(notes_in_scale))
+
+
+class TestScale(TestScaleBase):
 
     def test_constructor(self):
         scale = Scale('C4')
@@ -89,64 +119,80 @@ class TestScale(unittest.TestCase):
     def test_Scale_to_repr(self):
         self.assertEqual(repr(Scale('C4')), "Scale('C4')")
 
+    def test_is_generic_note_in_scale(self):
+        scale = Major('C4')
+        self.assertTrue(scale.is_generic_note_in_scale('C'))
+        self.assertTrue(scale.is_generic_note_in_scale(Note('C4')))
+        self.assertTrue(scale.is_generic_note_in_scale(Note('C6')))
+        self.assertTrue(scale.is_generic_note_in_scale(Note('G7')))
+
+
+class TestDiatonicScale(TestScaleBase):
+
     def test_Ionian_on_C4(self):
         scale = Ionian('C4')
-        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Ionian('C4')")
 
     def test_Ionian_on_C4_descending(self):
         scale = Ionian('C4', order='descending')
-        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5']
         in_scale.reverse()
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Ionian('C4', order='descending')")
 
     def test_Major_on_C4(self):
         scale = Major('C4')
-        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Major('C4')")
 
     def test_Dorian_on_C4(self):
         scale = Dorian(Note('C4'))
-        in_scale = ['C4', 'D4', 'Eb4', 'F4', 'G4', 'A4', 'Bb4']
+        in_scale = ['C4', 'D4', 'Eb4', 'F4', 'G4', 'A4', 'Bb4', 'C5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Dorian('C4')")
 
     def test_Phrygian_on_E4(self):
         scale = Phrygian(Note('E4'))
-        in_scale = ['E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5']
+        in_scale = ['E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Phrygian('E4')")
 
+    def test_MedievalLydian_on_F4(self):
+        scale = MedievalLydian(Note('F4'))
+        in_scale = ['F4', 'G4', 'A4', 'Cb4', 'C5', 'D5', 'E5', 'F5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "MedievalLydian('F4')")
+
     def test_Lydian_on_F4(self):
         scale = Lydian(Note('F4'))
-        in_scale = ['F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5']
+        in_scale = ['F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Lydian('F4')")
 
     def test_Mixolydian_on_G4(self):
         scale = Mixolydian(Note('G4'))
-        in_scale = ['G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5']
+        in_scale = ['G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Mixolydian('G4')")
 
     def test_Dominant_on_G4(self):
         scale = Dominant(Note('G4'))
-        in_scale = ['G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5']
+        in_scale = ['G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Dominant('G4')")
 
     def test_Aeolian_on_A4(self):
         scale = Aeolian(Note('A4'))
-        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Aeolian('A4')")
 
     def test_Minor_on_A4(self):
         scale = Minor(Note('A4'))
-        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5']
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Minor('A4')")
 
@@ -154,11 +200,7 @@ class TestScale(unittest.TestCase):
         def compare_major_minor(major_root, minor_root):
             major = Major(major_root)
             minor = Minor(minor_root)
-            major_notes = [n.get_note_without_octave() for n in major]
-            minor_notes = [n.get_note_without_octave() for n in minor]
-            major_notes.sort()
-            minor_notes.sort()
-            self.assertEqual(major_notes, minor_notes)
+            self.assertEqual(major.generic_notes, minor.generic_notes)
         compare_major_minor('C', 'A')
         compare_major_minor('G', 'E')
         compare_major_minor('D', 'B')
@@ -175,16 +217,9 @@ class TestScale(unittest.TestCase):
 
     def test_Locrian_on_B4(self):
         scale = Locrian(Note('B4'))
-        in_scale = ['B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
+        in_scale = ['B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Locrian('B4')")
-
-    def test_Chromatic_on_C4(self):
-        scale = Chromatic(Note('C4'))
-        in_scale = ['C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4',
-                    'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4']
-        self._scale_tester(scale, in_scale)
-        self.assertEqual(repr(scale), "Chromatic('C4')")
 
     def test_MajorPentatonic_on_C4(self):
         scale = MajorPentatonic(Note('C4'))
@@ -209,3 +244,154 @@ class TestScale(unittest.TestCase):
         in_scale = ['C4', 'Eb4', 'F4', 'F#4', 'G4', 'Bb4']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "MinorBlues('C4')")
+
+
+class TestChromaticScale(TestScaleBase):
+
+    def test_Chromatic_on_C4(self):
+        scale = Chromatic(Note('C4'))
+        in_scale = ['C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4',
+                    'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Chromatic('C4')")
+
+
+class TestOctatonicInterval(unittest.TestCase):
+
+    def setUp(self):
+        self.scale = Octatonic('C')
+
+    def test_Octatonic_generate_interval_raises(self):
+        with self.assertRaises(Exception):
+            self.scale._generate_intervals(0)
+        with self.assertRaises(Exception):
+            self.scale._generate_intervals(3)
+
+    def test_Octatonic_generate_interval_mode_one(self):
+        out = self.scale._generate_intervals(1)
+        expected = [0, 1, 3, 4, 6, 7, 9, 10, 12]
+        self.assertEqual(out, expected)
+
+    def test_Octatonic_generate_interval_mode_two(self):
+        out = self.scale._generate_intervals(2)
+        expected = [0, 2, 3, 5, 6, 8, 9, 11, 12]
+        self.assertEqual(out, expected)
+
+
+class TestOctatonicScale(TestScaleBase):
+
+    def test_OctatonicModeOne_on_C4(self):
+        scale = OctatonicModeOne(Note('C4'))
+        in_scale = ['C4', 'Db4', 'Eb4', 'E4', 'Gb4', 'G4', 'A4', 'Bb4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "OctatonicModeOne('C4')")
+
+    def test_OctatonicModeOne_is_symmetric(self):
+        def compare_symmetric_with_mode_one(scale1_root, scale2_root):
+            scale1 = OctatonicModeOne(scale1_root)
+            scale2 = OctatonicModeOne(scale2_root)
+            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+
+        def compare_symmetric_with_mode_two(scale1_root, scale2_root):
+            scale1 = OctatonicModeOne(scale1_root)
+            scale2 = OctatonicModeTwo(scale2_root)
+            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+        compare_symmetric_with_mode_two('C4', 'Db4')
+        compare_symmetric_with_mode_one('C4', 'Eb4')
+        compare_symmetric_with_mode_two('C4', 'E4')
+        compare_symmetric_with_mode_one('C4', 'Gb4')
+        compare_symmetric_with_mode_two('C4', 'G4')
+        compare_symmetric_with_mode_one('C4', 'A4')
+        compare_symmetric_with_mode_two('C4', 'Bb4')
+        compare_symmetric_with_mode_one('C4', 'C5')
+
+    def test_OctatonicModeTwo_on_C4(self):
+        scale = OctatonicModeTwo(Note('C4'))
+        in_scale = ['C4', 'D4', 'Eb4', 'F4', 'Gb4', 'Ab4', 'A4', 'B4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "OctatonicModeTwo('C4')")
+
+    def test_OctatonicModeTwo_is_symmetric(self):
+        def compare_symmetric_with_mode_two(scale1_root, scale2_root):
+            scale1 = OctatonicModeTwo(scale1_root)
+            scale2 = OctatonicModeTwo(scale2_root)
+            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+
+        def compare_symmetric_with_mode_one(scale1_root, scale2_root):
+            scale1 = OctatonicModeTwo(scale1_root)
+            scale2 = OctatonicModeOne(scale2_root)
+            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+        compare_symmetric_with_mode_one('C4', 'D4')
+        compare_symmetric_with_mode_two('C4', 'Eb4')
+        compare_symmetric_with_mode_one('C4', 'F4')
+        compare_symmetric_with_mode_two('C4', 'Gb4')
+        compare_symmetric_with_mode_one('C4', 'Ab4')
+        compare_symmetric_with_mode_two('C4', 'A4')
+        compare_symmetric_with_mode_one('C4', 'B4')
+        compare_symmetric_with_mode_two('C4', 'C5')
+
+
+class TestCircles(unittest.TestCase):
+
+    def test_circle_of_fifths(self):
+        out = circle_of_fifths()
+        expected = [Major('C4'),
+                    Major('G4'),
+                    Major('D4'),
+                    Major('A4'),
+                    Major('E4'),
+                    Major('B4'),
+                    Major('F#4'),
+                    Major('C#4')]
+        self.assertEqual(out, expected)
+
+    def test_circle_of_fourths(self):
+        out = circle_of_fourths()
+        expected = [Major('C4'),
+                    Major('F4'),
+                    Major('Bb4'),
+                    Major('Eb4'),
+                    Major('Ab4'),
+                    Major('Db4'),
+                    Major('Gb4'),
+                    Major('Cb4')]
+        self.assertEqual(out, expected)
+
+
+class TestScaleHelpers(unittest.TestCase):
+
+    def test_major_scales(self):
+        out = major_scales()
+        expected = [Major('C4'),
+                    Major('Db4'),
+                    Major('D4'),
+                    Major('Eb4'),
+                    Major('E4'),
+                    Major('F4'),
+                    Major('Gb4'),
+                    Major('G4'),
+                    Major('Ab4'),
+                    Major('A4'),
+                    Major('Bb4'),
+                    Major('B4')]
+        self.assertEqual(out, expected)
+
+    def test_minor_scales(self):
+        out = minor_scales()
+        expected = [Minor('A4'),
+                    Minor('Bb4'),
+                    Minor('B4'),
+                    Minor('C5'),
+                    Minor('C#5'),
+                    Minor('D5'),
+                    Minor('Eb5'),
+                    Minor('E5'),
+                    Minor('F5'),
+                    Minor('F#5'),
+                    Minor('G5'),
+                    Minor('G#5')]
+        self.assertEqual(out, expected)
+
+    def test_major_equals_minor(self):
+        for major, minor in zip(major_scales(), minor_scales()):
+            self.assertEqual(major.generic_notes, minor.generic_notes)
