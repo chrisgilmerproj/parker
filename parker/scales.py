@@ -245,7 +245,7 @@ class OctatonicModeTwo(Octatonic):
 def circle_of_fifths():
     root = 'C'
     scales = []
-    while root != 'G#':
+    while len(scales) < 8:
         scale = Major(Note(root))
         scales.append(scale)
         root = scale[4].get_note_without_octave()
@@ -255,7 +255,7 @@ def circle_of_fifths():
 def circle_of_fourths():
     root = 'C'
     scales = []
-    while root != 'Fb':
+    while len(scales) < 8:
         scale = Major(Note(root))
         scales.append(scale)
         root = scale[3].get_note_without_octave()
