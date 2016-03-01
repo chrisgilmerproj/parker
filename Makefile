@@ -10,9 +10,6 @@ TEST_OUTPUT?=nosetests.xml
 COVERAGE_OUTPUT?=coverage.xml
 COVERAGE_HTML_DIR?=cover
 
-default:
-	python setup.py check build
-
 .PHONY: help venv setup clean teardown lint test package
 
 help:  ## Print the help documentation
@@ -69,3 +66,5 @@ package:  ## Create the python package
 
 install:  ## Install the python package
 	$(WITH_VENV) python setup.py install
+
+default: help
