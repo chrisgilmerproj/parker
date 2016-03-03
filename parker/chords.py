@@ -1,9 +1,9 @@
-from constants import CHORD_MATCHER
-from notes import Note
-from notes import NoteGroupBase
-from notes import NotesParser
-from mixins import Aug
-from mixins import Dim
+from .constants import CHORD_MATCHER
+from .notes import Note
+from .notes import NoteGroupBase
+from .notes import NotesParser
+from .mixins import Aug
+from .mixins import Dim
 
 
 class Chord(NoteGroupBase):

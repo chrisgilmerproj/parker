@@ -1,13 +1,13 @@
-from constants import LOOKUP_FLATS
-from constants import LOOKUP_SHARPS
-from constants import NOTE_MATCHER
-from constants import NOTE_OFFSETS
-from mixins import AugmentDiminishMixin
-from mixins import Aug
-from mixins import Dim
-from mixins import CommonEqualityMixin
-from mixins import NotesMixin
-from mixins import TransposeMixin
+from .constants import LOOKUP_FLATS
+from .constants import LOOKUP_SHARPS
+from .constants import NOTE_MATCHER
+from .constants import NOTE_OFFSETS
+from .mixins import AugmentDiminishMixin
+from .mixins import Aug
+from .mixins import Dim
+from .mixins import CommonEqualityMixin
+from .mixins import NotesMixin
+from .mixins import TransposeMixin
 
 
 class Note(TransposeMixin, CommonEqualityMixin,
@@ -23,7 +23,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
 
     def __str__(self):
         accidentals = self.get_accidentals_as_string()
-        return "{}{}{}".format(self._base_name, accidentals, self._octave)
+        return "{}{}{:d}".format(self._base_name, accidentals, self._octave)
 
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))
@@ -32,7 +32,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         result = (int(self._octave) + 1) * 12
         result += NOTE_OFFSETS[self._base_name]
         result += self._accidentals
-        return result
+        return int(result)
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
@@ -66,7 +66,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  base_name:   C
                  accidentals: 0
         """
-        self._octave = (note / 12) - 1
+        self._octave = int((note / 12) - 1)
         offset = note - (self._octave + 1) * 12
         lookup = LOOKUP_SHARPS if use_sharps else LOOKUP_FLATS
         self._base_name, self._accidentals = lookup[offset]
@@ -120,7 +120,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         return "{}{}".format(self._base_name, accidentals)
 
     def set_accidentals(self, accidentals):
-        self._accidentals = accidentals
+        self._accidentals = int(accidentals)
 
     def get_octave(self):
         return self._octave

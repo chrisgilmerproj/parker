@@ -1,7 +1,7 @@
-from mixins import Aug
-from mixins import Dim
-from notes import Note
-from notes import NoteGroupBase
+from .mixins import Aug
+from .mixins import Dim
+from .notes import Note
+from .notes import NoteGroupBase
 
 
 class Scale(NoteGroupBase):
@@ -76,7 +76,7 @@ class Diatonic(Scale):
 
         Source: https://en.wikipedia.org/wiki/Diatonic_scale#Modes
         """
-        if tonic not in xrange(1, 8):
+        if tonic not in range(1, 8):
             raise Exception("Tonic must be a number between 1 and 7")
         rot = tonic - 1
         tonal_sequence = [2, 2, 1, 2, 2, 2, 1]
@@ -211,7 +211,7 @@ class MinorBlues(MinorPentatonic):
 
 class Chromatic(Scale):
     def get_intervals(self):
-        return xrange(0, 13)
+        return range(0, 13)
 
 
 class Octatonic(Scale):
@@ -221,7 +221,7 @@ class Octatonic(Scale):
         """
         Source: https://en.wikipedia.org/wiki/Octatonic_scale
         """
-        if tonic not in xrange(1, 3):
+        if tonic not in range(1, 3):
             raise Exception("Tonic must be a number between 1 and 2")
         rot = tonic - 1
         tonal_sequence = [1, 2, 1, 2, 1, 2, 1, 2]

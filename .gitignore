@@ -8,4 +8,5 @@ nosetests.xml
 build/
 dist/
 
+.tox/
 python-mingus/
