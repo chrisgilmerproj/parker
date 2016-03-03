@@ -14,6 +14,13 @@ from parker.scales import circle_of_fifths
 from parker.scales import circle_of_fourths
 
 
+def print_scale(scale):
+    print(scale.root.get_note_without_octave())
+    raw_input('\nPress enter for notes\n')
+    print([str(n.get_note_without_octave()) for n in scale.notes])
+    raw_input('\nPress enter for next scale\n')
+
+
 def main():
     fifths = circle_of_fifths()
     fourths = circle_of_fourths()
@@ -21,11 +28,13 @@ def main():
     print('\n')
 
     while True:
-        scale = random.choice(circle)
-        print(scale.root.get_note_without_octave())
-        raw_input('\nPress enter for notes\n')
-        print([str(n.get_note_without_octave()) for n in scale.notes])
-        raw_input('\nPress enter for next scale\n')
+        random.shuffle(circle)
+        for scale in circle:
+            print_scale(scale)
+
+        print('\n{}\n'.format('=' * 30))
+        print('\nCONGRATS. Ready for more? Press enter.\n')
+        print('\n{}\n'.format('=' * 30))
 
 
 if __name__ == "__main__":
