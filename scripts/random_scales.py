@@ -1,5 +1,13 @@
 #! /usr/local/bin/python
 
+"""
+Random Scales
+
+This exercise is to pick random scales to play.  The scales come from the
+Circle of Fourths and Circle of Fifths.  It will provide you with a scale
+and should you need the notes it will also print those out for you to see.
+"""
+
 import random
 
 from parker.scales import circle_of_fifths
