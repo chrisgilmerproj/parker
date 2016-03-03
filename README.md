@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/chrisgilmerproj/parker.svg?branch=master)](https://travis-ci.org/chrisgilmerproj/parker)
+
 # Parker
 
 This is a library to help me understand music theory and build useful studying
