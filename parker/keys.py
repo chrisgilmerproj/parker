@@ -1,6 +1,47 @@
+from collections import OrderedDict
 
-ORDER_OF_FLATS = ['Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb', 'Fb']
-ORDER_OF_SHARPS = ['F#', 'C#', 'G#', 'D#', 'A#', 'E#', 'B#']
+from .notes import Note
+from .scales import Major
+from .scales import Minor
+
+ORDER_OF_SHARPS = ['F', 'C', 'G', 'D', 'A', 'E', 'B']
+ORDER_OF_FLATS = ORDER_OF_SHARPS[::-1]
+
+MAJOR_KEYS = OrderedDict(sorted({
+    'Cb': -7,
+    'Gb': -6,
+    'Db': -5,
+    'Ab': -4,
+    'Eb': -3,
+    'Bb': -2,
+    'F': -1,
+    'C': 0,
+    'G': 1,
+    'D': 2,
+    'A': 3,
+    'E': 4,
+    'B': 5,
+    'F#': 6,
+    'C#': 7,
+    }.items(), key=lambda n: n[1]))
+
+MINOR_KEYS = OrderedDict(sorted({
+    'ab': -7,
+    'eb': -6,
+    'bb': -5,
+    'f': -4,
+    'c': -3,
+    'g': -2,
+    'd': -1,
+    'a': 0,
+    'e': 1,
+    'b': 2,
+    'f#': 3,
+    'c#': 4,
+    'g#': 5,
+    'd#': 6,
+    'a#': 7,
+    }.items(), key=lambda n: n[1]))
 
 
 class Key(object):
@@ -9,11 +50,24 @@ class Key(object):
     """
     MAJOR = 'major'
     MINOR = 'minor'
+    SIGN_SHARP = '#'
+    SIGN_FLAT = 'b'
 
     def __init__(self, key='C'):
         self.key = key
+
         self.mode = self.MINOR if key.islower() else self.MAJOR
-        self.signature = 0
+        if self.mode == self.MAJOR:
+            self.signature = MAJOR_KEYS[self.key]
+        elif self.mode == self.MINOR:
+            self.signature = MINOR_KEYS[self.key]
+
+        if self.signature >= 0:
+            self.sign = self.SIGN_SHARP
+            self.accidentals = ORDER_OF_SHARPS[:abs(self.signature)]
+        elif self.signature < 0:
+            self.sign = self.SIGN_FLAT
+            self.accidentals = ORDER_OF_FLATS[:abs(self.signature)]
 
     def __str__(self):
         return "{} {}".format(self.key, self.mode)
@@ -26,3 +80,12 @@ class Key(object):
 
     def is_minor(self):
         return self.mode == self.MINOR
+
+    def get_accidental_notes(self):
+        return [Note('{}{}'.format(n, self.sign)) for n in self.accidentals]
+
+    def get_scale(self):
+        if self.is_major():
+            return Major(self.key)
+        else:
+            return Minor(self.key.upper())

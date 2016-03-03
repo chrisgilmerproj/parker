@@ -1,6 +1,11 @@
 import unittest
 
+from parker.notes import Note
 from parker.keys import Key
+from parker.keys import ORDER_OF_FLATS
+from parker.keys import ORDER_OF_SHARPS
+from parker.scales import Major
+from parker.scales import Minor
 
 
 class TestKeys(unittest.TestCase):
@@ -18,10 +23,82 @@ class TestKeys(unittest.TestCase):
         key = Key('C')
         self.assertEqual(repr(key), "Key('C')")
 
-    def test_is_major(self):
+    def test_C_is_major(self):
         key = Key('C')
         self.assertTrue(key.is_major())
-
-    def test_is_minor(self):
-        key = Key('C')
         self.assertFalse(key.is_minor())
+
+    def test_a_is_minor(self):
+        key = Key('a')
+        self.assertTrue(key.is_minor())
+        self.assertFalse(key.is_major())
+
+    def test_signature_C(self):
+        key = Key('C')
+        self.assertEqual(key.signature, 0)
+
+    def test_signature_a(self):
+        key = Key('a')
+        self.assertEqual(key.signature, 0)
+
+    def test_accidentals_C(self):
+        key = Key('C')
+        self.assertEqual(key.accidentals, [])
+
+    def test_accidentals_a(self):
+        key = Key('a')
+        self.assertEqual(key.accidentals, [])
+
+    def test_accidentals_C_flat(self):
+        key = Key('Cb')
+        self.assertEqual(key.signature, -7)
+        self.assertEqual(key.accidentals, ORDER_OF_FLATS)
+
+    def test_accidentals_C_sharp(self):
+        key = Key('C#')
+        self.assertEqual(key.signature, 7)
+        self.assertEqual(key.accidentals, ORDER_OF_SHARPS)
+
+    def test_accidentals_a_flat(self):
+        key = Key('ab')
+        self.assertEqual(key.signature, -7)
+        self.assertEqual(key.accidentals, ORDER_OF_FLATS)
+
+    def test_accidentals_a_sharp(self):
+        key = Key('a#')
+        self.assertEqual(key.signature, 7)
+        self.assertEqual(key.accidentals, ORDER_OF_SHARPS)
+
+    def test_get_accidental_notes_C_sharp(self):
+        key = Key('C#')
+        expected = ['F#', 'C#', 'G#', 'D#', 'A#', 'E#', 'B#']
+        expected = [Note(n) for n in expected]
+        self.assertEqual(key.get_accidental_notes(), expected)
+
+    def test_get_accidental_notes_C_flat(self):
+        key = Key('Cb')
+        expected = ['Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb', 'Fb']
+        expected = [Note(n) for n in expected]
+        self.assertEqual(key.get_accidental_notes(), expected)
+
+    def test_get_scale_C_major(self):
+        key = Key('C')
+        scale = key.get_scale()
+        self.assertEqual(scale, Major('C'))
+
+    def test_get_scale_a_minor(self):
+        key = Key('a')
+        scale = key.get_scale()
+        self.assertEqual(scale, Minor('A'))
+
+    def test_accidental_notes_in_C_sharp(self):
+        key = Key('C#')
+        scale = key.get_scale()
+        for note in key.get_accidental_notes():
+            self.assertTrue(note in scale.notes)
+
+    def test_accidental_notes_in_C_flat(self):
+        key = Key('Cb')
+        scale = key.get_scale()
+        for note in key.get_accidental_notes():
+            self.assertTrue(note in scale.notes)
