@@ -1,4 +1,5 @@
 import collections
+import random
 import re
 
 
@@ -65,6 +66,21 @@ LOOKUP_FLATS = {
 
 ORDER_OF_SHARPS = ['F', 'C', 'G', 'D', 'A', 'E', 'B']
 ORDER_OF_FLATS = ORDER_OF_SHARPS[::-1]
+
+MNEMONIC_ORDER_OF_SHARPS = random.choice([
+    "Fat Cats Go Down Alleys Eating Birds",
+    "Father Charles Goes Down And Ends Battle",
+])
+MNEMONIC_ORDER_OF_FLATS = random.choice([
+    "Boys Eat All Day Girls Can Fly",
+    "Battle Ends And Down Goes Charles' Father",
+])
+MNEMONIC_CIRCLE_OF_FIFTHS = random.choice([
+    "Caroline Goes Down And Eats Butter Fly Costumes",
+])
+MNEMONIC_CIRCLE_OF_FOURTHS = random.choice([
+    "Caroline Finds B E A Ds Gone Cold",
+])
 
 MAJOR_KEYS = collections.OrderedDict(sorted({
     'Cb': -7,
