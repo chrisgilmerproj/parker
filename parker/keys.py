@@ -1,47 +1,10 @@
-from collections import OrderedDict
-
+from .constants import MAJOR_KEYS
+from .constants import MINOR_KEYS
+from .constants import ORDER_OF_FLATS
+from .constants import ORDER_OF_SHARPS
 from .notes import Note
 from .scales import Major
 from .scales import Minor
-
-ORDER_OF_SHARPS = ['F', 'C', 'G', 'D', 'A', 'E', 'B']
-ORDER_OF_FLATS = ORDER_OF_SHARPS[::-1]
-
-MAJOR_KEYS = OrderedDict(sorted({
-    'Cb': -7,
-    'Gb': -6,
-    'Db': -5,
-    'Ab': -4,
-    'Eb': -3,
-    'Bb': -2,
-    'F': -1,
-    'C': 0,
-    'G': 1,
-    'D': 2,
-    'A': 3,
-    'E': 4,
-    'B': 5,
-    'F#': 6,
-    'C#': 7,
-    }.items(), key=lambda n: n[1]))
-
-MINOR_KEYS = OrderedDict(sorted({
-    'ab': -7,
-    'eb': -6,
-    'bb': -5,
-    'f': -4,
-    'c': -3,
-    'g': -2,
-    'd': -1,
-    'a': 0,
-    'e': 1,
-    'b': 2,
-    'f#': 3,
-    'c#': 4,
-    'g#': 5,
-    'd#': 6,
-    'a#': 7,
-    }.items(), key=lambda n: n[1]))
 
 
 class Key(object):
