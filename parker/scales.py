@@ -184,6 +184,13 @@ class Locrian(Diatonic):
         return self._generate_intervals(7)
 
 
+class SuperLocrian(Diatonic):
+    def get_intervals(self):
+        intervals = self._generate_intervals(7)
+        intervals[3] -= 1
+        return intervals
+
+
 class MajorPentatonic(Major):
     """
     Major Pentatonic drops 4th and 7th from the Diatonic Major and
@@ -232,6 +239,33 @@ class MinorBlues(MinorPentatonic):
         intervals = super(MinorBlues, self).get_intervals()
         intervals.insert(3, Aug(5))
         return intervals
+
+
+class Altered(Scale):
+
+    @classmethod
+    def _generate_intervals(cls, tonic):
+        """
+        Source: https://en.wikipedia.org/wiki/Altered_scale
+
+        s-T-s-T-T-T-T
+        """
+        if tonic not in range(1, 8):
+            raise Exception("Tonic must be a number between 1 and 7")
+        rot = tonic - 1
+        tonal_sequence = [1, 2, 1, 2, 2, 2, 2]
+        seq = tonal_sequence[rot:] + tonal_sequence[:rot]
+        interval = [0]
+        for i, s in enumerate(seq):
+            interval.append(s + interval[i])
+        return interval
+
+    def get_intervals(self):
+        return self._generate_intervals(1)
+
+
+class DiminishedWholeTone(Altered):
+    pass
 
 
 class Chromatic(Scale):

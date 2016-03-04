@@ -4,8 +4,10 @@ from parker.mixins import Aug
 from parker.mixins import Dim
 from parker.notes import Note
 from parker.scales import Aeolian
+from parker.scales import Altered
 from parker.scales import Chromatic
 from parker.scales import Diatonic
+from parker.scales import DiminishedWholeTone
 from parker.scales import Dominant
 from parker.scales import Dorian
 from parker.scales import HarmonicMajor
@@ -26,6 +28,7 @@ from parker.scales import OctatonicModeOne
 from parker.scales import OctatonicModeTwo
 from parker.scales import Phrygian
 from parker.scales import Scale
+from parker.scales import SuperLocrian
 from parker.scales import _scale_creator
 from parker.scales import circle_of_fifths
 from parker.scales import circle_of_fourths
@@ -37,6 +40,15 @@ from parker.scales import minor_scales
 from parker.scales import minor_blues_scales
 from parker.scales import minor_pentatonic_scales
 from parker.scales import mixolydian_scales
+
+
+class TestScales(unittest.TestCase):
+
+    def test_Scale_equality(self):
+        self.assertTrue(Dorian('D') == Major('C'))
+        self.assertTrue(Dorian('D') == Dorian('D'))
+        self.assertFalse(Dorian('D') == Note('D'))
+        self.assertFalse(Dorian('D') == Dorian('F'))
 
 
 class TestDiatonicInterval(unittest.TestCase):
@@ -244,6 +256,12 @@ class TestDiatonicScale(TestScaleBase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Locrian('B4')")
 
+    def test_SuperLocrian_on_B4(self):
+        scale = SuperLocrian(Note('C4'))
+        in_scale = ['C4', 'Db4', 'Eb4', 'E4', 'Gb4', 'Ab4', 'Bb4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "SuperLocrian('C4')")
+
     def test_MajorPentatonic_on_C4(self):
         scale = MajorPentatonic(Note('C4'))
         in_scale = ['C4', 'D4', 'E4', 'G4', 'A4']
@@ -277,6 +295,35 @@ class TestChromaticScale(TestScaleBase):
                     'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Chromatic('C4')")
+
+
+class TestAlteredInterval(unittest.TestCase):
+
+    def setUp(self):
+        self.scale = Altered('C')
+
+    def test_Altered_generate_interval_raises(self):
+        with self.assertRaises(Exception):
+            self.scale._generate_intervals(0)
+        with self.assertRaises(Exception):
+            self.scale._generate_intervals(8)
+
+    def test_Altered_generate_interval_mode_one(self):
+        out = self.scale._generate_intervals(1)
+        expected = [0, 1, 3, 4, 6, 8, 10, 12]
+        self.assertEqual(out, expected)
+
+
+class TestAlteredScale(TestScaleBase):
+
+    def test_Altered_on_C4(self):
+        scale = Altered(Note('C4'))
+        in_scale = ['C4', 'Db4', 'Eb4', 'E4', 'Gb4', 'Ab4', 'Bb4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "Altered('C4')")
+
+    def test_Altered_is_SuperLocrian(self):
+        self.assertEqual(Altered('C4'), SuperLocrian('C4'))
 
 
 class TestOctatonicInterval(unittest.TestCase):
@@ -530,3 +577,30 @@ class TestScaleHelpers(unittest.TestCase):
                     MinorBlues('Bb4'),
                     MinorBlues('B4')]
         self.assertEqual(out, expected)
+
+
+class TestSongScales(unittest.TestCase):
+
+    def test_blue_bossa(self):
+        self.assertEqual(Dorian('D'), Major('C'))
+        self.assertEqual(Dorian('G'), Major('F'))
+        self.assertEqual(Locrian('E'), Major('F'))
+        self.assertEqual(DiminishedWholeTone('A'), SuperLocrian('A'))
+        self.assertEqual(Dorian('F'), Major('Eb'))
+        self.assertEqual(Mixolydian('Bb'), Major('Eb'))
+
+    def test_canteloupe_island(self):
+        self.assertEqual(Dorian('G'), Major('F'))
+        self.assertEqual(Lydian('Eb').generic_notes,
+                         set(['D#', 'F', 'G', 'A', 'A#', 'C', 'D']))
+        self.assertEqual(Dorian('E'), Major('D'))
+
+    def test_freddie_freeloader(self):
+        self.assertEqual(Mixolydian('C'), Major('F'))
+        self.assertEqual(Mixolydian('F'), Major('Bb'))
+        self.assertEqual(Mixolydian('G'), Major('C'))
+        self.assertEqual(Mixolydian('Bb'), Major('Eb'))
+
+    def test_so_what_scales(self):
+        self.assertEqual(Dorian('E'), Major('D'))
+        self.assertEqual(Dorian('F'), Major('Eb'))
