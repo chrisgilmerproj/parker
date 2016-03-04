@@ -45,7 +45,7 @@ class Scale(NoteGroupBase):
             self.notes.reverse()
 
         # Get a list of the notes without the octave
-        generic_notes = [Note(int(n)).get_note_without_octave()
+        generic_notes = [Note(int(n)).generalize()
                          for n in self.notes]
         self.generic_notes = set(generic_notes)
 
@@ -56,7 +56,7 @@ class Scale(NoteGroupBase):
         if isinstance(note, str):
             return note in self.generic_notes
         if isinstance(note, Note):
-            gen_note = Note(int(note)).get_note_without_octave()
+            gen_note = Note(int(note)).generalize()
             return gen_note in self.generic_notes
 
 
@@ -262,7 +262,7 @@ def circle_of_fifths():
     while len(scales) < 8:
         scale = Major(Note(root))
         scales.append(scale)
-        root = scale[4].get_note_without_octave()
+        root = scale[4].generalize()
     return scales
 
 
@@ -272,7 +272,7 @@ def circle_of_fourths():
     while len(scales) < 8:
         scale = Major(Note(root))
         scales.append(scale)
-        root = scale[3].get_note_without_octave()
+        root = scale[3].generalize()
     return scales
 
 

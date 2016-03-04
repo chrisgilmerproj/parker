@@ -115,7 +115,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
     def get_accidentals_as_string(self):
         return ('#' if self._accidentals > 0 else 'b') * abs(self._accidentals)
 
-    def get_note_without_octave(self):
+    def generalize(self):
         accidentals = self.get_accidentals_as_string()
         return "{}{}".format(self._base_name, accidentals)
 
