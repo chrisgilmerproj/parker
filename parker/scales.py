@@ -45,7 +45,7 @@ class Scale(NoteGroupBase):
             self.notes.reverse()
 
         # Get a list of the notes without the octave
-        generic_notes = [Note(int(n)).generalize()
+        generic_notes = [n.normalize(use_sharps=True)
                          for n in self.notes]
         self.generic_notes = set(generic_notes)
 
