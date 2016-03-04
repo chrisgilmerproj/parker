@@ -14,7 +14,7 @@ def main():
     notes = scale.notes
 
     for note in notes:
-        ch_notes = [n.generalize() for n in Chromatic(note).notes]
+        ch_notes = [n.normalize() for n in Chromatic(note).notes]
         raw_input('\n{}\n'.format(ch_notes))
 
 

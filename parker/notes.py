@@ -18,8 +18,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
     _accidentals = 0
     _duration = 0
 
-    def __init__(self, note=None):
-        self.set_note(note)
+    def __init__(self, note=None, use_sharps=True):
+        self.set_note(note, use_sharps=use_sharps)
 
     def __str__(self):
         accidentals = self.get_accidentals_as_string()
@@ -45,9 +45,9 @@ class Note(TransposeMixin, CommonEqualityMixin,
             return True
         return False
 
-    def set_note(self, note):
+    def set_note(self, note, use_sharps):
         if isinstance(note, int):
-            self.set_from_int(note)
+            self.set_from_int(note, use_sharps)
         elif isinstance(note, str):
             self.set_from_string(note)
         elif isinstance(note, Note):
@@ -116,8 +116,33 @@ class Note(TransposeMixin, CommonEqualityMixin,
         return ('#' if self._accidentals > 0 else 'b') * abs(self._accidentals)
 
     def generalize(self):
+        """
+        Return the note without the octave component.
+
+        Example: C4    -> C
+                 Cbb4  -> Cbb
+                 C###4 -> C###
+        """
         accidentals = self.get_accidentals_as_string()
         return "{}{}".format(self._base_name, accidentals)
+
+    def normalize(self, use_sharps=None):
+        """
+        Return the note normalized and without the octave component.
+        Set use_sharps to control the output.
+
+        Example: C4    -> C
+                 Cbb4  -> Bb
+                 Cbb4  -> A# (use_sharps=True)
+                 C###4 -> D#
+                 C###4 => Eb (use_sharps=False)
+        """
+        if use_sharps is None:
+            if 'b' in str(self):
+                use_sharps = False
+            else:
+                use_sharps = True
+        return Note(int(self), use_sharps).generalize()
 
     def set_accidentals(self, accidentals):
         self._accidentals = int(accidentals)

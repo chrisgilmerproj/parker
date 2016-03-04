@@ -30,6 +30,10 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('C6'), Note(84))
         self.assertEqual(Note('C7'), Note(96))
 
+    def test_constructor_from_int_sharps_flats(self):
+        self.assertEqual(str(Note(61, use_sharps=True)), 'C#4')
+        self.assertEqual(str(Note(61, use_sharps=False)), 'Db4')
+
     def test_constructor_from_Note(self):
         self.assertEqual(Note(Note('B9')), Note('B9'))
 
@@ -110,10 +114,24 @@ class TestNote(unittest.TestCase):
         self.assertEquals(note.get_accidentals(), 3)
 
     def test_generalize(self):
+        note = Note('C4')
+        self.assertEquals(note.generalize(), 'C')
         note = Note('Cbb4')
         self.assertEquals(note.generalize(), 'Cbb')
         note = Note('C###4')
         self.assertEquals(note.generalize(), 'C###')
+
+    def test_normalize(self):
+        note = Note('C4')
+        self.assertEquals(note.normalize(), 'C')
+        note = Note('Cbb4')
+        self.assertEquals(note.normalize(), 'Bb')
+        note = Note('Cbb4')
+        self.assertEquals(note.normalize(use_sharps=True), 'A#')
+        note = Note('C###4')
+        self.assertEquals(note.normalize(), 'D#')
+        note = Note('C###4')
+        self.assertEquals(note.normalize(use_sharps=False), 'Eb')
 
     def test_set_accidentals(self):
         note = Note('C4')
