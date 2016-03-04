@@ -10,27 +10,34 @@ and should you need the notes it will also print those out for you to see.
 
 import random
 
-from parker.scales import circle_of_fifths
-from parker.scales import circle_of_fourths
+from parker.scales import dorian_scales
+from parker.scales import major_scales
+from parker.scales import mixolydian_scales
 
 
 def print_scale(scale):
-    print(scale.root.get_note_without_octave())
-    raw_input('\nPress enter for notes\n')
-    print([str(n.get_note_without_octave()) for n in scale.notes])
-    raw_input('\nPress enter for next scale\n')
+    print(repr(scale))
+    raw_input('')
+    print([str(n.normalize()) for n in scale.notes])
+    raw_input('')
 
 
 def main():
-    fifths = circle_of_fifths()
-    fourths = circle_of_fourths()
-    circle = fifths + fourths
     print('\n')
 
+    scales = zip(major_scales(),
+                 mixolydian_scales(),
+                 dorian_scales())
     while True:
-        random.shuffle(circle)
-        for scale in circle:
-            print_scale(scale)
+        random.shuffle(scales)
+        for major, mixolydian, dorian in scales:
+            print_scale(major)
+            print_scale(mixolydian)
+            print_scale(dorian)
+            print('{}'.format('=' * 30))
+            print('Press enter for next scale')
+            print('{}'.format('=' * 30))
+            raw_input('')
 
         print('\n{}\n'.format('=' * 30))
         print('\nCONGRATS. Ready for more? Press enter.\n')

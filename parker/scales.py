@@ -276,17 +276,41 @@ def circle_of_fourths():
     return scales
 
 
-def major_scales():
-    scale = Chromatic('C4')
+def _scale_creator(scale_cls, root='C4'):
+    scale = Chromatic(root)
     scales = []
     for note in scale.notes[:-1]:
-        scales.append(Major(note))
+        scales.append(scale_cls(note))
     return scales
+
+
+def dorian_scales():
+    return _scale_creator(Dorian)
+
+
+def mixolydian_scales():
+    return _scale_creator(Mixolydian)
+
+
+def major_scales():
+    return _scale_creator(Major)
 
 
 def minor_scales():
-    scale = Chromatic('A4')
-    scales = []
-    for note in scale.notes[:-1]:
-        scales.append(Minor(note))
-    return scales
+    return _scale_creator(Minor, root='A4')
+
+
+def major_pentatonic_scales():
+    return _scale_creator(MajorPentatonic)
+
+
+def minor_pentatonic_scales():
+    return _scale_creator(MinorPentatonic)
+
+
+def major_blues_scales():
+    return _scale_creator(MajorBlues)
+
+
+def minor_blues_scales():
+    return _scale_creator(MinorBlues)

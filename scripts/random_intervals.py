@@ -58,10 +58,10 @@ def print_scale(scale):
                         scale))
 
         try:
-            n_ans = Note(ans).get_note_without_octave()
+            n_ans = Note(ans).generalize()
         except Exception:
             n_ans = ans
-        if n_ans == str(new_note.get_note_without_octave()):
+        if n_ans == str(new_note.generalize()):
             print('Correct!\n')
         else:
             print('Incorrect! You wanted {}\n'.format(new_note))

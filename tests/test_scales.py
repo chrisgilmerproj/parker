@@ -26,10 +26,17 @@ from parker.scales import OctatonicModeOne
 from parker.scales import OctatonicModeTwo
 from parker.scales import Phrygian
 from parker.scales import Scale
+from parker.scales import _scale_creator
 from parker.scales import circle_of_fifths
 from parker.scales import circle_of_fourths
+from parker.scales import dorian_scales
 from parker.scales import major_scales
+from parker.scales import major_blues_scales
+from parker.scales import major_pentatonic_scales
 from parker.scales import minor_scales
+from parker.scales import minor_blues_scales
+from parker.scales import minor_pentatonic_scales
+from parker.scales import mixolydian_scales
 
 
 class TestDiatonicInterval(unittest.TestCase):
@@ -378,6 +385,54 @@ class TestCircles(unittest.TestCase):
 
 class TestScaleHelpers(unittest.TestCase):
 
+    def test_scale_creator(self):
+        out = _scale_creator(Major)
+        expected = [Major('C4'),
+                    Major('Db4'),
+                    Major('D4'),
+                    Major('Eb4'),
+                    Major('E4'),
+                    Major('F4'),
+                    Major('Gb4'),
+                    Major('G4'),
+                    Major('Ab4'),
+                    Major('A4'),
+                    Major('Bb4'),
+                    Major('B4')]
+        self.assertEqual(out, expected)
+
+    def test_dorian_scales(self):
+        out = dorian_scales()
+        expected = [Dorian('C4'),
+                    Dorian('Db4'),
+                    Dorian('D4'),
+                    Dorian('Eb4'),
+                    Dorian('E4'),
+                    Dorian('F4'),
+                    Dorian('Gb4'),
+                    Dorian('G4'),
+                    Dorian('Ab4'),
+                    Dorian('A4'),
+                    Dorian('Bb4'),
+                    Dorian('B4')]
+        self.assertEqual(out, expected)
+
+    def test_mixolydian_scales(self):
+        out = mixolydian_scales()
+        expected = [Mixolydian('C4'),
+                    Mixolydian('Db4'),
+                    Mixolydian('D4'),
+                    Mixolydian('Eb4'),
+                    Mixolydian('E4'),
+                    Mixolydian('F4'),
+                    Mixolydian('Gb4'),
+                    Mixolydian('G4'),
+                    Mixolydian('Ab4'),
+                    Mixolydian('A4'),
+                    Mixolydian('Bb4'),
+                    Mixolydian('B4')]
+        self.assertEqual(out, expected)
+
     def test_major_scales(self):
         out = major_scales()
         expected = [Major('C4'),
@@ -413,3 +468,67 @@ class TestScaleHelpers(unittest.TestCase):
     def test_major_equals_minor(self):
         for major, minor in zip(major_scales(), minor_scales()):
             self.assertEqual(major.generic_notes, minor.generic_notes)
+
+    def test_major_pentatonic_scales(self):
+        out = major_pentatonic_scales()
+        expected = [MajorPentatonic('C4'),
+                    MajorPentatonic('Db4'),
+                    MajorPentatonic('D4'),
+                    MajorPentatonic('Eb4'),
+                    MajorPentatonic('E4'),
+                    MajorPentatonic('F4'),
+                    MajorPentatonic('Gb4'),
+                    MajorPentatonic('G4'),
+                    MajorPentatonic('Ab4'),
+                    MajorPentatonic('A4'),
+                    MajorPentatonic('Bb4'),
+                    MajorPentatonic('B4')]
+        self.assertEqual(out, expected)
+
+    def test_minor_pentatonic_scales(self):
+        out = minor_pentatonic_scales()
+        expected = [MinorPentatonic('C4'),
+                    MinorPentatonic('Db4'),
+                    MinorPentatonic('D4'),
+                    MinorPentatonic('Eb4'),
+                    MinorPentatonic('E4'),
+                    MinorPentatonic('F4'),
+                    MinorPentatonic('Gb4'),
+                    MinorPentatonic('G4'),
+                    MinorPentatonic('Ab4'),
+                    MinorPentatonic('A4'),
+                    MinorPentatonic('Bb4'),
+                    MinorPentatonic('B4')]
+        self.assertEqual(out, expected)
+
+    def test_major_blues_scales(self):
+        out = major_blues_scales()
+        expected = [MajorBlues('C4'),
+                    MajorBlues('Db4'),
+                    MajorBlues('D4'),
+                    MajorBlues('Eb4'),
+                    MajorBlues('E4'),
+                    MajorBlues('F4'),
+                    MajorBlues('Gb4'),
+                    MajorBlues('G4'),
+                    MajorBlues('Ab4'),
+                    MajorBlues('A4'),
+                    MajorBlues('Bb4'),
+                    MajorBlues('B4')]
+        self.assertEqual(out, expected)
+
+    def test_minor_blues_scales(self):
+        out = minor_blues_scales()
+        expected = [MinorBlues('C4'),
+                    MinorBlues('Db4'),
+                    MinorBlues('D4'),
+                    MinorBlues('Eb4'),
+                    MinorBlues('E4'),
+                    MinorBlues('F4'),
+                    MinorBlues('Gb4'),
+                    MinorBlues('G4'),
+                    MinorBlues('Ab4'),
+                    MinorBlues('A4'),
+                    MinorBlues('Bb4'),
+                    MinorBlues('B4')]
+        self.assertEqual(out, expected)
