@@ -8,6 +8,8 @@ from parker.scales import Chromatic
 from parker.scales import Diatonic
 from parker.scales import Dominant
 from parker.scales import Dorian
+from parker.scales import HarmonicMajor
+from parker.scales import HarmonicMinor
 from parker.scales import Ionian
 from parker.scales import Locrian
 from parker.scales import Lydian
@@ -148,6 +150,12 @@ class TestDiatonicScale(TestScaleBase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Major('C4')")
 
+    def test_HarmonicMajor_on_C4(self):
+        scale = HarmonicMajor('C4')
+        in_scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'Bb4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "HarmonicMajor('C4')")
+
     def test_Dorian_on_C4(self):
         scale = Dorian(Note('C4'))
         in_scale = ['C4', 'D4', 'Eb4', 'F4', 'G4', 'A4', 'Bb4', 'C5']
@@ -196,11 +204,21 @@ class TestDiatonicScale(TestScaleBase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Minor('A4')")
 
+    def test_HarmonicMinor_on_A4(self):
+        scale = HarmonicMinor(Note('A4'))
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G#5', 'A5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "HarmonicMinor('A4')")
+
     def test_Major_equals_Minor(self):
         def compare_major_minor(major_root, minor_root):
             major = Major(major_root)
             minor = Minor(minor_root)
             self.assertEqual(major.generic_notes, minor.generic_notes)
+            self.assertEqual(major.minor_third_down().generic_notes,
+                             minor.generic_notes)
+            self.assertEqual(minor.minor_third_up().generic_notes,
+                             major.generic_notes)
         compare_major_minor('C', 'A')
         compare_major_minor('G', 'E')
         compare_major_minor('D', 'B')

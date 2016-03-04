@@ -97,7 +97,7 @@ class TransposeMixin(CloneMixin):
     def transpose_list(self, lst):
         return [self.transpose(amount) for amount in lst]
 
-    # IMMUTABLE TRANSPOSE UP
+    # Transpose Up
     def minor_second_up(self):
         return self.transpose(1)
 
@@ -140,7 +140,61 @@ class TransposeMixin(CloneMixin):
     def octave_up(self):
         return self.transpose(12)
 
-    # IMMUTABLE TRANSPOSE DOWN
+    def minor_ninth_up(self):
+        return self.transpose(13)
+
+    def compound_minor_second_up(self):
+        return self.minor_ninth_up()
+
+    def major_ninth_up(self):
+        return self.transpose(14)
+
+    def compound_major_second_up(self):
+        return self.major_ninth_up()
+
+    def augmented_ninth_up(self):
+        return self.transpose(15)
+
+    def minor_tenth_up(self):
+        return self.augmented_ninth_up()
+
+    def compound_augmented_second_up(self):
+        return self.augmented_ninth_up()
+
+    def compound_minor_third_up(self):
+        return self.augmented_ninth_up()
+
+    def major_tenth_up(self):
+        return self.transpose(16)
+
+    def compound_major_third_up(self):
+        return self.major_tenth_up()
+
+    def major_eleventh_up(self):
+        return self.transpose(17)
+
+    def compound_perfect_fourth_up(self):
+        return self.major_eleventh_up()
+
+    def augmented_eleventh_up(self):
+        return self.transpose(18)
+
+    def compound_augmented_fourth_up(self):
+        return self.augmented_eleventh_up()
+
+    def minor_thirteenth_up(self):
+        return self.transpose(20)
+
+    def compound_minor_sixth_up(self):
+        return self.minor_thirteenth_up()
+
+    def major_thirteenth_up(self):
+        return self.transpose(21)
+
+    def compound_major_sixth_up(self):
+        return self.major_thirteenth_up()
+
+    # Transpose Down
     def minor_second_down(self):
         return self.transpose(-1)
 
@@ -182,3 +236,57 @@ class TransposeMixin(CloneMixin):
 
     def octave_down(self):
         return self.transpose(-12)
+
+    def minor_ninth_down(self):
+        return self.transpose(-13)
+
+    def compound_minor_second_down(self):
+        return self.minor_ninth_down()
+
+    def major_ninth_down(self):
+        return self.transpose(-14)
+
+    def compound_major_second_down(self):
+        return self.major_ninth_down()
+
+    def augmented_ninth_down(self):
+        return self.transpose(-15)
+
+    def minor_tenth_down(self):
+        return self.augmented_ninth_down()
+
+    def compound_augmented_second_down(self):
+        return self.augmented_ninth_down()
+
+    def compound_minor_third_down(self):
+        return self.augmented_ninth_down()
+
+    def major_tenth_down(self):
+        return self.transpose(-16)
+
+    def compound_major_third_down(self):
+        return self.major_tenth_down()
+
+    def major_eleventh_down(self):
+        return self.transpose(-17)
+
+    def compound_perfect_fourth_down(self):
+        return self.major_eleventh_down()
+
+    def augmented_eleventh_down(self):
+        return self.transpose(-18)
+
+    def compound_augmented_fourth_down(self):
+        return self.augmented_eleventh_down()
+
+    def minor_thirteenth_down(self):
+        return self.transpose(-20)
+
+    def compound_minor_sixth_down(self):
+        return self.minor_thirteenth_down()
+
+    def major_thirteenth_down(self):
+        return self.transpose(-21)
+
+    def compound_major_sixth_down(self):
+        return self.major_thirteenth_down()

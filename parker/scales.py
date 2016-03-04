@@ -109,6 +109,13 @@ class Major(Ionian):
     pass
 
 
+class HarmonicMajor(Major):
+    def get_intervals(self):
+        intervals = self._generate_intervals(1)
+        intervals[6] -= 1
+        return intervals
+
+
 class Dorian(Diatonic):
     def get_intervals(self):
         return self._generate_intervals(2)
@@ -152,6 +159,13 @@ class Aeolian(Diatonic):
 
 class Minor(Aeolian):
     pass
+
+
+class HarmonicMinor(Minor):
+    def get_intervals(self):
+        intervals = self._generate_intervals(6)
+        intervals[6] += 1
+        return intervals
 
 
 class Locrian(Diatonic):

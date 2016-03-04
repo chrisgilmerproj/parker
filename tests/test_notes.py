@@ -221,6 +221,28 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('C4').major_seventh_up(), Note('B4'))
         self.assertEqual(Note('C4').octave_up(), Note('C5'))
 
+    def test_transpose_up_no_accidentals_C4_compound(self):
+        self.assertEqual(Note('C4').minor_ninth_up(), Note('Db5'))
+        self.assertEqual(Note('C4').compound_minor_second_up(), Note('Db5'))
+        self.assertEqual(Note('C4').major_ninth_up(), Note('D5'))
+        self.assertEqual(Note('C4').compound_major_second_up(), Note('D5'))
+        self.assertEqual(Note('C4').augmented_ninth_up(), Note('Eb5'))
+        self.assertEqual(Note('C4').minor_tenth_up(), Note('Eb5'))
+        self.assertEqual(Note('C4').compound_augmented_second_up(),
+                         Note('Eb5'))
+        self.assertEqual(Note('C4').compound_minor_third_up(), Note('Eb5'))
+        self.assertEqual(Note('C4').major_tenth_up(), Note('E5'))
+        self.assertEqual(Note('C4').compound_major_third_up(), Note('E5'))
+        self.assertEqual(Note('C4').major_eleventh_up(), Note('F5'))
+        self.assertEqual(Note('C4').compound_perfect_fourth_up(), Note('F5'))
+        self.assertEqual(Note('C4').augmented_eleventh_up(), Note('Gb5'))
+        self.assertEqual(Note('C4').compound_augmented_fourth_up(),
+                         Note('Gb5'))
+        self.assertEqual(Note('C4').minor_thirteenth_up(), Note('Ab5'))
+        self.assertEqual(Note('C4').compound_minor_sixth_up(), Note('Ab5'))
+        self.assertEqual(Note('C4').major_thirteenth_up(), Note('A5'))
+        self.assertEqual(Note('C4').compound_major_sixth_up(), Note('A5'))
+
     def test_transpose_up_no_accidentals_F4(self):
         self.assertEqual(Note('F4').minor_second_up(), Note('Gb4'))
         self.assertEqual(Note('F4').major_second_up(), Note('G4'))
@@ -280,6 +302,28 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('C4').minor_seventh_down(), Note('D3'))
         self.assertEqual(Note('C4').major_seventh_down(), Note('Db3'))
         self.assertEqual(Note('C4').octave_down(), Note('C3'))
+
+    def test_transpose_down_no_accidentals_C4_compound(self):
+        self.assertEqual(Note('C4').minor_ninth_down(), Note('B2'))
+        self.assertEqual(Note('C4').compound_minor_second_down(), Note('B2'))
+        self.assertEqual(Note('C4').major_ninth_down(), Note('Bb2'))
+        self.assertEqual(Note('C4').compound_major_second_down(), Note('Bb2'))
+        self.assertEqual(Note('C4').augmented_ninth_down(), Note('A2'))
+        self.assertEqual(Note('C4').minor_tenth_down(), Note('A2'))
+        self.assertEqual(Note('C4').compound_augmented_second_down(),
+                         Note('A2'))
+        self.assertEqual(Note('C4').compound_minor_third_down(), Note('A2'))
+        self.assertEqual(Note('C4').major_tenth_down(), Note('Ab2'))
+        self.assertEqual(Note('C4').compound_major_third_down(), Note('Ab2'))
+        self.assertEqual(Note('C4').major_eleventh_down(), Note('G2'))
+        self.assertEqual(Note('C4').compound_perfect_fourth_down(), Note('G2'))
+        self.assertEqual(Note('C4').augmented_eleventh_down(), Note('Gb2'))
+        self.assertEqual(Note('C4').compound_augmented_fourth_down(),
+                         Note('Gb2'))
+        self.assertEqual(Note('C4').minor_thirteenth_down(), Note('E2'))
+        self.assertEqual(Note('C4').compound_minor_sixth_down(), Note('E2'))
+        self.assertEqual(Note('C4').major_thirteenth_down(), Note('Eb2'))
+        self.assertEqual(Note('C4').compound_major_sixth_down(), Note('Eb2'))
 
     def test_transpose_down_no_accidentals_F4(self):
         self.assertEqual(Note('F4').minor_second_down(), Note('E4'))
