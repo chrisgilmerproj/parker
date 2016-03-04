@@ -284,33 +284,33 @@ def _scale_creator(scale_cls, root='C4'):
     return scales
 
 
-def dorian_scales():
-    return _scale_creator(Dorian)
+def dorian_scales(root='C4'):
+    return _scale_creator(Dorian, root=root)
 
 
-def mixolydian_scales():
-    return _scale_creator(Mixolydian)
+def mixolydian_scales(root='C4'):
+    return _scale_creator(Mixolydian, root=root)
 
 
-def major_scales():
-    return _scale_creator(Major)
+def major_scales(root='C4'):
+    return _scale_creator(Major, root=root)
 
 
-def minor_scales():
-    return _scale_creator(Minor, root='A4')
+def minor_scales(root='C4'):
+    return _scale_creator(Minor, root=root)
 
 
-def major_pentatonic_scales():
-    return _scale_creator(MajorPentatonic)
+def major_pentatonic_scales(root='C4'):
+    return _scale_creator(MajorPentatonic, root=root)
 
 
-def minor_pentatonic_scales():
-    return _scale_creator(MinorPentatonic)
+def minor_pentatonic_scales(root='C4'):
+    return _scale_creator(MinorPentatonic, root=root)
 
 
-def major_blues_scales():
-    return _scale_creator(MajorBlues)
+def major_blues_scales(root='C4'):
+    return _scale_creator(MajorBlues, root=root)
 
 
-def minor_blues_scales():
-    return _scale_creator(MinorBlues)
+def minor_blues_scales(root='C4'):
+    return _scale_creator(MinorBlues, root=root)

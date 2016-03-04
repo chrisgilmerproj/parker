@@ -8,10 +8,14 @@ Circle of Fourths and Circle of Fifths.  It will provide you with a scale
 and should you need the notes it will also print those out for you to see.
 """
 
+import argparse
 import random
 
 from parker.scales import dorian_scales
 from parker.scales import major_scales
+from parker.scales import minor_scales
+from parker.scales import minor_blues_scales
+from parker.scales import minor_pentatonic_scales
 from parker.scales import mixolydian_scales
 
 
@@ -22,30 +26,49 @@ def print_scale(scale):
     raw_input('')
 
 
-def main():
+def main(args):
     print('\n')
 
-    scales = zip(major_scales(),
-                 mixolydian_scales(),
-                 dorian_scales())
+    major_scale_list = zip(major_scales(),
+                           mixolydian_scales(),
+                           dorian_scales())
+
+    minor_scale_list = zip(minor_scales(),
+                           minor_pentatonic_scales(),
+                           minor_blues_scales())
+
+    scale_list = None
+    if args.major:
+        scale_list = major_scale_list
+    elif args.minor:
+        scale_list = minor_scale_list
+
     while True:
-        random.shuffle(scales)
-        for major, mixolydian, dorian in scales:
-            print_scale(major)
-            print_scale(mixolydian)
-            print_scale(dorian)
+        random.shuffle(scale_list)
+        for scales in scale_list:
+            for scale in scales:
+                print_scale(scale)
             print('{}'.format('=' * 30))
             print('Press enter for next scale')
             print('{}'.format('=' * 30))
             raw_input('')
 
-        print('\n{}\n'.format('=' * 30))
-        print('\nCONGRATS. Ready for more? Press enter.\n')
-        print('\n{}\n'.format('=' * 30))
+        print('{}'.format('=' * 30))
+        print('CONGRATS. Ready for more? Press enter.')
+        print('{}'.format('=' * 30))
+        raw_input('')
 
 
 if __name__ == "__main__":
+    description = 'Practice Major or Minor Scale Sets.'
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('-M', '--major', action='store_true',
+                        help='play with major scales')
+    parser.add_argument('-m', '--minor', action='store_true',
+                        help='play with minor scales')
+    args = parser.parse_args()
+
     try:
-        main()
+        main(args)
     except KeyboardInterrupt:
         pass

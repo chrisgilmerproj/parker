@@ -450,7 +450,7 @@ class TestScaleHelpers(unittest.TestCase):
         self.assertEqual(out, expected)
 
     def test_minor_scales(self):
-        out = minor_scales()
+        out = minor_scales(root='A4')
         expected = [Minor('A4'),
                     Minor('Bb4'),
                     Minor('B4'),
@@ -466,7 +466,7 @@ class TestScaleHelpers(unittest.TestCase):
         self.assertEqual(out, expected)
 
     def test_major_equals_minor(self):
-        for major, minor in zip(major_scales(), minor_scales()):
+        for major, minor in zip(major_scales(), minor_scales(root='A4')):
             self.assertEqual(major.generic_notes, minor.generic_notes)
 
     def test_major_pentatonic_scales(self):
