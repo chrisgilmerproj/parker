@@ -38,6 +38,17 @@ class Scale(NoteGroupBase):
         else:
             return "{}('{}')".format(type(self).__name__, str(self))
 
+    def __eq__(self, other):
+        # Scales must be of the same class or derived from teh Scale class
+        if not (isinstance(other, self.__class__) or isinstance(other, Scale)):
+            return False
+        if self.__dict__ == other.__dict__:
+            return True
+        # Scales are identical if their generic notes are also identical
+        if self.generic_notes == other.generic_notes:
+            return True
+        return False
+
     def build_scale(self):
         intervals = self.get_intervals()
         self.notes = self.root.transpose_list(intervals)

@@ -221,11 +221,9 @@ class TestDiatonicScale(TestScaleBase):
         def compare_major_minor(major_root, minor_root):
             major = Major(major_root)
             minor = Minor(minor_root)
-            self.assertEqual(major.generic_notes, minor.generic_notes)
-            self.assertEqual(major.minor_third_down().generic_notes,
-                             minor.generic_notes)
-            self.assertEqual(minor.minor_third_up().generic_notes,
-                             major.generic_notes)
+            self.assertEqual(major, minor)
+            self.assertEqual(major.minor_third_down(), minor)
+            self.assertEqual(minor.minor_third_up(), major)
         compare_major_minor('C', 'A')
         compare_major_minor('G', 'E')
         compare_major_minor('D', 'B')
@@ -315,12 +313,12 @@ class TestOctatonicScale(TestScaleBase):
         def compare_symmetric_with_mode_one(scale1_root, scale2_root):
             scale1 = OctatonicModeOne(scale1_root)
             scale2 = OctatonicModeOne(scale2_root)
-            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+            self.assertEqual(scale1, scale2)
 
         def compare_symmetric_with_mode_two(scale1_root, scale2_root):
             scale1 = OctatonicModeOne(scale1_root)
             scale2 = OctatonicModeTwo(scale2_root)
-            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+            self.assertEqual(scale1, scale2)
         compare_symmetric_with_mode_two('C4', 'Db4')
         compare_symmetric_with_mode_one('C4', 'Eb4')
         compare_symmetric_with_mode_two('C4', 'E4')
@@ -340,12 +338,12 @@ class TestOctatonicScale(TestScaleBase):
         def compare_symmetric_with_mode_two(scale1_root, scale2_root):
             scale1 = OctatonicModeTwo(scale1_root)
             scale2 = OctatonicModeTwo(scale2_root)
-            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+            self.assertEqual(scale1, scale2)
 
         def compare_symmetric_with_mode_one(scale1_root, scale2_root):
             scale1 = OctatonicModeTwo(scale1_root)
             scale2 = OctatonicModeOne(scale2_root)
-            self.assertEqual(scale1.generic_notes, scale2.generic_notes)
+            self.assertEqual(scale1, scale2)
         compare_symmetric_with_mode_one('C4', 'D4')
         compare_symmetric_with_mode_two('C4', 'Eb4')
         compare_symmetric_with_mode_one('C4', 'F4')
@@ -467,7 +465,7 @@ class TestScaleHelpers(unittest.TestCase):
 
     def test_major_equals_minor(self):
         for major, minor in zip(major_scales(), minor_scales(root='A4')):
-            self.assertEqual(major.generic_notes, minor.generic_notes)
+            self.assertEqual(major, minor)
 
     def test_major_pentatonic_scales(self):
         out = major_pentatonic_scales()
