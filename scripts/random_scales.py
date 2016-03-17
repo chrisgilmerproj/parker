@@ -43,6 +43,9 @@ def main(args):
     elif args.minor:
         scale_list = minor_scale_list
 
+    if scale_list is None:
+        scale_list = major_scale_list
+
     while True:
         random.shuffle(scale_list)
         for scales in scale_list:

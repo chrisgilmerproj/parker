@@ -171,6 +171,10 @@ class Chord(NoteGroupBase):
         return cls._create_chord(root, [0, 4, 7, 10, Aug(14)], '7#9')
 
     @classmethod
+    def added_ninth(cls, root):
+        return cls._create_chord(root, [0, 4, 7, 14], 'add9')
+
+    @classmethod
     def eleventh(cls, root):
         return cls._create_chord(root, [0, 7, 10, 17], '11')
 
@@ -249,6 +253,7 @@ class Chord(NoteGroupBase):
             '7#9': cls.dominant_sharp_ninth,
             'M9': cls.major_ninth,
             'm9': cls.minor_ninth,
+            'add9': cls.added_ninth,
             # Elevenths
             '11': cls.eleventh,
             'm11': cls.minor_eleventh,

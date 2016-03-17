@@ -217,6 +217,11 @@ class TestChord(unittest.TestCase):
         self.assertEqual(str(chord), 'C4M9')
         self._chord_tester(chord, ['C4', 'E4', 'G4', 'B4', 'D5'])
 
+    def test_added_ninth(self):
+        chord = Chord.added_ninth('C4')
+        self.assertEqual(str(chord), 'C4add9')
+        self._chord_tester(chord, ['C4', 'E4', 'G4', 'D5'])
+
     def test_dominant_ninth(self):
         chord = Chord.dominant_ninth('C4')
         self.assertEqual(str(chord), 'C49')
