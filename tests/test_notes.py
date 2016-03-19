@@ -170,15 +170,6 @@ class TestNote(unittest.TestCase):
         with self.assertRaises(Exception):
             n.set_octave(12)
 
-    def test_get_duration(self):
-        n = Note('C4')
-        self.assertEqual(n.get_duration(), 0)
-
-    def test_set_duration(self):
-        n = Note('C4')
-        n.set_duration(500)
-        self.assertEqual(n.get_duration(), 500)
-
     def test_transpose(self):
         n = Note('C4')
         self.assertEqual(n.perfect_fourth_up(), Note('F4'))

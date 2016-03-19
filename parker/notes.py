@@ -16,7 +16,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
     _base_name = 'A'
     _octave = 4
     _accidentals = 0
-    _duration = 0
 
     def __init__(self, note=None, use_sharps=True):
         self.set_note(note, use_sharps=use_sharps)
@@ -98,7 +97,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
         self._base_name = note._base_name
         self._octave = note._octave
         self._accidentals = note._accidentals
-        # self._duration = note._duration
 
     def get_base_name(self):
         return self._base_name
@@ -159,12 +157,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
         if not (0 < octave < 9):
             raise Exception("Octave must be 0 through 9")
         self._octave = octave
-
-    def get_duration(self):
-        return self._duration
-
-    def set_duration(self, duration):
-        self._duration = duration
 
     def set_transpose(self, amount):
         acc = self._accidentals
