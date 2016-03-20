@@ -54,3 +54,21 @@ Notes can also be represented as integers:
 60
 
 
+Constructing Notes
+------------------
+
+You can construct notes using strings, integers, and other Note objects.
+
+
+Modifying Notes
+---------------
+
+Augmenting or Diminishing Notes
+
+
+Other Reprentations
+-------------------
+
+Normalization vs Generalization
+
+
