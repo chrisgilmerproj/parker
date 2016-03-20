@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/chrisgilmerproj/parker.svg?branch=master)](https://travis-ci.org/chrisgilmerproj/parker)
+[![Build Status](https://travis-ci.org/chrisgilmerproj/parker.svg?branch=master)](https://travis-ci.org/chrisgilmerproj/parker) 
+[![Documentation Status](https://readthedocs.org/projects/parker/badge/?version=latest)](http://parker.readthedocs.org/en/latest/?badge=latest)
+
 
 # Parker
 
