@@ -27,6 +27,10 @@ API Docs
 .. toctree::
    :maxdepth: 2
 
+   api/notes.rst
+   api/chords.rst
+   api/scales.rst
+   api/keys.rst
 
 Indices and tables
 ==================
