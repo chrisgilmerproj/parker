@@ -34,6 +34,10 @@ class TestNote(unittest.TestCase):
         self.assertEqual(str(Note(61, use_sharps=True)), 'C#4')
         self.assertEqual(str(Note(61, use_sharps=False)), 'Db4')
 
+    def test_constructor_from_int_negative_octave(self):
+        self.assertEqual(int(Note('B-1')), int(Note(11)))
+        self.assertEqual(Note('B-1'), Note(11))
+
     def test_constructor_from_Note(self):
         self.assertEqual(Note(Note('B9')), Note('B9'))
 

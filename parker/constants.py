@@ -3,11 +3,12 @@ import random
 import re
 
 
+# Reference: https://en.wikipedia.org/wiki/Scientific_pitch_notation
 # Notes should be formated with three pieces of information
 # The first group is the note, always capitalized from A to G
 # The second group is the accidentals, any number of # or b symbols
 # The third group is the octave, which must be a digit between 0 and 9
-NOTE_MATCHER = re.compile("^([A|B|C|D|E|F|G]{1})([#|b]*)([0-9]{0,1})$")
+NOTE_MATCHER = re.compile("^([A|B|C|D|E|F|G]{1})([#|b]*)(-*[0-9]{0,1})$")
 
 # Chords are formatted like notes but include a trailing group
 # which defines the type of chord

@@ -65,9 +65,13 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  base_name:   C
                  accidentals: 0
         """
-        self._octave = int((note / 12) - 1)
+        self._octave = int((note // 12) - 1)
         offset = note - (self._octave + 1) * 12
         lookup = LOOKUP_SHARPS if use_sharps else LOOKUP_FLATS
+
+        # The lookup table only works from 0 - 11, so make sure
+        # that the offset matches
+        offset = offset % 12
         self._base_name, self._accidentals = lookup[offset]
 
     def set_from_string(self, note):
@@ -85,8 +89,10 @@ class Note(TransposeMixin, CommonEqualityMixin,
         if m is not None:
             name, accidentals, octave = m.group(1), m.group(2), m.group(3)
             self._base_name = name
-            octave = octave if octave.isdigit() else "4"
-            self._octave = int(octave)
+            try:
+                self._octave = int(octave)
+            except (NameError, ValueError):
+                self._octave = 4
             self._accidentals = sum(1 if acc == '#' else -1
                                     for acc in accidentals)
             return
