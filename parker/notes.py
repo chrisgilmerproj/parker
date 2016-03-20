@@ -119,6 +119,36 @@ class Note(TransposeMixin, CommonEqualityMixin,
     def get_accidentals_as_string(self):
         return ('#' if self._accidentals > 0 else 'b') * abs(self._accidentals)
 
+    def get_frequency(self, ndigits=None):
+        """
+        Return the frequency of the note.
+
+        This uses the forumula f = f0 * (a ** n)
+
+        f0 - the reference frequency, which is A4 at 440 Hz
+        a  - the twelth root of 2, or 2 ** (1/12)
+        n  - the number of half steps between notes
+
+        Should rounding be required you can set the number of digits to
+        round to in the method.
+
+        Reference:
+          - http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
+          - https://en.wikipedia.org/wiki/Scientific_pitch_notation
+          - https://en.wikipedia.org/wiki/Music_and_mathematics
+        """
+        reference = Note('A4')
+        if self == reference:
+            return 440.0
+        ref_freq = reference.get_frequency()
+        steps = int(self) - int(reference)
+        a = 2.0 ** (1.0 / 12.0)
+        note_freq = ref_freq * (a ** steps)
+
+        if isinstance(ndigits, int):
+            return round(note_freq, ndigits)
+        return note_freq
+
     def generalize(self):
         """
         Return the note without the octave component.

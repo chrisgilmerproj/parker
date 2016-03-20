@@ -38,6 +38,10 @@ class TestNote(unittest.TestCase):
         self.assertEqual(int(Note('B-1')), int(Note(11)))
         self.assertEqual(Note('B-1'), Note(11))
 
+    def test_constructor_from_int_blackhole_note(self):
+        self.assertEqual(int(Note('Bb-53')), int(Note(-614)))
+        self.assertEqual(Note('Bb-53'), Note(-614))
+
     def test_constructor_from_Note(self):
         self.assertEqual(Note(Note('B9')), Note('B9'))
 
@@ -116,6 +120,12 @@ class TestNote(unittest.TestCase):
         self.assertEquals(note.get_accidentals(), -2)
         note = Note('C###4')
         self.assertEquals(note.get_accidentals(), 3)
+
+    def test_get_frequency(self):
+        self.assertEquals(round(Note('A2').get_frequency(), 0), 110.0)
+        self.assertEquals(Note('A4').get_frequency(ndigits=3), 440.0)
+        self.assertEquals(Note('C5').get_frequency(ndigits=3), 523.251)
+        self.assertEquals(Note('B9').get_frequency(ndigits=3), 15804.266)
 
     def test_generalize(self):
         note = Note('C4')
