@@ -91,6 +91,12 @@ class TestNote(unittest.TestCase):
     def test_Note_inequality(self):
         self.assertTrue(Note('C4') != Note('F4'))
 
+    def test_Note_addition(self):
+        self.assertEquals(Note('C5') + Note('A4'), 141)
+
+    def test_Note_subtraction(self):
+        self.assertEquals(Note('C5') - Note('A4'), 3)
+
     def test_clone(self):
         note = Note('C4')
         self.assertNotEqual(id(note), id(note.clone()))
@@ -125,7 +131,17 @@ class TestNote(unittest.TestCase):
         self.assertEquals(round(Note('A2').get_frequency(), 0), 110.0)
         self.assertEquals(Note('A4').get_frequency(ndigits=3), 440.0)
         self.assertEquals(Note('C5').get_frequency(ndigits=3), 523.251)
-        self.assertEquals(Note('B9').get_frequency(ndigits=3), 15804.266)
+        self.assertEquals(Note('B10').get_frequency(ndigits=3), 31608.531)
+
+    def test_get_frequency_human_range(self):
+        """
+        Humans should be able to hear from about 20Hz to 20kHz.  For most
+        applications C0 to C10 is valid but its more like E0 to E10.
+        """
+        self.assertEquals(Note('C0').get_frequency(ndigits=3), 16.352)
+        self.assertEquals(Note('E0').get_frequency(ndigits=3), 20.602)
+        self.assertEquals(Note('C10').get_frequency(ndigits=3), 16744.036)
+        self.assertEquals(Note('E10').get_frequency(ndigits=3), 21096.164)
 
     def test_generalize(self):
         note = Note('C4')

@@ -44,6 +44,20 @@ class Note(TransposeMixin, CommonEqualityMixin,
             return True
         return False
 
+    def __add__(self, other):
+        """
+        Addition is a function of semitones and simply returns the sum
+        of the semitones of each Note object.
+        """
+        return int(self) + int(other)
+
+    def __sub__(self, other):
+        """
+        Addition is a function of semitones and simply returns the difference
+        of the semitones of each Note object.
+        """
+        return int(self) - int(other)
+
     def set_note(self, note, use_sharps):
         if isinstance(note, int):
             self.set_from_int(note, use_sharps)
@@ -141,7 +155,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         if self == reference:
             return 440.0
         ref_freq = reference.get_frequency()
-        steps = int(self) - int(reference)
+        steps = self - reference
         a = 2.0 ** (1.0 / 12.0)
         note_freq = ref_freq * (a ** steps)
 
