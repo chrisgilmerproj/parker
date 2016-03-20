@@ -273,6 +273,12 @@ class Chord(NoteGroupBase):
 
 
 def produce_all_chords(root):
+    """
+    Produce all chords given a root note.
+
+    Returns a dictionary of chord names as the key and the chord object
+    as the value.
+    """
 
     cls = Chord
     chord_methods = [
