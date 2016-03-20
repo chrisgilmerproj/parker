@@ -30,6 +30,30 @@ Packaging is done with `make package`.
 
 Style is important.  Check with `make lint`.
 
+# Documentation
+
+Change to the `docs` directory.  Then do the following:
+
+```sh
+$ cd docs/
+$ virtualenv .venv
+$ source .venv/bin/activate
+(.venv) $ pip install -r requirements.txt
+(.venv) $ pip install -r requirements-local.txt --upgrade
+(.venv) $ make html
+(.venv) $ open build/index.html
+```
+
+It's important that the current version of the library be installed in order
+to generate the API docs.  To insure this insure to install from
+`requirements-local.txt` with the `--upgrade` flag every time.  Example:
+
+```sh
+$ source .venv/bin/activate
+(.venv) $ pip install -r requirements-local.txt --upgrade
+(.venv) $ make html
+```
+
 # Credit
 
 This began as a reconstruction of work from another library so I could get a
