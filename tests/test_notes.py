@@ -5,6 +5,7 @@ from parker.mixins import Dim
 from parker.notes import Note
 from parker.notes import NoteGroup
 from parker.notes import is_valid_note
+from parker.notes import note_from_frequency
 
 
 class TestNoteMethods(unittest.TestCase):
@@ -24,6 +25,12 @@ class TestNoteMethods(unittest.TestCase):
         self.assertFalse(is_valid_note('C$'))
         self.assertFalse(is_valid_note('CC'))
         self.assertFalse(is_valid_note('C#+1'))
+
+    def test_note_from_frequency(self):
+        self.assertEquals(Note('A2'), note_from_frequency(110.0))
+        self.assertEquals(Note('A4'), note_from_frequency(440.0))
+        self.assertEquals(Note('C5'), note_from_frequency(523.251))
+        self.assertEquals(Note('B10'), note_from_frequency(31608.531))
 
 
 class TestNote(unittest.TestCase):

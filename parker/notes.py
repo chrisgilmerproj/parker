@@ -1,3 +1,5 @@
+from math import log
+
 from .constants import LOOKUP_FLATS
 from .constants import LOOKUP_SHARPS
 from .constants import NOTE_MATCHER
@@ -243,6 +245,33 @@ class Note(TransposeMixin, CommonEqualityMixin,
     def set_diminish(self):
         self._accidentals -= 1
         return self
+
+
+def note_from_frequency(freq):
+    """
+    Return the closest note given a frequency value in Hz
+
+    This uses the forumula f = f0 * (a ** n)
+
+    f0 - the reference frequency, which is A4 at 440 Hz
+    a  - the twelth root of 2, or 2 ** (1/12)
+    n  - the number of half steps between notes
+
+    Here we want the value of n, or the integer value
+    of half steps distance from the reference note.
+
+    n = log(f / f0) / log(a)
+
+    This does not take into account out of tune notes. In the future it might
+    make sense to return the cents above or below the note.
+    """
+    reference = Note('A4')
+    ref_freq = reference.get_frequency()
+    a = 2.0 ** (1.0 / 12.0)
+    steps = log(freq / ref_freq) / log(a)
+    steps = int(round(steps))
+    note_int = reference + steps
+    return Note(note_int)
 
 
 class NotesParser(object):

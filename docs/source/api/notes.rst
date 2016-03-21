@@ -3,6 +3,8 @@ parker.notes
 
 .. automethod:: parker.notes.is_valid_note
 
+.. automethod:: parker.notes.note_from_frequency
+
 .. autoclass:: parker.notes.Note
    :members:
    :undoc-members:
