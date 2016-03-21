@@ -4,6 +4,26 @@ from parker.mixins import Aug
 from parker.mixins import Dim
 from parker.notes import Note
 from parker.notes import NoteGroup
+from parker.notes import is_valid_note
+
+
+class TestNoteMethods(unittest.TestCase):
+
+    def test_is_valid_note(self):
+        self.assertTrue(is_valid_note('C'))
+        self.assertTrue(is_valid_note('C4'))
+        self.assertTrue(is_valid_note('C#4'))
+        self.assertTrue(is_valid_note('C10'))
+        self.assertTrue(is_valid_note('B-1'))
+        self.assertTrue(is_valid_note('Bb-53'))
+
+    def test_is_not_valid_note(self):
+        self.assertFalse(is_valid_note('c'))
+        self.assertFalse(is_valid_note('H'))
+        self.assertFalse(is_valid_note('C$'))
+        self.assertFalse(is_valid_note('C$'))
+        self.assertFalse(is_valid_note('CC'))
+        self.assertFalse(is_valid_note('C#+1'))
 
 
 class TestNote(unittest.TestCase):

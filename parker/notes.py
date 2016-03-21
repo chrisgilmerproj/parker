@@ -10,6 +10,16 @@ from .mixins import NotesMixin
 from .mixins import TransposeMixin
 
 
+def is_valid_note(note):
+    """
+    Determine if a note is valid from a given string representation.
+    """
+    m = NOTE_MATCHER.match(note)
+    if m is not None:
+        return True
+    return False
+
+
 class Note(TransposeMixin, CommonEqualityMixin,
            AugmentDiminishMixin):
     """Representation of a single note."""

@@ -1,6 +1,8 @@
 parker.notes
 ============
 
+.. automethod:: parker.notes.is_valid_note
+
 .. autoclass:: parker.notes.Note
    :members:
    :undoc-members:
