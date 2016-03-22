@@ -10,9 +10,11 @@ class TestChord(unittest.TestCase):
     def _chord_tester(self, chord, notes):
         self.assertEqual(len(chord), len(notes))
         for ix, note in enumerate(notes):
-            self.assertEqual(chord[ix], Note(note),
-                    msg="Note {} of {} doesn't match.\n{} != {}\nGiv: {}\nExp: {}".format(
-                                 ix, str(chord), chord[ix], note, [str(n) for n in chord.notes], notes))
+            msg = ("Note {} of {} doesn't match.\n"
+                   "{} != {}\nGiv: {}\nExp: {}".format(
+                    ix, str(chord), chord[ix], note,
+                    [str(n) for n in chord.notes], notes))
+            self.assertEqual(chord[ix], Note(note), msg)
 
     def test_constructor(self):
         chord = Chord('C')
@@ -30,8 +32,7 @@ class TestChord(unittest.TestCase):
         self._chord_tester(Chord('Cmin7'), ['C4', 'Eb4', 'G4', 'Bb4'])
         self._chord_tester(Chord('Cmi7'), ['C4', 'Eb4', 'G4', 'Bb4'])
         self._chord_tester(Chord('C-7'), ['C4', 'Eb4', 'G4', 'Bb4'])
-        # TODO: Change octave to 3
-        #self._chord_tester(Chord('C-7'), ['C3', 'Eb3', 'G3', 'Bb3'])
+        self._chord_tester(Chord('C-7', octave=3), ['C3', 'Eb3', 'G3', 'Bb3'])
 
     def test_constructor_raises_with_no_input(self):
         with self.assertRaises(Exception):
@@ -52,8 +53,8 @@ class TestChord(unittest.TestCase):
         self.assertEqual(repr(Chord('Cmin7')), "Chord('Cm7')")
         self.assertEqual(repr(Chord('Cmi7')), "Chord('Cm7')")
         self.assertEqual(repr(Chord('C-7')), "Chord('Cm7')")
-        # TODO: Set to octave 3
-        # self.assertEqual(repr(Chord('C-7')), "Chord('C3m7')")
+        self.assertEqual(repr(Chord('C-7', octave=3)),
+                         "Chord('Cm7', octave=3)")
 
     def test_get_shorthand_raises(self):
         with self.assertRaises(Exception):

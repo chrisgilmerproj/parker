@@ -11,7 +11,7 @@ class Chord(NoteGroupBase):
     Source Material: https://en.wikipedia.org/wiki/Chord_(music)
     """
 
-    def __init__(self, chord=None, notes=None, extension=None):
+    def __init__(self, chord=None, notes=None, extension=None, octave=None):
         """
         Create chords either from a chord name or from a set
         of notes.  The notes should be a list of Note() objects.
@@ -20,6 +20,7 @@ class Chord(NoteGroupBase):
         """
         self.notes = []
         self.extension = ''
+        self._octave = octave
         if isinstance(chord, str):
             self._set_from_string(chord)
         elif notes:
@@ -34,7 +35,10 @@ class Chord(NoteGroupBase):
                              self.extension)
 
     def __repr__(self):
-        return "{}('{}')".format(type(self).__name__, str(self))
+        rep_str = "{}('{}'".format(type(self).__name__, str(self))
+        if self._octave:
+            rep_str = "{}, octave={}".format(rep_str, self._octave)
+        return "{})".format(rep_str)
 
     def _set_from_string(self, chord):
         m = CHORD_MATCHER.match(chord)
@@ -42,6 +46,8 @@ class Chord(NoteGroupBase):
             raise Exception("Unknown chord format: {}".format(chord))
 
         root, extension = m.group(1), m.group(2)
+        if self._octave:
+            root = "{}{}".format(root, self._octave)
         self.extension = self.normalize_extension(extension)
 
         chord = self._get_shorthand(self.extension)(root)
