@@ -84,7 +84,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
         """
         Set the Note from an integer representation
 
-        Example: 60 should return middle C on a piano
+        Example:
+                 60 should return middle C on a piano
                  integer:     60
                  octave:      4
                  offset:      0
@@ -104,7 +105,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
         """
         Set the Note from a string representation
 
-        Example: C4 should return middle C on a piano
+        Example:
+                 C4 should return middle C on a piano
                  string:      C4
                  octave:      4
                  offset:      0
@@ -201,7 +203,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
         """
         Return the note without the octave component.
 
-        Example: C4    -> C
+        Example:
+                 C4    -> C
                  Cbb4  -> Cbb
                  C###4 -> C###
         """
@@ -213,7 +216,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
         Return the note normalized and without the octave component.
         Set use_sharps to control the output.
 
-        Example: C4    -> C
+        Example:
+                 C4    -> C
                  Cbb4  -> Bb
                  Cbb4  -> A# (use_sharps=True)
                  C###4 -> D#
