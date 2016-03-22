@@ -2,6 +2,8 @@ from .constants import MAJOR_KEYS
 from .constants import MINOR_KEYS
 from .constants import ORDER_OF_FLATS
 from .constants import ORDER_OF_SHARPS
+from .constants import SIGN_FLAT
+from .constants import SIGN_SHARP
 from .notes import Note
 from .scales import Major
 from .scales import Minor
@@ -13,8 +15,6 @@ class Key(object):
     """
     MAJOR = 'major'
     MINOR = 'minor'
-    SIGN_SHARP = '#'
-    SIGN_FLAT = 'b'
 
     def __init__(self, key='C'):
         self.key = key
@@ -26,10 +26,10 @@ class Key(object):
             self.signature = MINOR_KEYS[self.key]
 
         if self.signature >= 0:
-            self.sign = self.SIGN_SHARP
+            self.sign = SIGN_SHARP
             self.accidentals = ORDER_OF_SHARPS[:abs(self.signature)]
         elif self.signature < 0:
-            self.sign = self.SIGN_FLAT
+            self.sign = SIGN_FLAT
             self.accidentals = ORDER_OF_FLATS[:abs(self.signature)]
 
     def __str__(self):

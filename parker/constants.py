@@ -3,6 +3,10 @@ import random
 import re
 
 
+# Signs for sharps and flats
+SIGN_SHARP = '#'
+SIGN_FLAT = 'b'
+
 # Reference: https://en.wikipedia.org/wiki/Scientific_pitch_notation
 # Notes should be formated with three pieces of information
 # The first group is the note, always capitalized from A to G

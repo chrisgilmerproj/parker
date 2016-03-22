@@ -4,6 +4,8 @@ from .constants import LOOKUP_FLATS
 from .constants import LOOKUP_SHARPS
 from .constants import NOTE_MATCHER
 from .constants import NOTE_OFFSETS
+from .constants import SIGN_FLAT
+from .constants import SIGN_SHARP
 from .mixins import AugmentDiminishMixin
 from .mixins import Aug
 from .mixins import Dim
@@ -121,7 +123,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                 self._octave = int(octave)
             except (NameError, ValueError):
                 self._octave = 4
-            self._accidentals = sum(1 if acc == '#' else -1
+            self._accidentals = sum(1 if acc == SIGN_SHARP else -1
                                     for acc in accidentals)
             return
         raise Exception("Unknown note format: {}".format(note))
@@ -152,7 +154,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
         self._accidentals = int(accidentals)
 
     def _get_accidentals_as_string(self):
-        return ('#' if self._accidentals > 0 else 'b') * abs(self._accidentals)
+        return (SIGN_SHARP if self._accidentals > 0 else SIGN_FLAT) * \
+                abs(self._accidentals)
 
     @property
     def octave(self):
@@ -224,7 +227,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  C###4 => Eb (use_sharps=False)
         """
         if use_sharps is None:
-            if 'b' in str(self):
+            if SIGN_FLAT in str(self):
                 use_sharps = False
             else:
                 use_sharps = True
