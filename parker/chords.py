@@ -21,7 +21,7 @@ class Chord(NoteGroupBase):
         self.notes = []
         self.extension = ''
         if isinstance(chord, str):
-            self.set_from_string(chord)
+            self._set_from_string(chord)
         elif notes:
             self.notes.extend(NotesParser.parse(notes))
             self.extension = extension or ''
@@ -30,13 +30,13 @@ class Chord(NoteGroupBase):
                             'name or a set of notes in a list')
 
     def __str__(self):
-        return '{}{}'.format(str(self.notes[0]) if self.notes else '',
+        return '{}{}'.format(self.notes[0].generalize() if self.notes else '',
                              self.extension)
 
     def __repr__(self):
         return "{}('{}')".format(type(self).__name__, str(self))
 
-    def set_from_string(self, chord):
+    def _set_from_string(self, chord):
         m = CHORD_MATCHER.match(chord)
         if m is None:
             raise Exception("Unknown chord format: {}".format(chord))
