@@ -131,12 +131,12 @@ class TestNote(unittest.TestCase):
 
     def test_get_base_name(self):
         note = Note('C4')
-        self.assertEqual(note.get_base_name(), 'C')
+        self.assertEqual(note.base_name, 'C')
 
     def test_set_base_name(self):
         note = Note('C4')
-        note.set_base_name('D')
-        self.assertEqual(note.get_base_name(), 'D')
+        note.base_name = 'D'
+        self.assertEqual(note.base_name, 'D')
         self.assertEqual(str(note), 'D4')
 
     def test_set_base_name_raises(self):
@@ -146,13 +146,21 @@ class TestNote(unittest.TestCase):
 
     def test_get_accidentals(self):
         note = Note('C4')
-        self.assertEquals(note.get_accidentals(), 0)
+        self.assertEquals(note.accidentals, 0)
+
+    def test_set_accidentals(self):
+        note = Note('C4')
+        note.accidentals = 2
+        self.assertEquals(note.accidentals, 2)
+        self.assertEquals(str(note), 'C##4')
 
     def test_get_accidentals_as_string(self):
         note = Note('Cbb4')
-        self.assertEquals(note.get_accidentals(), -2)
+        self.assertEquals(note.accidentals, -2)
+        self.assertEquals(note.get_accidentals_as_string(), 'bb')
         note = Note('C###4')
-        self.assertEquals(note.get_accidentals(), 3)
+        self.assertEquals(note.accidentals, 3)
+        self.assertEquals(note.get_accidentals_as_string(), '###')
 
     def test_get_frequency(self):
         self.assertEquals(round(Note('A2').get_frequency(), 0), 110.0)
@@ -190,42 +198,36 @@ class TestNote(unittest.TestCase):
         note = Note('C###4')
         self.assertEquals(note.normalize(use_sharps=False), 'Eb')
 
-    def test_set_accidentals(self):
-        note = Note('C4')
-        note.set_accidentals(2)
-        self.assertEquals(note.get_accidentals(), 2)
-        self.assertEquals(str(note), 'C##4')
-
     def test_get_octave(self):
-        self.assertEqual(Note('C4').get_octave(), 4)
-        self.assertEqual(Note('B4').get_octave(), 4)
-        self.assertEqual(Note('Cb5').get_octave(), 5)
+        self.assertEqual(Note('C4').octave, 4)
+        self.assertEqual(Note('B4').octave, 4)
+        self.assertEqual(Note('Cb5').octave, 5)
 
     def test_set_octave_from_int(self):
         n = Note('C4')
-        self.assertEqual(n.get_octave(), 4)
-        n.set_octave(3)
-        self.assertEqual(n.get_octave(), 3)
+        self.assertEqual(n.octave, 4)
+        n.octave = 3
+        self.assertEqual(n.octave, 3)
         self.assertEqual(str(n), 'C3')
 
     def test_set_octave_from_str(self):
         n = Note('C4')
-        self.assertEqual(n.get_octave(), 4)
-        n.set_octave('3')
-        self.assertEqual(n.get_octave(), 3)
+        self.assertEqual(n.octave, 4)
+        n.octave = '3'
+        self.assertEqual(n.octave, 3)
         self.assertEqual(str(n), 'C3')
 
     def test_set_octave_from_bad_value(self):
         n = Note('C4')
-        self.assertEqual(n.get_octave(), 4)
+        self.assertEqual(n.octave, 4)
         with self.assertRaises(Exception):
-            n.set_octave('3b')
+            n.octave = '3b'
 
     def test_set_octave_from_int_outside_range(self):
         n = Note('C4')
-        self.assertEqual(n.get_octave(), 4)
+        self.assertEqual(n.octave, 4)
         with self.assertRaises(Exception):
-            n.set_octave(12)
+            n.octave = 12
 
     def test_transpose(self):
         n = Note('C4')

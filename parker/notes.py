@@ -130,17 +130,24 @@ class Note(TransposeMixin, CommonEqualityMixin,
         self._octave = note._octave
         self._accidentals = note._accidentals
 
-    def get_base_name(self):
+    @property
+    def base_name(self):
         return self._base_name
 
-    def set_base_name(self, base_name):
+    @base_name.setter
+    def base_name(self, base_name):
         if base_name in 'ABCDEFG':
             self._base_name = base_name
         else:
             raise Exception('Unkown base name: {}'.format(base_name))
 
-    def get_accidentals(self):
+    @property
+    def accidentals(self):
         return self._accidentals
+
+    @accidentals.setter
+    def accidentals(self, accidentals):
+        self._accidentals = int(accidentals)
 
     def get_accidentals_as_string(self):
         return ('#' if self._accidentals > 0 else 'b') * abs(self._accidentals)
@@ -204,13 +211,12 @@ class Note(TransposeMixin, CommonEqualityMixin,
                 use_sharps = True
         return Note(int(self), use_sharps).generalize()
 
-    def set_accidentals(self, accidentals):
-        self._accidentals = int(accidentals)
-
-    def get_octave(self):
+    @property
+    def octave(self):
         return self._octave
 
-    def set_octave(self, octave):
+    @octave.setter
+    def octave(self, octave):
         if not isinstance(octave, int):
             try:
                 octave = int(octave)
