@@ -26,7 +26,6 @@ class TestChord(unittest.TestCase):
 
     def test_constructor_from_shorthand(self):
         self._chord_tester(Chord('Cmaj7'), ['C4', 'E4', 'G4', 'B4'])
-        self._chord_tester(Chord('Cmaj7'), ['C4', 'E4', 'G4', 'B4'])
         self._chord_tester(Chord('CM7'), ['C4', 'E4', 'G4', 'B4'])
         self._chord_tester(Chord('Cm7'), ['C4', 'Eb4', 'G4', 'Bb4'])
         self._chord_tester(Chord('Cmin7'), ['C4', 'Eb4', 'G4', 'Bb4'])
@@ -46,7 +45,6 @@ class TestChord(unittest.TestCase):
         self.assertEqual(str(Chord('Cmaj7')), 'CM7')
 
     def test_Chord_to_repr(self):
-        self.assertEqual(repr(Chord('Cmaj7')), "Chord('CM7')")
         self.assertEqual(repr(Chord('Cmaj7')), "Chord('CM7')")
         self.assertEqual(repr(Chord('CM7')), "Chord('CM7')")
         self.assertEqual(repr(Chord('Cm7')), "Chord('Cm7')")
@@ -79,6 +77,11 @@ class TestChord(unittest.TestCase):
         chord = Chord.minor_triad('C')
         self.assertEqual(str(chord), 'Cm')
         self._chord_tester(chord, ['C4', 'Eb4', 'G4'])
+
+    def test_diminished_triad_o(self):
+        chord = Chord.diminished_triad('C')
+        self.assertEqual(str(chord), 'Cdim')
+        self._chord_tester(chord, ['C4', 'Eb4', 'Gb4'])
 
     def test_diminished_triad(self):
         chord = Chord.diminished_triad('C')

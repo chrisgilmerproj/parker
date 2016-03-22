@@ -219,6 +219,7 @@ class Chord(NoteGroupBase):
             'm': cls.minor_triad,
             'M': cls.major_triad,
             '': cls.major_triad,
+            'o': cls.diminished_triad,
             'dim': cls.diminished_triad,
             # Augmented
             'aug': cls.augmented_triad,
