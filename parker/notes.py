@@ -30,10 +30,10 @@ class Note(TransposeMixin, CommonEqualityMixin,
     _accidentals = 0
 
     def __init__(self, note=None, use_sharps=True):
-        self.set_note(note, use_sharps=use_sharps)
+        self._set_note(note, use_sharps=use_sharps)
 
     def __str__(self):
-        accidentals = self.get_accidentals_as_string()
+        accidentals = self._get_accidentals_as_string()
         return "{}{}{:d}".format(self._base_name, accidentals, self._octave)
 
     def __repr__(self):
@@ -70,17 +70,17 @@ class Note(TransposeMixin, CommonEqualityMixin,
         """
         return int(self) - int(other)
 
-    def set_note(self, note, use_sharps):
+    def _set_note(self, note, use_sharps):
         if isinstance(note, int):
-            self.set_from_int(note, use_sharps)
+            self._set_from_int(note, use_sharps)
         elif isinstance(note, str):
-            self.set_from_string(note)
+            self._set_from_string(note)
         elif isinstance(note, Note):
-            self.set_from_note(note)
+            self._set_from_note(note)
         elif note is None:
-            self.set_from_string('A4')
+            self._set_from_string('A4')
 
-    def set_from_int(self, note, use_sharps=True):
+    def _set_from_int(self, note, use_sharps=True):
         """
         Set the Note from an integer representation
 
@@ -100,7 +100,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         offset = offset % 12
         self._base_name, self._accidentals = lookup[offset]
 
-    def set_from_string(self, note):
+    def _set_from_string(self, note):
         """
         Set the Note from a string representation
 
@@ -124,7 +124,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
             return
         raise Exception("Unknown note format: {}".format(note))
 
-    def set_from_note(self, note):
+    def _set_from_note(self, note):
         """Set the Note from a Note object"""
         self._base_name = note._base_name
         self._octave = note._octave
@@ -149,8 +149,23 @@ class Note(TransposeMixin, CommonEqualityMixin,
     def accidentals(self, accidentals):
         self._accidentals = int(accidentals)
 
-    def get_accidentals_as_string(self):
+    def _get_accidentals_as_string(self):
         return ('#' if self._accidentals > 0 else 'b') * abs(self._accidentals)
+
+    @property
+    def octave(self):
+        return self._octave
+
+    @octave.setter
+    def octave(self, octave):
+        if not isinstance(octave, int):
+            try:
+                octave = int(octave)
+            except ValueError:
+                raise Exception("Unknown octave format: {}".format(octave))
+        if not (0 < octave < 9):
+            raise Exception("Octave must be 0 through 9")
+        self._octave = octave
 
     def get_frequency(self, ndigits=None):
         """
@@ -190,7 +205,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  Cbb4  -> Cbb
                  C###4 -> C###
         """
-        accidentals = self.get_accidentals_as_string()
+        accidentals = self._get_accidentals_as_string()
         return "{}{}".format(self._base_name, accidentals)
 
     def normalize(self, use_sharps=None):
@@ -211,21 +226,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
                 use_sharps = True
         return Note(int(self), use_sharps).generalize()
 
-    @property
-    def octave(self):
-        return self._octave
-
-    @octave.setter
-    def octave(self, octave):
-        if not isinstance(octave, int):
-            try:
-                octave = int(octave)
-            except ValueError:
-                raise Exception("Unknown octave format: {}".format(octave))
-        if not (0 < octave < 9):
-            raise Exception("Octave must be 0 through 9")
-        self._octave = octave
-
     def set_transpose(self, amount):
         acc = self._accidentals
         transpose_amount = None
@@ -236,7 +236,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         else:
             raise Exception("Cannot transpose from '{}'".format(amount))
         use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
-        self.set_from_int(int(self) - acc + transpose_amount, use_sharps)
+        self._set_from_int(int(self) - acc + transpose_amount, use_sharps)
         self._accidentals += acc
 
         # The amount to update could given by a Aug or Dim class

@@ -154,13 +154,13 @@ class TestNote(unittest.TestCase):
         self.assertEquals(note.accidentals, 2)
         self.assertEquals(str(note), 'C##4')
 
-    def test_get_accidentals_as_string(self):
+    def test__get_accidentals_as_string(self):
         note = Note('Cbb4')
         self.assertEquals(note.accidentals, -2)
-        self.assertEquals(note.get_accidentals_as_string(), 'bb')
+        self.assertEquals(note._get_accidentals_as_string(), 'bb')
         note = Note('C###4')
         self.assertEquals(note.accidentals, 3)
-        self.assertEquals(note.get_accidentals_as_string(), '###')
+        self.assertEquals(note._get_accidentals_as_string(), '###')
 
     def test_get_frequency(self):
         self.assertEquals(round(Note('A2').get_frequency(), 0), 110.0)
