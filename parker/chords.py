@@ -5,11 +5,16 @@ from .mixins import Aug
 from .mixins import Dim
 
 
+# The CHORD_MAP is a dictionary where the chord name is mapped to a list of
+# shorthand notations and the corresponding transpose list to create the
+# chord given a root note.  The shorthand list order is not consequential
+# except that when producing all the chords the first element in the list
+# is chosen as the desired shorthand notation.
 CHORD_MAP = {
-    # Triads
-    'major_triad': {'shorthand': ['M', ''],
+    # Major
+    'major_triad': {'shorthand': ['M', '', 'maj', 'ma', 'major'],
                     'transpose_list': [0, 4, 7]},
-    'minor_triad': {'shorthand': ['m'],
+    'minor_triad': {'shorthand': ['m', 'min', 'mi', '-', 'minor'],
                     'transpose_list': [0, 3, 7]},
     # Augmented
     'augmented_triad': {'shorthand': ['aug'],
@@ -30,14 +35,17 @@ CHORD_MAP = {
                                'transpose_list': [0, 5, 7]},
     'suspended_second_triad': {'shorthand': ['sus2'],
                                'transpose_list': [0, 2, 7]},
-    'suspended_seventh': {'shorthand': ['sus47'],
+    'suspended_seventh': {'shorthand': ['sus47', '7sus4'],
                           'transpose_list': [0, 5, 7, 10]},
+    # Fifths
+    'major_fifth': {'shorthand': ['5'],
+                    'transpose_list': [0, 7]},
     # Sixths
-    'major_sixth': {'shorthand': ['M6'],
+    'major_sixth': {'shorthand': ['M6', '6', 'maj6'],
                     'transpose_list': [0, 4, 7, 9]},
-    'minor_sixth': {'shorthand': ['m6'],
+    'minor_sixth': {'shorthand': ['m6', 'min6'],
                     'transpose_list': [0, 3, 7, 9]},
-    'sixth_ninth': {'shorthand': ['69'],
+    'sixth_ninth': {'shorthand': ['69', '6/9'],
                     'transpose_list': [0, 4, 7, 9, 14]},
     'dominant_sixth': {'shorthand': ['67'],
                        'transpose_list': [0, 4, 7, 9, 10]},
@@ -46,27 +54,44 @@ CHORD_MAP = {
                          'transpose_list': [0, 4, 7, 10]},
     'lydian_dominant_seventh': {'shorthand': ['7#11'],
                                 'transpose_list': [0, 4, 7, 10, Aug(17)]},
-    'major_seventh': {'shorthand': ['M7'],
+    'major_seventh': {'shorthand': ['M7', 'maj7', 'ma7'],  # delta7 and delta
                       'transpose_list': [0, 4, 7, 11]},
-    'minor_major_seventh': {'shorthand': ['mM7', 'm/M7'],
+    'major_seventh_sharp_five': {'shorthand': ['M7#5', 'M7+5'],
+                                 'transpose_list': [0, 4, 8, 11]},
+    'major_seventh_flat_five': {'shorthand': ['M7b5', 'M7-5'],
+                                'transpose_list': [0, 4, 6, 11]},
+    'minor_major_seventh': {'shorthand': ['mM7', 'm/M7', 'm/maj7'],
                             'transpose_list': [0, 3, 7, 11]},
-    'minor_seventh': {'shorthand': ['m7'],
+    'minor_seventh': {'shorthand': ['m7', 'min7', 'mi7', '-7'],
                       'transpose_list': [0, 3, 7, 10]},
-    'minor_seventh_flat_five': {'shorthand': ['m7b5'],
+    'minor_seventh_sharp_five': {'shorthand': ['m7#5', 'm7+5'],
+                                 'transpose_list': [0, 3, 8, 10]},
+    'minor_seventh_flat_five': {'shorthand': ['m7b5', 'm7-5'],
                                 'transpose_list': [0, 3, 6, 10]},
     # Ninths
     'added_ninth': {'shorthand': ['add9'],
                     'transpose_list': [0, 4, 7, 14]},
+    'minor_added_ninth': {'shorthand': ['madd9'],
+                          'transpose_list': [0, 3, 7, 14]},
     'dominant_ninth': {'shorthand': ['9'],
                        'transpose_list': [0, 4, 7, 10, 14]},
-    'dominant_flat_ninth': {'shorthand': ['7b9'],
+    'dominant_ninth_flat_five': {'shorthand': ['9b5', '9-5'],
+                                 'transpose_list': [0, 4, 6, 10, 14]},
+    'dominant_ninth_sharp_five': {'shorthand': ['9#5', '9+5'],
+                                  'transpose_list': [0, 4, 8, 10, 14]},
+    'dominant_flat_ninth': {'shorthand': ['7b9', '7-9'],
                             'transpose_list': [0, 4, 7, 10, 13]},
-    'dominant_sharp_ninth': {'shorthand': ['7#9'],
+    'dominant_sharp_ninth': {'shorthand': ['7#9', '7+9'],
                              'transpose_list': [0, 4, 7, 10, Aug(14)]},
-    'major_ninth': {'shorthand': ['M9'],
+    'dominant_sharp_ninth_flat_five': {'shorthand': ['7#9b5', '7+9-5'],
+                                       'transpose_list': [0, 4, 6, 10,
+                                                          Aug(14)]},
+    'major_ninth': {'shorthand': ['M9', 'maj9', 'ma9'],
                     'transpose_list': [0, 4, 7, 11, 14]},
-    'minor_ninth': {'shorthand': ['m9'],
+    'minor_ninth': {'shorthand': ['m9', 'min9', 'mi9'],
                     'transpose_list': [0, 3, 7, 10, 14]},
+    'minor_ninth_flat_five': {'shorthand': ['m9b5', 'm9-5'],
+                              'transpose_list': [0, 3, 6, 10, 14]},
     # Elevenths
     'eleventh': {'shorthand': ['11'],
                  'transpose_list': [0, 7, 10, 17]},
@@ -75,13 +100,15 @@ CHORD_MAP = {
     # Thirteenths
     'dominant_thirteenth': {'shorthand': ['13'],
                             'transpose_list': [0, 4, 7, 10, 14, 21]},
-    'major_thirteenth': {'shorthand': ['M13'],
+    'major_thirteenth': {'shorthand': ['M13', 'maj13'],
                          'transpose_list': [0, 4, 7, 11, 14, 21]},
     'minor_thirteenth': {'shorthand': ['m13'],
                          'transpose_list': [0, 3, 7, 10, 14, 21]},
     # Altered
-    'dominant_flat_five': {'shorthand': ['7b5'],
+    'dominant_flat_five': {'shorthand': ['7b5', '7-5'],
                            'transpose_list': [0, 4, 6, 10]},
+    'dominant_sharp_five': {'shorthand': ['7#5', '7+5'],
+                            'transpose_list': [0, 4, 8, 10]},
     'hendrix_chord': {'shorthand': ['7b12'],
                       'transpose_list': [0, 4, 7, 10, 15]},
 }
@@ -134,22 +161,12 @@ class Chord(NoteGroupBase):
         if m is None:
             raise Exception("Unknown chord format: {}".format(chord))
 
-        root, extension = m.group(1), m.group(2)
+        root, self.extension = m.group(1), m.group(2)
         if self._octave:
             root = "{}{}".format(root, self._octave)
-        self.extension = self.normalize_extension(extension)
 
         transpose_list = self._get_shorthand(self.extension)
         self.notes = Note(root).transpose_list(transpose_list)
-
-    @staticmethod
-    def normalize_extension(extension):
-        extension = extension.replace("min", "m")
-        extension = extension.replace("mi", "m")
-        extension = extension.replace("-", "m")
-        extension = extension.replace("maj", "M")
-        extension = extension.replace("ma", "M")
-        return extension
 
     @classmethod
     def _get_shorthand(cls, shorthand):

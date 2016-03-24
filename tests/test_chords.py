@@ -42,17 +42,17 @@ class TestChord(unittest.TestCase):
             Chord('_C%G6')
 
     def test_Chord_to_str(self):
-        self.assertEqual(str(Chord('Cmaj7')), 'CM7')
+        self.assertEqual(str(Chord('Cmaj7')), 'Cmaj7')
 
     def test_Chord_to_repr(self):
-        self.assertEqual(repr(Chord('Cmaj7')), "Chord('CM7')")
+        self.assertEqual(repr(Chord('Cmaj7')), "Chord('Cmaj7')")
         self.assertEqual(repr(Chord('CM7')), "Chord('CM7')")
         self.assertEqual(repr(Chord('Cm7')), "Chord('Cm7')")
-        self.assertEqual(repr(Chord('Cmin7')), "Chord('Cm7')")
-        self.assertEqual(repr(Chord('Cmi7')), "Chord('Cm7')")
-        self.assertEqual(repr(Chord('C-7')), "Chord('Cm7')")
+        self.assertEqual(repr(Chord('Cmin7')), "Chord('Cmin7')")
+        self.assertEqual(repr(Chord('Cmi7')), "Chord('Cmi7')")
+        self.assertEqual(repr(Chord('C-7')), "Chord('C-7')")
         self.assertEqual(repr(Chord('C-7', octave=3)),
-                         "Chord('Cm7', octave=3)")
+                         "Chord('C-7', octave=3)")
 
     def test_get_shorthand_raises(self):
         with self.assertRaises(Exception):
@@ -272,23 +272,33 @@ class TestAllChords(unittest.TestCase):
                     'dominant_flat_five': Chord('C7b5'),
                     'dominant_flat_ninth': Chord('C7b9'),
                     'dominant_ninth': Chord('C9'),
+                    'dominant_ninth_flat_five': Chord('C9b5'),
+                    'dominant_ninth_sharp_five': Chord('C9#5'),
                     'dominant_seventh': Chord('C7'),
+                    'dominant_sharp_five': Chord('C7#5'),
                     'dominant_sharp_ninth': Chord('C7#9'),
+                    'dominant_sharp_ninth_flat_five': Chord('C7#9b5'),
                     'dominant_sixth': Chord('C67'),
                     'dominant_thirteenth': Chord('C13'),
                     'eleventh': Chord('C11'),
                     'hendrix_chord': Chord('C7b12'),
                     'lydian_dominant_seventh': Chord('C7#11'),
+                    'major_fifth': Chord('C5'),
                     'major_ninth': Chord('CM9'),
                     'major_seventh': Chord('CM7'),
+                    'major_seventh_flat_five': Chord('CM7b5'),
+                    'major_seventh_sharp_five': Chord('CM7#5'),
                     'major_sixth': Chord('CM6'),
                     'major_thirteenth': Chord('CM13'),
                     'major_triad': Chord('CM'),
+                    'minor_added_ninth': Chord('Cmadd9'),
                     'minor_eleventh': Chord('Cm11'),
                     'minor_major_seventh': Chord('CmM7'),
                     'minor_ninth': Chord('Cm9'),
+                    'minor_ninth_flat_five': Chord('Cm9b5'),
                     'minor_seventh': Chord('Cm7'),
                     'minor_seventh_flat_five': Chord('Cm7b5'),
+                    'minor_seventh_sharp_five': Chord('Cm7#5'),
                     'minor_sixth': Chord('Cm6'),
                     'minor_thirteenth': Chord('Cm13'),
                     'minor_triad': Chord('Cm'),
