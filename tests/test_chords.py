@@ -63,6 +63,9 @@ class TestChord(unittest.TestCase):
         self.assertEqual(str(chord), 'CM')
         self._chord_tester(chord, ['C4', 'E4', 'G4'])
 
+        # Alternative representations
+        self.assertEqual(chord, Chord('C'))
+
     def test_minor_triad(self):
         chord = Chord('Cm')
         self.assertEqual(str(chord), 'Cm')
@@ -72,6 +75,9 @@ class TestChord(unittest.TestCase):
         chord = Chord('Cdim')
         self.assertEqual(str(chord), 'Cdim')
         self._chord_tester(chord, ['C4', 'Eb4', 'Gb4'])
+
+        # Alternative representations
+        self.assertEqual(chord, Chord('Co'))
 
     def test_augmented_triad(self):
         chord = Chord('Caug')
@@ -92,6 +98,9 @@ class TestChord(unittest.TestCase):
         chord = Chord('Csus4')
         self.assertEqual(str(chord), 'Csus4')
         self._chord_tester(chord, ['C4', 'F4', 'G4'])
+
+        # Alternative representations
+        self.assertEqual(chord, Chord('Csus'))
 
     def test_suspended_second_triad(self):
         chord = Chord('Csus2')
@@ -167,6 +176,9 @@ class TestChord(unittest.TestCase):
         chord = Chord('CmM7')
         self.assertEqual(str(chord), 'CmM7')
         self._chord_tester(chord, ['C4', 'Eb4', 'G4', 'B4'])
+
+        # Alternative representations
+        self.assertEqual(chord, Chord('Cm/M7'))
 
     def test_minor_sixth(self):
         chord = Chord('Cm6')

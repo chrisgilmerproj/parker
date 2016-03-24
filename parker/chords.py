@@ -5,97 +5,91 @@ from .mixins import Aug
 from .mixins import Dim
 
 
-SHORTHAND = {
+CHORD_MAP = {
     # Triads
-    'm': [0, 3, 7],
-    'M': [0, 4, 7],
-    'dim': [0, 3, 6],
+    'major_triad': {'shorthand': ['M', ''],
+                    'transpose_list': [0, 4, 7]},
+    'minor_triad': {'shorthand': ['m'],
+                    'transpose_list': [0, 3, 7]},
     # Augmented
-    'aug': [0, 4, Aug(7)],
-    'm7+': [0, 4, Aug(7), 10],
-    'M7+': [0, 4, Aug(7), 11],
+    'augmented_triad': {'shorthand': ['aug'],
+                        'transpose_list': [0, 4, Aug(7)]},
+    'augmented_major_seventh': {'shorthand': ['M7+'],
+                                'transpose_list': [0, 4, Aug(7), 11]},
+    'augmented_minor_seventh': {'shorthand': ['m7+'],
+                                'transpose_list': [0, 4, Aug(7), 10]},
+    # Diminished
+    'diminished_seventh': {'shorthand': ['dim7'],
+                           'transpose_list': [0, 3, 6, Dim(10)]},
+    'diminished_triad': {'shorthand': ['dim', 'o'],
+                         'transpose_list': [0, 3, 6]},
     # Suspended
-    'sus47': [0, 5, 7, 10],
-    'sus4': [0, 5, 7],
-    'sus2': [0, 2, 7],
-    'sus4b9': [0, 5, 7, 13],
-    # Sevenths
-    'm7': [0, 3, 7, 10],
-    'M7': [0, 4, 7, 11],
-    '7': [0, 4, 7, 10],
-    'm7b5': [0, 3, 6, 10],
-    'dim7': [0, 3, 6, Dim(10)],
-    'mM7': [0, 3, 7, 11],
+    'suspended_fourth_ninth': {'shorthand': ['sus4b9'],
+                               'transpose_list': [0, 5, 7, 13]},
+    'suspended_fourth_triad': {'shorthand': ['sus4', 'sus'],
+                               'transpose_list': [0, 5, 7]},
+    'suspended_second_triad': {'shorthand': ['sus2'],
+                               'transpose_list': [0, 2, 7]},
+    'suspended_seventh': {'shorthand': ['sus47'],
+                          'transpose_list': [0, 5, 7, 10]},
     # Sixths
-    'm6': [0, 3, 7, 9],
-    'M6': [0, 4, 7, 9],
-    '67': [0, 4, 7, 9, 10],
+    'major_sixth': {'shorthand': ['M6'],
+                    'transpose_list': [0, 4, 7, 9]},
+    'minor_sixth': {'shorthand': ['m6'],
+                    'transpose_list': [0, 3, 7, 9]},
+    'sixth_ninth': {'shorthand': ['69'],
+                    'transpose_list': [0, 4, 7, 9, 14]},
+    'dominant_sixth': {'shorthand': ['67'],
+                       'transpose_list': [0, 4, 7, 9, 10]},
+    # Sevenths
+    'dominant_seventh': {'shorthand': ['7'],
+                         'transpose_list': [0, 4, 7, 10]},
+    'lydian_dominant_seventh': {'shorthand': ['7#11'],
+                                'transpose_list': [0, 4, 7, 10, Aug(17)]},
+    'major_seventh': {'shorthand': ['M7'],
+                      'transpose_list': [0, 4, 7, 11]},
+    'minor_major_seventh': {'shorthand': ['mM7', 'm/M7'],
+                            'transpose_list': [0, 3, 7, 11]},
+    'minor_seventh': {'shorthand': ['m7'],
+                      'transpose_list': [0, 3, 7, 10]},
+    'minor_seventh_flat_five': {'shorthand': ['m7b5'],
+                                'transpose_list': [0, 3, 6, 10]},
     # Ninths
-    '69': [0, 4, 7, 9, 14],
-    '9': [0, 4, 7, 10, 14],
-    '7b9': [0, 4, 7, 10, 13],
-    '7#9': [0, 4, 7, 10, Aug(14)],
-    'M9': [0, 4, 7, 11, 14],
-    'm9': [0, 3, 7, 10, 14],
-    'add9': [0, 4, 7, 14],
+    'added_ninth': {'shorthand': ['add9'],
+                    'transpose_list': [0, 4, 7, 14]},
+    'dominant_ninth': {'shorthand': ['9'],
+                       'transpose_list': [0, 4, 7, 10, 14]},
+    'dominant_flat_ninth': {'shorthand': ['7b9'],
+                            'transpose_list': [0, 4, 7, 10, 13]},
+    'dominant_sharp_ninth': {'shorthand': ['7#9'],
+                             'transpose_list': [0, 4, 7, 10, Aug(14)]},
+    'major_ninth': {'shorthand': ['M9'],
+                    'transpose_list': [0, 4, 7, 11, 14]},
+    'minor_ninth': {'shorthand': ['m9'],
+                    'transpose_list': [0, 3, 7, 10, 14]},
     # Elevenths
-    '11': [0, 7, 10, 17],
-    'm11': [0, 3, 7, 10, 17],
-    '7#11': [0, 4, 7, 10, Aug(17)],
+    'eleventh': {'shorthand': ['11'],
+                 'transpose_list': [0, 7, 10, 17]},
+    'minor_eleventh': {'shorthand': ['m11'],
+                       'transpose_list': [0, 3, 7, 10, 17]},
     # Thirteenths
-    'M13': [0, 4, 7, 11, 14, 21],
-    'm13': [0, 3, 7, 10, 14, 21],
-    '13': [0, 4, 7, 10, 14, 21],
-    # Altered chords
-    '7b5': [0, 4, 6, 10],
-    '7b12': [0, 4, 7, 10, 15],
+    'dominant_thirteenth': {'shorthand': ['13'],
+                            'transpose_list': [0, 4, 7, 10, 14, 21]},
+    'major_thirteenth': {'shorthand': ['M13'],
+                         'transpose_list': [0, 4, 7, 11, 14, 21]},
+    'minor_thirteenth': {'shorthand': ['m13'],
+                         'transpose_list': [0, 3, 7, 10, 14, 21]},
+    # Altered
+    'dominant_flat_five': {'shorthand': ['7b5'],
+                           'transpose_list': [0, 4, 6, 10]},
+    'hendrix_chord': {'shorthand': ['7b12'],
+                      'transpose_list': [0, 4, 7, 10, 15]},
 }
 
-CHORD_TO_SHORTHAND = {
-    # Triads
-    'minor_triad': 'm',
-    'major_triad': 'M',
-    'diminished_triad': 'dim',
-    # Augmented
-    'augmented_triad': 'aug',
-    'augmented_minor_seventh': 'm7+',
-    'augmented_major_seventh': 'M7+',
-    # Suspended
-    'suspended_fourth_triad': 'sus4',
-    'suspended_second_triad': 'sus2',
-    'suspended_seventh': 'sus47',
-    'suspended_fourth_ninth': 'sus4b9',
-    # Sevenths
-    'minor_seventh': 'm7',
-    'major_seventh': 'M7',
-    'dominant_seventh': '7',
-    'minor_seventh_flat_five': 'm7b5',
-    'diminished_seventh': 'dim7',
-    'minor_major_seventh': 'mM7',
-    # Sixths
-    'minor_sixth': 'm6',
-    'major_sixth': 'M6',
-    'dominant_sixth': '67',
-    # Ninths
-    'sixth_ninth': '69',
-    'dominant_ninth': '9',
-    'dominant_flat_ninth': '7b9',
-    'dominant_sharp_ninth': '7#9',
-    'major_ninth': 'M9',
-    'minor_ninth': 'm9',
-    'added_ninth': 'add9',
-    # Elevenths
-    'eleventh': '11',
-    'minor_eleventh': 'm11',
-    'lydian_dominant_seventh': '7#11',
-    # Thirteenths
-    'major_thirteenth': 'M13',
-    'minor_thirteenth': 'm13',
-    'dominant_thirteenth': '13',
-    # Altered chords
-    'dominant_flat_five': '7b5',
-    'hendrix_chord': '7b12',
-}
+SHORTHAND = {}
+for name, data in CHORD_MAP.items():
+    for short in data['shorthand']:
+        SHORTHAND[short] = data['transpose_list']
 
 
 class Chord(NoteGroupBase):
@@ -123,6 +117,17 @@ class Chord(NoteGroupBase):
         if self._octave:
             rep_str = "{}, octave={}".format(rep_str, self._octave)
         return "{})".format(rep_str)
+
+    def __eq__(self, other):
+        # Chords must be of the same class or derived from the Chord class
+        if not (isinstance(other, self.__class__) or isinstance(other, Chord)):
+            return False
+        if self.__dict__ == other.__dict__:
+            return True
+        # Scales are identical if their generic notes are also identical
+        if self.notes == other.notes:
+            return True
+        return False
 
     def _set_from_string(self, chord):
         m = CHORD_MATCHER.match(chord)
@@ -162,7 +167,8 @@ def produce_all_chords(root):
     """
 
     chord_info = {}
-    for name, shorthand in CHORD_TO_SHORTHAND.items():
+    for name, data in CHORD_MAP.items():
+        shorthand = data['shorthand'][0]
         chord_name = '{}{}'.format(root, shorthand)
         chord = Chord(chord_name)
         chord_info[name] = chord

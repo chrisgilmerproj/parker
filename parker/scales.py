@@ -39,7 +39,7 @@ class Scale(NoteGroupBase):
             return "{}('{}')".format(type(self).__name__, str(self))
 
     def __eq__(self, other):
-        # Scales must be of the same class or derived from teh Scale class
+        # Scales must be of the same class or derived from the Scale class
         if not (isinstance(other, self.__class__) or isinstance(other, Scale)):
             return False
         if self.__dict__ == other.__dict__:
