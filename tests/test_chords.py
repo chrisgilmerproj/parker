@@ -196,7 +196,7 @@ class TestChord(unittest.TestCase):
     def test_minor_sixth(self):
         chord = Chord.minor_sixth('C')
         self.assertEqual(str(chord), 'Cm6')
-        self._chord_tester(chord, ['C4', 'Eb4', 'G4', 'Ab4'])
+        self._chord_tester(chord, ['C4', 'Eb4', 'G4', 'A4'])
 
     def test_major_sixth(self):
         chord = Chord.major_sixth('C')

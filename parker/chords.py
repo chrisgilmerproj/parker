@@ -142,7 +142,7 @@ class Chord(NoteGroupBase):
 
     @classmethod
     def minor_sixth(cls, root):
-        return cls._create_chord(root, [0, 3, 7, 8], 'm6')
+        return cls._create_chord(root, [0, 3, 7, 9], 'm6')
 
     @classmethod
     def major_sixth(cls, root):

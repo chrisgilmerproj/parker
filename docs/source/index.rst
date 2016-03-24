@@ -16,6 +16,10 @@ Tutorial
 
    tutorial/features.rst
    tutorial/notes.rst
+   tutorial/intervals.rst
+   tutorial/chords.rst
+   tutorial/scales.rst
+   tutorial/keys.rst
 
 
 API Docs
