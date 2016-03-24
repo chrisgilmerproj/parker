@@ -11,7 +11,7 @@ from .mixins import Dim
 # except that when producing all the chords the first element in the list
 # is chosen as the desired shorthand notation.
 CHORD_MAP = {
-    # Major
+    # Triads
     'major_triad': {'shorthand': ['M', '', 'maj', 'ma', 'major'],
                     'transpose_list': [0, 4, 7]},
     'minor_triad': {'shorthand': ['m', 'min', 'mi', '-', 'minor'],
@@ -24,6 +24,8 @@ CHORD_MAP = {
     'augmented_minor_seventh': {'shorthand': ['m7+'],
                                 'transpose_list': [0, 4, Aug(7), 10]},
     # Diminished
+    'diminished_major_seventh': {'shorthand': ['dimM7'],
+                                 'transpose_list': [0, 3, 6, 'e']},
     'diminished_seventh': {'shorthand': ['dim7'],
                            'transpose_list': [0, 3, 6, Dim(10)]},
     'diminished_triad': {'shorthand': ['dim', 'o'],
@@ -106,9 +108,9 @@ CHORD_MAP = {
                          'transpose_list': [0, 3, 7, 10, 14, 21]},
     # Altered
     'dominant_flat_five': {'shorthand': ['7b5', '7-5'],
-                           'transpose_list': [0, 4, 6, 10]},
+                           'transpose_list': [0, 4, 6, 't']},
     'dominant_sharp_five': {'shorthand': ['7#5', '7+5'],
-                            'transpose_list': [0, 4, 8, 10]},
+                            'transpose_list': [0, 4, 8, 't']},
     'hendrix_chord': {'shorthand': ['7b12'],
                       'transpose_list': [0, 4, 7, 10, 15]},
 }

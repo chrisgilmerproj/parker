@@ -173,6 +173,11 @@ class TestChord(unittest.TestCase):
         self.assertEqual(str(chord), 'Cdim7')
         self._chord_tester(chord, ['C4', 'Eb4', 'Gb4', 'Bbb4'])
 
+    def test_diminished_major_seventh(self):
+        chord = Chord('CdimM7')
+        self.assertEqual(str(chord), 'CdimM7')
+        self._chord_tester(chord, ['C4', 'Eb4', 'Gb4', 'B4'])
+
     def test_minor_seventh_flat_five(self):
         chord = Chord('Cm7b5')
         self.assertEqual(str(chord), 'Cm7b5')
@@ -273,6 +278,7 @@ class TestAllChords(unittest.TestCase):
                     'augmented_major_seventh': Chord('CM7+'),
                     'augmented_minor_seventh': Chord('Cm7+'),
                     'augmented_triad': Chord('Caug'),
+                    'diminished_major_seventh': Chord('CdimM7'),
                     'diminished_seventh': Chord('Cdim7'),
                     'diminished_triad': Chord('Cdim'),
                     'dominant_flat_five': Chord('C7b5'),
