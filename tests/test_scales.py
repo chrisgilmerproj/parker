@@ -23,6 +23,7 @@ from parker.scales import Minor
 from parker.scales import MinorBlues
 from parker.scales import MinorPentatonic
 from parker.scales import Mixolydian
+from parker.scales import NaturalMinor
 from parker.scales import Octatonic
 from parker.scales import OctatonicModeOne
 from parker.scales import OctatonicModeTwo
@@ -222,6 +223,12 @@ class TestDiatonicScale(TestScaleBase):
         in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Minor('A4')")
+
+    def test_NaturalMinor_on_A4(self):
+        scale = NaturalMinor(Note('A4'))
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "NaturalMinor('A4')")
 
     def test_HarmonicMinor_on_A4(self):
         scale = HarmonicMinor(Note('A4'))

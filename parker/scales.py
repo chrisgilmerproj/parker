@@ -172,6 +172,10 @@ class Minor(Aeolian):
     pass
 
 
+class NaturalMinor(Minor):
+    pass
+
+
 class HarmonicMinor(Minor):
     def get_intervals(self):
         intervals = self._generate_intervals(6)
