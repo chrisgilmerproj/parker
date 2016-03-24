@@ -10,6 +10,7 @@ from parker.scales import Diatonic
 from parker.scales import DiminishedWholeTone
 from parker.scales import Dominant
 from parker.scales import Dorian
+from parker.scales import HalfWholeDiminished
 from parker.scales import HarmonicMajor
 from parker.scales import HarmonicMinor
 from parker.scales import Ionian
@@ -19,6 +20,7 @@ from parker.scales import Major
 from parker.scales import MajorBlues
 from parker.scales import MajorPentatonic
 from parker.scales import MedievalLydian
+from parker.scales import MelodicMinor
 from parker.scales import Minor
 from parker.scales import MinorBlues
 from parker.scales import MinorPentatonic
@@ -28,8 +30,10 @@ from parker.scales import Octatonic
 from parker.scales import OctatonicModeOne
 from parker.scales import OctatonicModeTwo
 from parker.scales import Phrygian
+from parker.scales import PhrygianDominant
 from parker.scales import Scale
 from parker.scales import SuperLocrian
+from parker.scales import WholeHalfDiminished
 from parker.scales import _scale_creator
 from parker.scales import circle_of_fifths
 from parker.scales import circle_of_fourths
@@ -188,6 +192,12 @@ class TestDiatonicScale(TestScaleBase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "Phrygian('E4')")
 
+    def test_PhrygianDominant_on_E4(self):
+        scale = PhrygianDominant(Note('E4'))
+        in_scale = ['E4', 'F4', 'G#4', 'A4', 'B4', 'C5', 'D5', 'E5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "PhrygianDominant('E4')")
+
     def test_MedievalLydian_on_F4(self):
         scale = MedievalLydian(Note('F4'))
         in_scale = ['F4', 'G4', 'A4', 'Cb4', 'C5', 'D5', 'E5', 'F5']
@@ -235,6 +245,12 @@ class TestDiatonicScale(TestScaleBase):
         in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G#5', 'A5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "HarmonicMinor('A4')")
+
+    def test_MelodicMinor_on_A4(self):
+        scale = MelodicMinor(Note('A4'))
+        in_scale = ['A4', 'B4', 'C5', 'D5', 'E5', 'F#5', 'G#5', 'A5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "MelodicMinor('A4')")
 
     def test_Major_equals_Minor(self):
         def compare_major_minor(major_root, minor_root):
@@ -363,6 +379,12 @@ class TestOctatonicScale(TestScaleBase):
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "OctatonicModeOne('C4')")
 
+    def test_HalfWholeDiminished_on_C4(self):
+        scale = HalfWholeDiminished(Note('C4'))
+        in_scale = ['C4', 'Db4', 'Eb4', 'E4', 'Gb4', 'G4', 'A4', 'Bb4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "HalfWholeDiminished('C4')")
+
     def test_OctatonicModeOne_is_symmetric(self):
         def compare_symmetric_with_mode_one(scale1_root, scale2_root):
             scale1 = OctatonicModeOne(scale1_root)
@@ -387,6 +409,12 @@ class TestOctatonicScale(TestScaleBase):
         in_scale = ['C4', 'D4', 'Eb4', 'F4', 'Gb4', 'Ab4', 'A4', 'B4', 'C5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "OctatonicModeTwo('C4')")
+
+    def test_WholeHalfDiminished_on_C4(self):
+        scale = WholeHalfDiminished(Note('C4'))
+        in_scale = ['C4', 'D4', 'Eb4', 'F4', 'Gb4', 'Ab4', 'A4', 'B4', 'C5']
+        self._scale_tester(scale, in_scale)
+        self.assertEqual(repr(scale), "WholeHalfDiminished('C4')")
 
     def test_OctatonicModeTwo_is_symmetric(self):
         def compare_symmetric_with_mode_two(scale1_root, scale2_root):

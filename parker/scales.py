@@ -137,6 +137,13 @@ class Phrygian(Diatonic):
         return self._generate_intervals(3)
 
 
+class PhrygianDominant(Diatonic):
+    def get_intervals(self):
+        intervals = self._generate_intervals(3)
+        intervals[2] += 1
+        return intervals
+
+
 class MedievalLydian(Diatonic):
     def get_intervals(self):
         return self._generate_intervals(4)
@@ -179,6 +186,14 @@ class NaturalMinor(Minor):
 class HarmonicMinor(Minor):
     def get_intervals(self):
         intervals = self._generate_intervals(6)
+        intervals[6] += 1
+        return intervals
+
+
+class MelodicMinor(Minor):
+    def get_intervals(self):
+        intervals = self._generate_intervals(6)
+        intervals[5] += 1
         intervals[6] += 1
         return intervals
 
@@ -300,9 +315,17 @@ class OctatonicModeOne(Octatonic):
         return self._generate_intervals(1)
 
 
+class HalfWholeDiminished(OctatonicModeOne):
+    pass
+
+
 class OctatonicModeTwo(Octatonic):
     def get_intervals(self):
         return self._generate_intervals(2)
+
+
+class WholeHalfDiminished(OctatonicModeTwo):
+    pass
 
 
 def circle_of_fifths():
