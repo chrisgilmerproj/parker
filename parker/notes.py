@@ -6,6 +6,7 @@ from .constants import NOTE_MATCHER
 from .constants import NOTE_OFFSETS
 from .constants import SIGN_FLAT
 from .constants import SIGN_SHARP
+from .constants import VALID_NOTES
 from .mixins import AugmentDiminishMixin
 from .mixins import Aug
 from .mixins import Dim
@@ -140,7 +141,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
 
     @base_name.setter
     def base_name(self, base_name):
-        if base_name in 'ABCDEFG':
+        if base_name in VALID_NOTES:
             self._base_name = base_name
         else:
             raise Exception('Unkown base name: {}'.format(base_name))

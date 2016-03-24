@@ -3,6 +3,8 @@ import random
 import re
 
 
+VALID_NOTES = 'ABCDEFG'
+
 # Signs for sharps and flats
 SIGN_SHARP = '#'
 SIGN_FLAT = 'b'
