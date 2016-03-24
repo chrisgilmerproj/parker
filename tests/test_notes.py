@@ -496,7 +496,7 @@ class TestNote(unittest.TestCase):
     def test_set_transpose_raises(self):
         n = Note(60)
         with self.assertRaises(Exception):
-            n.set_transpose('5')
+            n.set_transpose({5})
 
     def test_augment(self):
         n = Note('C4')

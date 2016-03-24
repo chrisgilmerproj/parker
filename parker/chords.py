@@ -5,6 +5,10 @@ from .mixins import Aug
 from .mixins import Dim
 
 
+# References:
+# - http://www.cs.cmu.edu/~scottd/chords_and_scales/music.html
+# - https://en.wikipedia.org/wiki/List_of_chords
+
 # The CHORD_MAP is a dictionary where the chord name is mapped to a list of
 # shorthand notations and the corresponding transpose list to create the
 # chord given a root note.  The shorthand list order is not consequential
@@ -20,9 +24,11 @@ CHORD_MAP = {
     'augmented_triad': {'shorthand': ['aug'],
                         'transpose_list': [0, 4, Aug(7)]},
     'augmented_major_seventh': {'shorthand': ['M7+'],
-                                'transpose_list': [0, 4, Aug(7), 11]},
+                                'transpose_list': [0, 4, Aug(7), 'e']},
     'augmented_minor_seventh': {'shorthand': ['m7+'],
-                                'transpose_list': [0, 4, Aug(7), 10]},
+                                'transpose_list': [0, 4, Aug(7), 't']},
+    'lydian_dominant_seventh': {'shorthand': ['7#11'],
+                                'transpose_list': [0, 4, 7, 't', Aug(17)]},
     # Diminished
     'diminished_major_seventh': {'shorthand': ['dimM7'],
                                  'transpose_list': [0, 3, 6, 'e']},
@@ -54,8 +60,6 @@ CHORD_MAP = {
     # Sevenths
     'dominant_seventh': {'shorthand': ['7'],
                          'transpose_list': [0, 4, 7, 10]},
-    'lydian_dominant_seventh': {'shorthand': ['7#11'],
-                                'transpose_list': [0, 4, 7, 10, Aug(17)]},
     'major_seventh': {'shorthand': ['M7', 'maj7', 'ma7'],  # delta7 and delta
                       'transpose_list': [0, 4, 7, 11]},
     'major_seventh_sharp_five': {'shorthand': ['M7#5', 'M7+5'],
@@ -111,8 +115,33 @@ CHORD_MAP = {
                            'transpose_list': [0, 4, 6, 't']},
     'dominant_sharp_five': {'shorthand': ['7#5', '7+5'],
                             'transpose_list': [0, 4, 8, 't']},
-    'hendrix_chord': {'shorthand': ['7b12'],
-                      'transpose_list': [0, 4, 7, 10, 15]},
+    # Atonal
+    'ode_to_napoleon': {'shorthand': ['napoleon'],
+                        'transpose_list': [0, 1, 4, 5, 8, 9]},
+    'farben': {'shorthand': ['farben'],
+               'transpose_list': [0, 8, 'e', 16, 21]},
+    'mystic': {'shorthand': ['mystic'],
+               'transpose_list': [0, 6, 't', 16, 21, 26]},
+    'northern_lights': {'shorthand': ['northern'],
+                        'transpose_list': [1, 2, 8, 12, 15, 18,
+                                           19, 22, 23, 28, 31]},
+    'viennese_trichord': {'shorthand': ['viennese'],
+                          'transpose_list': [0, 1, 6]},
+    # Bitonal
+    'elektra': {'shorthand': ['elektra'],
+                'transpose_list': [0, 7, 9, 13, 16]},
+    'so_what': {'shorthand': ['so_what'],
+                'transpose_list': [0, 5, 't', 15, 19]},
+    # Mixed
+    'hendrix_chord': {'shorthand': ['7b12', 'hendrix'],
+                      'transpose_list': [0, 4, 7, 't', 15]},
+    'petrushka': {'shorthand': ['petrushka'],
+                  'transpose_list': [0, 1, 4, 6, 7, 't']},
+    # Predominant
+    'augmented_sixth': {'shorthand': ['aug6'],
+                        'transpose_list': [0, 6, 8]},
+    'tristan': {'shorthand': ['tristan'],
+                'transpose_list': [0, 3, 6, 't']},
 }
 
 SHORTHAND = {}
@@ -138,7 +167,7 @@ class Chord(NoteGroupBase):
                             'chord name')
 
     def __str__(self):
-        return '{}{}'.format(self.notes[0].generalize() if self.notes else '',
+        return '{}{}'.format(self.root.generalize() if self.notes else '',
                              self.extension)
 
     def __repr__(self):
@@ -168,7 +197,8 @@ class Chord(NoteGroupBase):
             root = "{}{}".format(root, self._octave)
 
         transpose_list = self._get_shorthand(self.extension)
-        self.notes = Note(root).transpose_list(transpose_list)
+        self.root = Note(root)
+        self.notes = self.root.transpose_list(transpose_list)
 
     @classmethod
     def _get_shorthand(cls, shorthand):
