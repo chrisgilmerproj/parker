@@ -235,10 +235,28 @@ class Note(TransposeMixin, CommonEqualityMixin,
         return Note(int(self), use_sharps).generalize()
 
     def set_transpose(self, amount):
+        """
+        Modify the note by a given number of semitones.
+
+        In some instances the letters 't' or 'A' may be used to designate a
+        change of 10 pitch classes.  Similarly 'e' or 'B' may be used to
+        designate a change of 11 pitch classes.
+
+        References:
+          - https://en.wikipedia.org/wiki/Pitch_class
+          - https://en.wikipedia.org/wiki/List_of_chords
+        """
         acc = self._accidentals
         transpose_amount = None
         if isinstance(amount, int):
             transpose_amount = amount
+        elif isinstance(amount, str):
+            if amount in 'tA':
+                transpose_amount = 10
+            elif amount in 'eB':
+                transpose_amount = 11
+            else:
+                raise Exception("Cannot transpose from '{}'".format(amount))
         elif isinstance(amount, (Aug, Dim)):
             transpose_amount = amount.amount
         else:

@@ -478,6 +478,21 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.set_transpose(Dim(4)), Note(68))
         self.assertEqual(n, Note(68))
 
+    def test_set_transpose_letters(self):
+        n = Note(60)
+        self.assertEqual(n.set_transpose('t'), Note(70))
+        n = Note(60)
+        self.assertEqual(n.set_transpose('A'), Note(70))
+        n = Note(60)
+        self.assertEqual(n.set_transpose('e'), Note(71))
+        n = Note(60)
+        self.assertEqual(n.set_transpose('B'), Note(71))
+
+    def test_set_transpose_letters_raises(self):
+        n = Note(60)
+        with self.assertRaises(Exception):
+            n.set_transpose('C')
+
     def test_set_transpose_raises(self):
         n = Note(60)
         with self.assertRaises(Exception):
