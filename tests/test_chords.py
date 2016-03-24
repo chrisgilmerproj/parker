@@ -54,6 +54,12 @@ class TestChord(unittest.TestCase):
         self.assertEqual(repr(Chord('C-7', octave=3)),
                          "Chord('C-7', octave=3)")
 
+    def test_Chord_equality(self):
+        self.assertTrue(Chord('Csus') == Chord('Csus4'))
+        self.assertTrue(Chord('D') == Chord('D'))
+        self.assertFalse(Chord('D') == Note('D'))
+        self.assertFalse(Chord('D') == Chord('F'))
+
     def test_get_shorthand_raises(self):
         with self.assertRaises(Exception):
             Chord._get_shorthand('fail')
