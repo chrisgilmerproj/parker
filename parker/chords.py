@@ -36,15 +36,6 @@ CHORD_MAP = {
                            'transpose_list': [0, 3, 6, Dim(10)]},
     'diminished_triad': {'shorthand': ['dim', 'o'],
                          'transpose_list': [0, 3, 6]},
-    # Suspended
-    'suspended_fourth_ninth': {'shorthand': ['sus4b9'],
-                               'transpose_list': [0, 5, 7, 13]},
-    'suspended_fourth_triad': {'shorthand': ['sus4', 'sus'],
-                               'transpose_list': [0, 5, 7]},
-    'suspended_second_triad': {'shorthand': ['sus2'],
-                               'transpose_list': [0, 2, 7]},
-    'suspended_seventh': {'shorthand': ['sus47', '7sus4'],
-                          'transpose_list': [0, 5, 7, 10]},
     # Fifths
     'major_fifth': {'shorthand': ['5'],
                     'transpose_list': [0, 7]},
@@ -142,6 +133,15 @@ CHORD_MAP = {
                         'transpose_list': [0, 6, 8]},
     'tristan': {'shorthand': ['tristan'],
                 'transpose_list': [0, 3, 6, 't']},
+    # Suspended
+    'suspended_fourth_ninth': {'shorthand': ['sus4b9'],
+                               'transpose_list': [0, 5, 7, 13]},
+    'suspended_fourth_triad': {'shorthand': ['sus4', 'sus'],
+                               'transpose_list': [0, 5, 7]},
+    'suspended_second_triad': {'shorthand': ['sus2'],
+                               'transpose_list': [0, 2, 7]},
+    'suspended_seventh': {'shorthand': ['sus47', '7sus4'],
+                          'transpose_list': [0, 5, 7, 't']},
 }
 
 SHORTHAND = {}

@@ -3,11 +3,13 @@ import random
 import re
 
 
+# Set of valid notes in scale
 VALID_NOTES = 'ABCDEFG'
 
 # Signs for sharps and flats
-SIGN_SHARP = '#'
+SIGN_DOUBLE_SHARP = 'x'
 SIGN_FLAT = 'b'
+SIGN_SHARP = '#'
 
 # Reference: https://en.wikipedia.org/wiki/Scientific_pitch_notation
 # Notes should be formated with three pieces of information
