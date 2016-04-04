@@ -145,6 +145,42 @@ class TestScale(TestScaleBase):
     def test_Scale_to_repr(self):
         self.assertEqual(repr(Scale('C4')), "Scale('C4')")
 
+    def test_whole_half_construction(self):
+        scale = Major('C4')
+        out = scale.get_whole_half_construction()
+        expected = ['W', 'W', 'H', 'W', 'W', 'W', 'H']
+        self.assertEquals(out, expected)
+
+    def test_whole_half_construction_major_blues(self):
+        scale = MajorBlues('C4')
+        out = scale.get_whole_half_construction()
+        expected = ['W', 'H', 'H', 3, 'W']
+        self.assertEquals(out, expected)
+
+    def test_whole_half_construction_minor_blues(self):
+        scale = MinorBlues('C4')
+        out = scale.get_whole_half_construction()
+        expected = [3, 'W', 'H', 'H', 3]
+        self.assertEquals(out, expected)
+
+    def test_tone_semitone_construction(self):
+        scale = Major('C4')
+        out = scale.get_tone_semitone_construction()
+        expected = ['T', 'T', 's', 'T', 'T', 'T', 's']
+        self.assertEquals(out, expected)
+
+    def test_tone_semitone_construction_major_blues(self):
+        scale = MajorBlues('C4')
+        out = scale.get_tone_semitone_construction()
+        expected = ['T', 's', 's', 3, 'T']
+        self.assertEquals(out, expected)
+
+    def test_tone_semitone_construction_minor_blues(self):
+        scale = MinorBlues('C4')
+        out = scale.get_tone_semitone_construction()
+        expected = [3, 'T', 's', 's', 3]
+        self.assertEquals(out, expected)
+
     def test_is_generic_note_in_scale(self):
         scale = Major('C4')
         self.assertTrue(scale.is_generic_note_in_scale('C'))

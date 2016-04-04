@@ -63,6 +63,43 @@ class Scale(NoteGroupBase):
     def get_intervals(self):
         return [0]
 
+    def get_whole_half_construction(self):
+        intervals = self.get_intervals()
+        if len(intervals) < 2:
+            return []
+
+        wh = []
+        current = intervals[0]
+        for i in intervals[1:]:
+            if isinstance(i, Aug):
+                diff = i.amount + 1 - current
+                current = i.amount + 1
+            elif isinstance(i, Dim):
+                diff = i.amount - 1 - current
+                current = i.amount - 1
+            else:
+                diff = i - current
+                current = i
+            if diff == 2:
+                wh.append('W')
+            elif diff == 1:
+                wh.append('H')
+            else:
+                wh.append(diff)
+        return wh
+
+    def get_tone_semitone_construction(self):
+        wh = self.get_whole_half_construction()
+        ts = []
+        for current in wh:
+            if current == 'W':
+                ts.append('T')
+            elif current == 'H':
+                ts.append('s')
+            else:
+                ts.append(current)
+        return ts
+
     def is_generic_note_in_scale(self, note):
         if isinstance(note, str):
             return note in self.generic_notes

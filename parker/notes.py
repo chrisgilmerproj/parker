@@ -156,7 +156,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
 
     def _get_accidentals_as_string(self):
         return (SIGN_SHARP if self._accidentals > 0 else SIGN_FLAT) * \
-                abs(self._accidentals)
+            abs(self._accidentals)
 
     @property
     def octave(self):
