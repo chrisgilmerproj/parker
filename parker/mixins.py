@@ -70,6 +70,7 @@ class Dim(CommonEqualityMixin):
 
 
 class NotesMixin(object):
+    root = None
 
     def get_notes(self):
         raise NotImplementedError
@@ -83,7 +84,7 @@ class NotesMixin(object):
     def walk(self, func):
         for n in self.get_notes():
             func(n)
-        self.root = self.get_notes()[0]
+        func(self.root)
         return self
 
 

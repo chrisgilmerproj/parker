@@ -338,6 +338,7 @@ class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
 
     The base class does not let you add notes.
     """
+    root = None
     notes = []
 
     def set_transpose(self, amount):
@@ -373,6 +374,8 @@ class NoteGroup(NoteGroupBase):
     def __init__(self, notes=None):
         self.notes = []
         self.add(notes)
+        if len(self.notes) > 0:
+            self.root = self.notes[0].clone()
 
     def add(self, notes):
         self.notes.extend(NotesParser.parse(notes))

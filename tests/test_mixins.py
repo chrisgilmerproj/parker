@@ -117,6 +117,8 @@ class TestCommonEqualityMixin(unittest.TestCase):
 class TestNotesMixin(unittest.TestCase):
     def setUp(self):
         class NewNote(NotesMixin):
+            root = Note('C4')
+
             def get_notes(self):
                 return ['C4', 'F4']
         self.nn = NewNote()

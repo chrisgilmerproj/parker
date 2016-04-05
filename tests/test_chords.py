@@ -253,6 +253,7 @@ class TestChord(unittest.TestCase):
 
     def test_transpose_chord(self):
         chord = Chord('CM')
+        self.assertEqual(repr(chord), "Chord('CM')")
         self.assertEqual(chord.notes, [Note('C'),
                                        Note('E4'),
                                        Note('G4')])
@@ -260,11 +261,36 @@ class TestChord(unittest.TestCase):
         self._chord_tester(chord, ['C4', 'E4', 'G4'])
 
         new_chord = chord.transpose(5)
+        self.assertEqual(repr(new_chord), "Chord('FM')")
+        self.assertEqual(new_chord.extension, 'M')
         self.assertEqual(new_chord.notes, [Note('F4'),
                                            Note('A4'),
                                            Note('C5')])
-        self.assertEqual(new_chord.extension, 'M')
         self._chord_tester(new_chord, ['F4', 'A4', 'C5'])
+
+    def test_transpose_chord_northern(self):
+        chord = Chord('Cnorthern')
+        self.assertEqual(repr(chord), "Chord('Cnorthern')")
+        self.assertEqual(chord.extension, 'northern')
+        self._chord_tester(chord, ['Db4', 'D4', 'Ab4', 'C5', 'Eb5',
+                                   'Gb5', 'G5', 'Bb5', 'B5', 'E6', 'G6'])
+
+        new_chord = chord.transpose(5)
+        self.assertEqual(repr(new_chord), "Chord('Fnorthern')")
+        self.assertEqual(new_chord.extension, 'northern')
+        self.assertEqual(new_chord.notes, [Note('Gb4'),
+                                           Note('G4'),
+                                           Note('Db5'),
+                                           Note('F5'),
+                                           Note('Ab5'),
+                                           Note('Cb6'),
+                                           Note('C6'),
+                                           Note('Eb6'),
+                                           Note('E6'),
+                                           Note('A6'),
+                                           Note('C7')])
+        self._chord_tester(new_chord, ['Gb4', 'G4', 'Db5', 'F5', 'Ab5',
+                                       'Cb6', 'C6', 'Eb6', 'E6', 'A6', 'C7'])
 
 
 class TestAllChords(unittest.TestCase):
