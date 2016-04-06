@@ -1,10 +1,11 @@
 from .mixins import Aug
 from .mixins import Dim
+from .mixins import OctaveMixin
 from .notes import Note
 from .notes import NoteGroupBase
 
 
-class Scale(NoteGroupBase):
+class Scale(NoteGroupBase, OctaveMixin):
     """
     Source: https://en.wikipedia.org/wiki/Scale_(music)
     """
@@ -50,7 +51,7 @@ class Scale(NoteGroupBase):
         return False
 
     def build_scale(self):
-        intervals = self.get_intervals()
+        intervals = self.intervals
         self.notes = self.root.transpose_list(intervals)
         if self.order == self.DESCENDING:
             self.notes.reverse()
@@ -60,11 +61,12 @@ class Scale(NoteGroupBase):
                          for n in self.notes]
         self.generic_notes = set(generic_notes)
 
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return [0]
 
     def get_whole_half_construction(self):
-        intervals = self.get_intervals()
+        intervals = self.intervals
         if len(intervals) < 2:
             return []
 
@@ -149,7 +151,8 @@ class Diatonic(Scale):
 
 
 class Ionian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(1)
 
 
@@ -158,31 +161,36 @@ class Major(Ionian):
 
 
 class HarmonicMajor(Major):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         intervals = self._generate_intervals(1)
         intervals[6] -= 1
         return intervals
 
 
 class Dorian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(2)
 
 
 class Phrygian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(3)
 
 
 class PhrygianDominant(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         intervals = self._generate_intervals(3)
         intervals[2] += 1
         return intervals
 
 
 class MedievalLydian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(4)
 
 
@@ -194,12 +202,14 @@ class Lydian(Diatonic):
 
     Source: https://en.wikipedia.org/wiki/Lydian_mode
     """
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(4, aug_dim_cls=[(3, Aug)])
 
 
 class Mixolydian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(5)
 
 
@@ -208,7 +218,8 @@ class Dominant(Mixolydian):
 
 
 class Aeolian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(6)
 
 
@@ -221,14 +232,16 @@ class NaturalMinor(Minor):
 
 
 class HarmonicMinor(Minor):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         intervals = self._generate_intervals(6)
         intervals[6] += 1
         return intervals
 
 
 class MelodicMinor(Minor):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         intervals = self._generate_intervals(6)
         intervals[5] += 1
         intervals[6] += 1
@@ -236,12 +249,14 @@ class MelodicMinor(Minor):
 
 
 class Locrian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(7)
 
 
 class SuperLocrian(Diatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         intervals = self._generate_intervals(7)
         intervals[3] -= 1
         return intervals
@@ -253,8 +268,9 @@ class MajorPentatonic(Major):
     consists of only 5 notes.
     """
 
-    def get_intervals(self):
-        intervals = super(MajorPentatonic, self).get_intervals()
+    @property
+    def intervals(self):
+        intervals = super(MajorPentatonic, self).intervals
         intervals.pop(6)
         intervals.pop(3)
         return intervals[0:5]
@@ -266,8 +282,9 @@ class MinorPentatonic(Minor):
     consists of only 5 notes.
     """
 
-    def get_intervals(self):
-        intervals = super(MinorPentatonic, self).get_intervals()
+    @property
+    def intervals(self):
+        intervals = super(MinorPentatonic, self).intervals
         intervals.pop(5)
         intervals.pop(1)
         return intervals[0:5]
@@ -279,8 +296,9 @@ class MajorBlues(MajorPentatonic):
     diminished 4th and consists of 6 notes.
     """
 
-    def get_intervals(self):
-        intervals = super(MajorBlues, self).get_intervals()
+    @property
+    def intervals(self):
+        intervals = super(MajorBlues, self).intervals
         intervals.insert(2, Dim(4))
         return intervals
 
@@ -291,8 +309,9 @@ class MinorBlues(MinorPentatonic):
     augmented 5th and consists of 6 notes.
     """
 
-    def get_intervals(self):
-        intervals = super(MinorBlues, self).get_intervals()
+    @property
+    def intervals(self):
+        intervals = super(MinorBlues, self).intervals
         intervals.insert(3, Aug(5))
         return intervals
 
@@ -316,7 +335,8 @@ class Altered(Scale):
             interval.append(s + interval[i])
         return interval
 
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(1)
 
 
@@ -325,7 +345,8 @@ class DiminishedWholeTone(Altered):
 
 
 class Chromatic(Scale):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return range(0, 13)
 
 
@@ -348,7 +369,8 @@ class Octatonic(Scale):
 
 
 class OctatonicModeOne(Octatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(1)
 
 
@@ -357,7 +379,8 @@ class HalfWholeDiminished(OctatonicModeOne):
 
 
 class OctatonicModeTwo(Octatonic):
-    def get_intervals(self):
+    @property
+    def intervals(self):
         return self._generate_intervals(2)
 
 

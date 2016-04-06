@@ -127,3 +127,38 @@ MINOR_KEYS = collections.OrderedDict(sorted({
     'd#': 6,
     'a#': 7,
     }.items(), key=lambda n: n[1]))
+
+
+# Semitones are useful in describing transpositions between notes but they
+# are not how notes are normally represented with numbers.  Instead you might
+# see the semitones [0, 3, 7] represented as ['1', '3b', '5'].  A conversion
+# is needed to make this happen.
+
+SEMITONE_TO_INTERVAL = {
+    0: '1',
+    1: '2b',
+    2: '2',
+    3: '3b',
+    4: '3',
+    5: '4',
+    6: '5b',
+    7: '5',
+    8: '6b',
+    9: '6',
+    10: '7b',
+    11: '7',
+    12: '8',
+    13: '9b',
+    14: '9',
+    15: '10b',
+    16: '10',
+    17: '11',
+    18: '12b',
+    19: '12',
+    20: '13b',
+    21: '13',
+    22: '14b',
+    23: '14',
+    24: '15',
+    25: '15#',
+}

@@ -1,5 +1,7 @@
 import copy
 
+from .constants import SEMITONE_TO_INTERVAL
+
 
 class CloneMixin(object):
     """Return a Clone or deepcopy of the object"""
@@ -363,3 +365,10 @@ class TransposeMixin(CloneMixin):
             'major_thirteenth_down': self.transpose(-21),
             'compound_major_sixth_down': self.major_thirteenth_down(),
         }
+
+
+class OctaveMixin(object):
+    """Translate Semitones to Octave"""
+
+    def get_octave_construction(self):
+        return [SEMITONE_TO_INTERVAL[i] for i in self.intervals]

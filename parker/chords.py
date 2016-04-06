@@ -3,6 +3,7 @@ from .notes import Note
 from .notes import NoteGroupBase
 from .mixins import Aug
 from .mixins import Dim
+from .mixins import OctaveMixin
 
 
 # References:
@@ -150,7 +151,7 @@ for name, data in CHORD_MAP.items():
         SHORTHAND[short] = data['transpose_list']
 
 
-class Chord(NoteGroupBase):
+class Chord(NoteGroupBase, OctaveMixin):
     """
     Source Material: https://en.wikipedia.org/wiki/Chord_(music)
     """
@@ -196,9 +197,9 @@ class Chord(NoteGroupBase):
         if self._octave:
             root = "{}{}".format(root, self._octave)
 
-        transpose_list = self._get_shorthand(self.extension)
+        self.intervals = self._get_shorthand(self.extension)
         self.root = Note(root)
-        self.notes = self.root.transpose_list(transpose_list)
+        self.notes = self.root.transpose_list(self.intervals)
 
     @classmethod
     def _get_shorthand(cls, shorthand):

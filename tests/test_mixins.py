@@ -5,6 +5,7 @@ from parker.mixins import Aug
 from parker.mixins import Dim
 from parker.mixins import CloneMixin
 from parker.mixins import CommonEqualityMixin
+from parker.mixins import OctaveMixin
 from parker.mixins import NotesMixin
 from parker.mixins import TransposeMixin
 from parker.notes import Note
@@ -155,3 +156,15 @@ class TestTransposeMixin(unittest.TestCase):
         tm = TransposeMixin()
         with self.assertRaises(NotImplementedError):
             tm.transpose_list([0, 3, 5, 7])
+
+
+class TestOctaveMixin(unittest.TestCase):
+
+    def setUp(self):
+        self.om = OctaveMixin()
+
+    def test_get_octave_construction(self):
+        self.om.intervals = [0, 3, 7]
+        out = self.om.get_octave_construction()
+        expected = ['1', '3b', '5']
+        self.assertEquals(out, expected)
