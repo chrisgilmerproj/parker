@@ -1,9 +1,6 @@
 #! /usr/bin/python
 
 from parker.chords import Chord
-from parker.scales import Dorian
-from parker.scales import Ionian
-from parker.scales import Mixolydian
 
 
 CHANGES = [['Em7', 'A7', 'F#m7', 'B7'],
@@ -28,15 +25,8 @@ def main():
             ch_notes = [n.normalize() for n in ch.notes]
             print(ch_notes)
             print(ch.get_octave_construction())
-            ch_cls = Ionian
-            if 'm7' == chord[1:]:
-                ch_cls = Dorian
-            elif 'M7' == chord[1:]:
-                ch_cls = Ionian
-            elif '7' == chord[1:]:
-                ch_cls = Mixolydian
-            sc = ch_cls(ch.root)
-            print(ch_cls.__name__)
+            sc = ch.get_scale()
+            print(repr(sc))
             # print(sc.notes)
 
             # Find notes common to the previous phrase
