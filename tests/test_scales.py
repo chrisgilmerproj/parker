@@ -151,6 +151,12 @@ class TestScale(TestScaleBase):
         expected = ['W', 'W', 'H', 'W', 'W', 'W', 'H']
         self.assertEquals(out, expected)
 
+    def test_whole_half_construction_len_one(self):
+        scale = Scale('C4')
+        out = scale.get_whole_half_construction()
+        expected = []
+        self.assertEquals(out, expected)
+
     def test_whole_half_construction_major_blues(self):
         scale = MajorBlues('C4')
         out = scale.get_whole_half_construction()
