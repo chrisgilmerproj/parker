@@ -28,8 +28,8 @@ def main():
             sc = ch.get_scale()
 
             # Find notes common to the previous phrase
-            ch_notes = [n.normalize() for n in ch.notes]
-            sc_notes = [n.normalize() for n in sc.notes]
+            ch_notes = [n.normalize(use_sharps=True) for n in ch.notes]
+            sc_notes = [n.normalize(use_sharps=True) for n in sc.notes]
             common_notes_last_chord = list(set(ch_notes) & last_ch_notes)
             common_notes_last_chord.sort()
             common_notes_last_scale = list(set(sc_notes) & last_sc_notes)
