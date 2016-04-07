@@ -34,8 +34,6 @@ def main():
             common_notes_last_chord.sort()
             common_notes_last_scale = list(set(sc_notes) & last_sc_notes)
             common_notes_last_scale.sort()
-            common_ch_sc_notes = list(set(sc_notes) & set(ch_notes))
-            common_ch_sc_notes.sort()
             last_ch_notes = set(ch_notes)
             last_sc_notes = set(sc_notes)
 
@@ -43,7 +41,6 @@ def main():
             print('Chord Notes: {}'.format(ch_notes))
             print('Common with last chord: {}'.format(common_notes_last_chord))
             print('Common with last scale: {}'.format(common_notes_last_scale))
-            print('Common with chord and scale: {}'.format(common_ch_sc_notes))
             print('')
 
 
