@@ -257,7 +257,9 @@ class Chord(NoteGroupBase, OctaveMixin):
         return SHORTHAND_TO_SCALE[shorthand]
 
     def get_scale(self):
-        return self.scale_cls(self.root)
+        if self.scale_cls:
+            return self.scale_cls(self.root)
+        return self.scale_cls
 
 
 def produce_all_chords(root):

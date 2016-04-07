@@ -98,6 +98,10 @@ class TestChord(unittest.TestCase):
         self.assertEqual(str(chord), 'Caug')
         self._chord_tester(chord, ['C4', 'E4', 'G#4'])
 
+        # Scale
+        scale = chord.get_scale()
+        self.assertEqual(scale, None)
+
     def test_augmented_minor_seventh(self):
         chord = Chord('Cm7+')
         self.assertEqual(str(chord), 'Cm7+')
