@@ -20,59 +20,58 @@ class Progression(object):
     def __init__(self, scale):
         self.scale = Major(scale)
 
-    def _get_chord_triad(self, lookup):
-        note = self.scale.notes[lookup]
-        sc_type = PROGRESSION_LOOKUP[lookup]
-        ch_str = '{}{}'.format(note.generalize(), sc_type)
-        return Chord(ch_str)
+    def _get_chord(self, lookup, extension=''):
+        """
+        Get chord for progression from a lookup index number.
 
-    def _get_chord_seventh(self, lookup):
+        The extension helps determine the dominant.
+        """
         note = self.scale.notes[lookup]
         sc_type = PROGRESSION_LOOKUP[lookup]
-        ch_str = '{}{}7'.format(note.generalize(), sc_type)
+        ch_str = '{}{}{}'.format(note.generalize(), sc_type, extension)
         return Chord(ch_str)
 
     def I(self):
-        return self._get_chord_triad(0)
+        return self._get_chord(0)
 
     def II(self):
-        return self._get_chord_triad(1)
+        return self._get_chord(1)
 
     def III(self):
-        return self._get_chord_triad(2)
+        return self._get_chord(2)
 
     def IV(self):
-        return self._get_chord_triad(3)
+        return self._get_chord(3)
 
     def V(self):
-        return self._get_chord_triad(4)
+        return self._get_chord(4)
 
     def VI(self):
-        return self._get_chord_triad(5)
+        return self._get_chord(5)
 
     def VII(self):
-        return self._get_chord_triad(6)
+        return self._get_chord(6)
 
     def I7(self):
-        return self._get_chord_seventh(0)
+        return self._get_chord(0, '7')
 
     def II7(self):
-        return self._get_chord_seventh(1)
+        return self._get_chord(1, '7')
 
     def III7(self):
-        return self._get_chord_seventh(2)
+        return self._get_chord(2, '7')
 
     def IV7(self):
-        return self._get_chord_seventh(3)
+        return self._get_chord(3, '7')
 
     def V7(self):
-        return self._get_chord_seventh(4)
+        return self._get_chord(4, '7')
 
     def VI7(self):
-        return self._get_chord_seventh(5)
+        return self._get_chord(5, '7')
 
     def VII7(self):
-        return self._get_chord_seventh(6)
+        return self._get_chord(6, '7')
 
     def all_progressions(self):
         return {'I': self.I(),
