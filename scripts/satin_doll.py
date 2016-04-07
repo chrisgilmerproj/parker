@@ -15,27 +15,36 @@ CHANGES = [['Em7', 'A7', 'F#m7', 'B7'],
 
 
 def main():
-    last_notes = set()
+    last_ch_notes = set()
+    last_sc_notes = set()
     for phrase in CHANGES:
-        print(phrase)
+        print('-' * 80)
+        print('Musical Phrase: {}'.format(phrase))
+        print('-' * 80)
         print('')
         for chord in phrase:
-            print(chord)
             ch = Chord(chord)
             ch_notes = [n.normalize() for n in ch.notes]
-            print(ch_notes)
-            print(ch.get_octave_construction())
             sc = ch.get_scale()
-            print(repr(sc))
-            # print(sc.notes)
 
             # Find notes common to the previous phrase
-            gen_notes = [n.normalize() for n in sc.notes]
-            print(sorted(list(set(gen_notes) & last_notes)))
-            print(sorted(list(set(gen_notes) & set(ch_notes))))
-            last_notes = set(gen_notes)
+            ch_notes = [n.normalize() for n in ch.notes]
+            sc_notes = [n.normalize() for n in sc.notes]
+            common_notes_last_chord = list(set(ch_notes) & last_ch_notes)
+            common_notes_last_chord.sort()
+            common_notes_last_scale = list(set(sc_notes) & last_sc_notes)
+            common_notes_last_scale.sort()
+            common_ch_sc_notes = list(set(sc_notes) & set(ch_notes))
+            common_ch_sc_notes.sort()
+            last_ch_notes = set(ch_notes)
+            last_sc_notes = set(sc_notes)
+
+            print('{} - {}'.format(repr(ch), repr(sc)))
+            print('Chord Notes: {}'.format(ch_notes))
+            print('Common with last chord: {}'.format(common_notes_last_chord))
+            print('Common with last scale: {}'.format(common_notes_last_scale))
+            print('Common with chord and scale: {}'.format(common_ch_sc_notes))
             print('')
-        print('')
 
 
 if __name__ == "__main__":
