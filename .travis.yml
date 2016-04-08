@@ -18,6 +18,3 @@ install:
 script:
   - coverage erase
   - tox -e $TOX_ENV
-after_success:
-  - ls -alh .coverage
-  - coveralls -v
