@@ -140,7 +140,7 @@ class TestNote(unittest.TestCase):
 
     def test_set_base_name_raises(self):
         note = Note('C4')
-        self.assertRaises(Exception, setattr, note.base_name, 'H')
+        self.assertRaises(Exception, setattr, note, 'base_name', 'H')
 
     def test_get_accidentals(self):
         note = Note('C4')
@@ -218,12 +218,12 @@ class TestNote(unittest.TestCase):
     def test_set_octave_from_bad_value(self):
         n = Note('C4')
         self.assertEqual(n.octave, 4)
-        self.assertRaises(Exception, setattr, n.octave, '3b')
+        self.assertRaises(Exception, setattr, n, 'octave', '3b')
 
     def test_set_octave_from_int_outside_range(self):
         n = Note('C4')
         self.assertEqual(n.octave, 4)
-        self.assertRaises(Exception, setattr, n.octave, 12)
+        self.assertRaises(Exception, setattr, n, 'octave', 12)
 
     def test_transpose(self):
         n = Note('C4')
