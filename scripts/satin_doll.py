@@ -9,14 +9,14 @@ from parker.scales import Major
 # from the main Key where 1 is ionic and the second half of the tuple is
 # the phrase with the chord progressions.
 KEY = 'D'
-PROGRESSIONS = [(1, ['ii7', 'V7', 'iii7', 'vi7']),
-                (1, ['II7', 'bII7', 'I7', 'IV7', 'iii7', 'vi7']),
-                (1, ['ii7', 'V7', 'iii7', 'vi7']),
-                (1, ['II7', 'bII7', 'I7', 'I7']),
-                (4, ['ii7', 'V7', 'I7', 'I7']),
-                (5, ['ii7', 'V7', 'v7', 'I7']),
-                (1, ['ii7', 'V7', 'iii7', 'vi7']),
-                (1, ['II7', 'bII7', 'I7', 'IV7', 'iii7', 'vi7']),
+PROGRESSIONS = [(1, ['ii7', 'V7', 'iii7', 'VI7']),
+                (1, ['II7', 'bII7', 'IM7', 'IV7', 'iii7', 'VI7']),
+                (1, ['ii7', 'V7', 'iii7', 'VI7']),
+                (1, ['II7', 'bII7', 'IM7', 'IM7']),
+                (4, ['ii7', 'V7', 'IM7', 'IM7']),
+                (5, ['ii7', 'V7', 'v7', 'IM7']),
+                (1, ['ii7', 'V7', 'iii7', 'VI7']),
+                (1, ['II7', 'bII7', 'IM7', 'IV7', 'iii7', 'VI7']),
                 ]
 
 

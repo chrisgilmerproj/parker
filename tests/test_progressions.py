@@ -64,31 +64,31 @@ class TestProgressions(unittest.TestCase):
 
     def test_standard_sevenths(self):
         out = self.p.standard_sevenths()
-        expected = {'I7': Chord('DM7'),
+        expected = {'I7': Chord('D7'),
                     'ii7': Chord('Em7'),
                     'iii7': Chord('F#m7'),
-                    'IV7': Chord('GM7'),
-                    'V7': Chord('AM7'),
+                    'IV7': Chord('G7'),
+                    'V7': Chord('A7'),
                     'vi7': Chord('Bm7'),
-                    'vii7': Chord('C#dim7')}
+                    'vii7': Chord('C#m7')}
         self.assertEquals(out, expected)
 
     def test_all_progressions(self):
         out = self.p.all_progressions()
         expected = {'I': Chord('DM'),
-                    'I7': Chord('DM7'),
+                    'I7': Chord('D7'),
                     'II': Chord('EM'),
-                    'II7': Chord('EM7'),
+                    'II7': Chord('E7'),
                     'III': Chord('F#M'),
-                    'III7': Chord('F#M7'),
+                    'III7': Chord('F#7'),
                     'IV': Chord('GM'),
-                    'IV7': Chord('GM7'),
+                    'IV7': Chord('G7'),
                     'V': Chord('AM'),
-                    'V7': Chord('AM7'),
+                    'V7': Chord('A7'),
                     'VI': Chord('BM'),
-                    'VI7': Chord('BM7'),
+                    'VI7': Chord('B7'),
                     'VII': Chord('C#dim'),
-                    'VII7': Chord('C#dim7'),
+                    'VII7': Chord('C#7'),
                     'i': Chord('Dm'),
                     'i7': Chord('Dm7'),
                     'ii': Chord('Em'),
@@ -102,7 +102,7 @@ class TestProgressions(unittest.TestCase):
                     'vi': Chord('Bm'),
                     'vi7': Chord('Bm7'),
                     'vii': Chord('C#dim'),
-                    'vii7': Chord('C#dim7')}
+                    'vii7': Chord('C#m7')}
         self.assertEquals(out, expected)
 
     def test_from_string(self):
@@ -120,7 +120,7 @@ class TestProgressions(unittest.TestCase):
         self.assertEquals(out, expected)
 
     def test_from_list(self):
-        prog_list = ['ii7', 'V7', 'iii7', 'vi7']
+        prog_list = ['ii7', 'V7', 'iii7', 'VI7']
         out = self.p.from_list(prog_list)
-        expected = [Chord('Em7'), Chord('AM7'), Chord('F#m7'), Chord('Bm7')]
+        expected = [Chord('Em7'), Chord('A7'), Chord('F#m7'), Chord('B7')]
         self.assertEquals(out, expected)

@@ -87,12 +87,16 @@ class Progression(object):
 
         index = PROG_LOOKUP[prog.upper()]
         ch_type = ''
-        if prog in ['VII', 'vii']:
-            ch_type = 'dim'
-        elif prog.isupper():
-            ch_type = 'M'
-        elif prog.islower():
-            ch_type = 'm'
+        if not extension:
+            if prog in ['VII', 'vii']:
+                ch_type = 'dim'
+            elif prog.isupper():
+                ch_type = 'M'
+            elif prog.islower():
+                ch_type = 'm'
+        else:
+            if prog.islower():
+                ch_type = 'm'
         ch_str = '{}{}'.format(ch_type, extension)
         return self._get_chord(index, ch_str, accidental=accidental)
 
