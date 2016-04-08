@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/chrisgilmerproj/parker.svg?branch=master)](https://travis-ci.org/chrisgilmerproj/parker) 
+[![Coverage Status](https://coveralls.io/repos/github/chrisgilmerproj/parker/badge.svg?branch=master)](https://coveralls.io/github/chrisgilmerproj/parker?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/parker/badge/?version=latest)](http://parker.readthedocs.org/en/latest/?badge=latest)
 
 
