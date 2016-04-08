@@ -204,14 +204,14 @@ class Chord(NoteGroupBase, OctaveMixin):
                             'chord name')
 
     def __str__(self):
-        return '{}{}'.format(self.root.generalize() if self.notes else '',
-                             self.extension)
+        return '{0}{1}'.format(self.root.generalize() if self.notes else '',
+                               self.extension)
 
     def __repr__(self):
-        rep_str = "{}('{}'".format(type(self).__name__, str(self))
+        rep_str = "{0}('{1}'".format(type(self).__name__, str(self))
         if self._octave:
-            rep_str = "{}, octave={}".format(rep_str, self._octave)
-        return "{})".format(rep_str)
+            rep_str = "{0}, octave={1}".format(rep_str, self._octave)
+        return "{0})".format(rep_str)
 
     def __eq__(self, other):
         # Chords must be of the same class or derived from the Chord class
@@ -227,11 +227,11 @@ class Chord(NoteGroupBase, OctaveMixin):
     def _set_from_string(self, chord):
         m = CHORD_MATCHER.match(chord)
         if m is None:
-            raise Exception("Unknown chord format: {}".format(chord))
+            raise Exception("Unknown chord format: {0}".format(chord))
 
         root, self.extension = m.group(1), m.group(2)
         if self._octave:
-            root = "{}{}".format(root, self._octave)
+            root = "{0}{1}".format(root, self._octave)
 
         self.intervals = self._get_intervals(self.extension)
         self.scale_cls = self._get_scale_cls(self.extension)
@@ -244,7 +244,7 @@ class Chord(NoteGroupBase, OctaveMixin):
         Given shorthand extension return the list of intervals to transpose
         """
         if shorthand not in SHORTHAND_TO_TRANSPOSE:
-            raise Exception("Unknown chord extensions: {}".format(shorthand))
+            raise Exception("Unknown chord extensions: {0}".format(shorthand))
         return SHORTHAND_TO_TRANSPOSE[shorthand]
 
     @classmethod
@@ -253,7 +253,7 @@ class Chord(NoteGroupBase, OctaveMixin):
         Given shorthand extension return the Scale class associated with it
         """
         if shorthand not in SHORTHAND_TO_SCALE:
-            raise Exception("Unknown chord extensions: {}".format(shorthand))
+            raise Exception("Unknown chord extensions: {0}".format(shorthand))
         return SHORTHAND_TO_SCALE[shorthand]
 
     def get_scale(self):
@@ -273,7 +273,7 @@ def produce_all_chords(root):
     chord_info = {}
     for name, data in CHORD_MAP.items():
         shorthand = data['shorthand'][0]
-        chord_name = '{}{}'.format(root, shorthand)
+        chord_name = '{0}{1}'.format(root, shorthand)
         chord = Chord(chord_name)
         chord_info[name] = chord
     return chord_info

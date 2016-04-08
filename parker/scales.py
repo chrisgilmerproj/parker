@@ -25,7 +25,7 @@ class Scale(NoteGroupBase, OctaveMixin):
         elif order in self.ORDER_CHOICES:
             self.order = order
         else:
-            raise Exception("Order must be one of: {}".format(
+            raise Exception("Order must be one of: {0}".format(
                             self.ORDER_CHOICES))
         self.build_scale()
 
@@ -34,10 +34,10 @@ class Scale(NoteGroupBase, OctaveMixin):
 
     def __repr__(self):
         if self.order == self.DESCENDING:
-            return "{}('{}', order='{}')".format(type(self).__name__,
-                                                 str(self), self.DESCENDING)
+            return "{0}('{1}', order='{2}')".format(type(self).__name__,
+                                                    str(self), self.DESCENDING)
         else:
-            return "{}('{}')".format(type(self).__name__, str(self))
+            return "{0}('{1}')".format(type(self).__name__, str(self))
 
     def __eq__(self, other):
         # Scales must be of the same class or derived from the Scale class

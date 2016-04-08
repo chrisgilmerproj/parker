@@ -92,7 +92,7 @@ MNEMONIC_CIRCLE_OF_FOURTHS = random.choice([
     "Caroline Finds B E A Ds Gone Cold",
 ])
 
-MAJOR_KEYS = collections.OrderedDict(sorted({
+MAJOR_KEYS = {
     'Cb': -7,
     'Gb': -6,
     'Db': -5,
@@ -108,9 +108,9 @@ MAJOR_KEYS = collections.OrderedDict(sorted({
     'B': 5,
     'F#': 6,
     'C#': 7,
-    }.items(), key=lambda n: n[1]))
+    }
 
-MINOR_KEYS = collections.OrderedDict(sorted({
+MINOR_KEYS = {
     'ab': -7,
     'eb': -6,
     'bb': -5,
@@ -126,7 +126,7 @@ MINOR_KEYS = collections.OrderedDict(sorted({
     'g#': 5,
     'd#': 6,
     'a#': 7,
-    }.items(), key=lambda n: n[1]))
+    }
 
 
 # Semitones are useful in describing transpositions between notes but they

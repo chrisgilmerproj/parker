@@ -32,11 +32,11 @@ class Progression(object):
 
     def __repr__(self):
         if self.scale_cls != Major:
-            return "{}('{}', scale_cls={})".format(type(self).__name__,
-                                                   str(self),
-                                                   self.scale_cls.__name__)
+            return "{0}('{1}', scale_cls={2})".format(type(self).__name__,
+                                                      str(self),
+                                                      self.scale_cls.__name__)
         else:
-            return "{}('{}')".format(type(self).__name__, str(self))
+            return "{0}('{1}')".format(type(self).__name__, str(self))
 
     def __call__(self, progression):
         """
@@ -55,7 +55,7 @@ class Progression(object):
             note.set_diminish()
         elif accidental == SIGN_SHARP:
             note.set_augment()
-        ch_str = '{}{}'.format(note.generalize(), extension)
+        ch_str = '{0}{1}'.format(note.generalize(), extension)
         return Chord(ch_str)
 
     def standard_triads(self):
@@ -72,7 +72,7 @@ class Progression(object):
         progressions = {}
         for p in p_types:
             for ext in extensions:
-                prog_str = '{}{}'.format(p, ext)
+                prog_str = '{0}{1}'.format(p, ext)
                 progressions[prog_str] = self.from_string(prog_str)
                 prog_str = prog_str.lower()
                 progressions[prog_str] = self.from_string(prog_str)
@@ -81,7 +81,7 @@ class Progression(object):
     def from_string(self, progression):
         m = PROG_MATCHER.match(progression)
         if not m:
-            msg = "Progression '{}' not recognized".format(progression)
+            msg = "Progression '{0}' not recognized".format(progression)
             raise Exception(msg)
         accidental, prog, extension = m.groups()
 
@@ -97,7 +97,7 @@ class Progression(object):
         else:
             if prog.islower():
                 ch_type = 'm'
-        ch_str = '{}{}'.format(ch_type, extension)
+        ch_str = '{0}{1}'.format(ch_type, extension)
         return self._get_chord(index, ch_str, accidental=accidental)
 
     def from_list(self, progression_list):

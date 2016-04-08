@@ -37,10 +37,10 @@ class Note(TransposeMixin, CommonEqualityMixin,
 
     def __str__(self):
         accidentals = self._get_accidentals_as_string()
-        return "{}{}{:d}".format(self._base_name, accidentals, self._octave)
+        return "{0}{1}{2:d}".format(self._base_name, accidentals, self._octave)
 
     def __repr__(self):
-        return "{}('{}')".format(type(self).__name__, str(self))
+        return "{0}('{1}')".format(type(self).__name__, str(self))
 
     def __int__(self):
         result = (int(self._octave) + 1) * 12
@@ -127,7 +127,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
             self._accidentals = sum(1 if acc == SIGN_SHARP else -1
                                     for acc in accidentals)
             return
-        raise Exception("Unknown note format: {}".format(note))
+        raise Exception("Unknown note format: {0}".format(note))
 
     def _set_from_note(self, note):
         """Set the Note from a Note object"""
@@ -144,7 +144,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         if base_name in VALID_NOTES:
             self._base_name = base_name
         else:
-            raise Exception('Unkown base name: {}'.format(base_name))
+            raise Exception('Unkown base name: {0}'.format(base_name))
 
     @property
     def accidentals(self):
@@ -168,7 +168,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
             try:
                 octave = int(octave)
             except ValueError:
-                raise Exception("Unknown octave format: {}".format(octave))
+                raise Exception("Unknown octave format: {0}".format(octave))
         if not (0 < octave < 9):
             raise Exception("Octave must be 0 through 9")
         self._octave = octave
@@ -213,7 +213,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  C###4 -> C###
         """
         accidentals = self._get_accidentals_as_string()
-        return "{}{}".format(self._base_name, accidentals)
+        return "{0}{1}".format(self._base_name, accidentals)
 
     def normalize(self, use_sharps=None):
         """
@@ -256,11 +256,11 @@ class Note(TransposeMixin, CommonEqualityMixin,
             elif amount in 'eB':
                 transpose_amount = 11
             else:
-                raise Exception("Cannot transpose from '{}'".format(amount))
+                raise Exception("Cannot transpose from '{0}'".format(amount))
         elif isinstance(amount, (Aug, Dim)):
             transpose_amount = amount.amount
         else:
-            raise Exception("Cannot transpose from '{}'".format(amount))
+            raise Exception("Cannot transpose from '{0}'".format(amount))
         use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
         self._set_from_int(int(self) - acc + transpose_amount, use_sharps)
         self._accidentals += acc
@@ -327,7 +327,7 @@ class NotesParser(object):
             return result
         elif notes is None:
             return []
-        raise Exception("Cannot parse notes: {}".format(str(notes)))
+        raise Exception("Cannot parse notes: {0}".format(str(notes)))
 
 
 class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
@@ -360,7 +360,7 @@ class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
         return str(self.notes)
 
     def __repr__(self):
-        return "{}({})".format(type(self).__name__, str(self))
+        return "{0}({1})".format(type(self).__name__, str(self))
 
     def __len__(self):
         return len(self.notes)

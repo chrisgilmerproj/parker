@@ -33,10 +33,10 @@ class Key(object):
             self.accidentals = ORDER_OF_FLATS[:abs(self.signature)]
 
     def __str__(self):
-        return "{} {}".format(self.key, self.mode)
+        return "{0} {1}".format(self.key, self.mode)
 
     def __repr__(self):
-        return "{}('{}')".format(type(self).__name__, str(self.key))
+        return "{0}('{1}')".format(type(self).__name__, str(self.key))
 
     def is_major(self):
         return self.mode == self.MAJOR
@@ -45,7 +45,7 @@ class Key(object):
         return self.mode == self.MINOR
 
     def get_accidental_notes(self):
-        return [Note('{}{}'.format(n, self.sign)) for n in self.accidentals]
+        return [Note('{0}{1}'.format(n, self.sign)) for n in self.accidentals]
 
     def get_scale(self):
         if self.is_major():

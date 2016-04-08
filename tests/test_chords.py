@@ -10,8 +10,8 @@ class TestChord(unittest.TestCase):
     def _chord_tester(self, chord, notes):
         self.assertEqual(len(chord), len(notes))
         for ix, note in enumerate(notes):
-            msg = ("Note {} of {} doesn't match.\n"
-                   "{} != {}\nGiv: {}\nExp: {}".format(
+            msg = ("Note {0} of {1} doesn't match.\n"
+                   "{2} != {3}\nGiv: {4}\nExp: {5}".format(
                     ix, str(chord), chord[ix], note,
                     [str(n) for n in chord.notes], notes))
             self.assertEqual(chord[ix], Note(note), msg)

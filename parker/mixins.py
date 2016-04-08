@@ -50,7 +50,7 @@ class Aug(CommonEqualityMixin):
         return note.set_augment()
 
     def __repr__(self):
-        return "{}({})".format(type(self).__name__, str(self.amount))
+        return "{0}({1})".format(type(self).__name__, str(self.amount))
 
 
 class Dim(CommonEqualityMixin):
@@ -68,7 +68,7 @@ class Dim(CommonEqualityMixin):
         return note.set_diminish()
 
     def __repr__(self):
-        return "{}({})".format(type(self).__name__, str(self.amount))
+        return "{0}({1})".format(type(self).__name__, str(self.amount))
 
 
 class NotesMixin(object):

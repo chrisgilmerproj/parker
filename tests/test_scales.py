@@ -123,7 +123,7 @@ class TestScaleBase(unittest.TestCase):
         notes = [str(s) for s in scale.notes]
         self.assertEqual(notes, notes_in_scale)
         for s in notes_in_scale:
-            msg = "Note {} should be part of the scale {}".format(s, notes)
+            msg = "Note {0} should be part of the scale {1}".format(s, notes)
             self.assertTrue(Note(s) in scale, msg)
         self.assertEqual(len(scale), len(notes_in_scale))
 
