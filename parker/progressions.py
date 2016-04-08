@@ -153,3 +153,6 @@ class Progression(object):
                 'vi7': self.vi7(),
                 'vii7': self.vii7(),
                 }
+
+    def from_string(self, progression):
+        return getattr(self, progression)()

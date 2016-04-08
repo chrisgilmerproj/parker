@@ -66,3 +66,8 @@ class TestProgressions(unittest.TestCase):
                     'vii': Chord('C#dim'),
                     'vii7': Chord('C#dim7')}
         self.assertEquals(out, expected)
+
+    def test_from_string(self):
+        out = self.p.from_string('ii')
+        expected = Chord('Em')
+        self.assertEquals(out, expected)

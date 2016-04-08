@@ -13,6 +13,8 @@ CHANGES = [['Em7', 'A7', 'F#m7', 'B7'],
            ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7'],
            ]
 
+PROGRESSIONS = []
+
 
 def main():
     last_ch_notes = set()
