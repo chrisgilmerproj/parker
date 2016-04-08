@@ -103,7 +103,7 @@ class Progression(object):
     def vii7(self):
         return self._get_chord(6, 'dim7')
 
-    def standard(self):
+    def standard_triads(self):
         return {'I': self.I(),
                 'ii': self.ii(),
                 'iii': self.iii(),
@@ -111,6 +111,16 @@ class Progression(object):
                 'V': self.V(),
                 'vi': self.vi(),
                 'vii': self.vii(),
+                }
+
+    def standard_sevenths(self):
+        return {'I7': self.I7(),
+                'ii7': self.ii7(),
+                'iii7': self.iii7(),
+                'IV7': self.IV7(),
+                'V7': self.V7(),
+                'vi7': self.vi7(),
+                'vii7': self.vii7(),
                 }
 
     def all_progressions(self):

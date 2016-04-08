@@ -13,8 +13,8 @@ class TestProgressions(unittest.TestCase):
     def test_progression_scale(self):
         self.assertEqual(self.p.scale, Major('D4'))
 
-    def test_standard(self):
-        out = self.p.standard()
+    def test_standard_triads(self):
+        out = self.p.standard_triads()
         expected = {'I': Chord('DM'),
                     'ii': Chord('Em'),
                     'iii': Chord('F#m'),
@@ -22,6 +22,17 @@ class TestProgressions(unittest.TestCase):
                     'V': Chord('AM'),
                     'vi': Chord('Bm'),
                     'vii': Chord('C#dim')}
+        self.assertEquals(out, expected)
+
+    def test_standard_sevenths(self):
+        out = self.p.standard_sevenths()
+        expected = {'I7': Chord('DM7'),
+                    'ii7': Chord('Em7'),
+                    'iii7': Chord('F#m7'),
+                    'IV7': Chord('GM7'),
+                    'V7': Chord('AM7'),
+                    'vi7': Chord('Bm7'),
+                    'vii7': Chord('C#dim7')}
         self.assertEquals(out, expected)
 
     def test_all_progressions(self):
