@@ -32,7 +32,7 @@ clean: ## Clean the library and test files
 	rm -rf */__pycache__/
 	rm -f MANIFEST
 	rm -f $(TEST_OUTPUT)
-	rm -f .coverage
+	coverage erase
 	rm -f $(COVERAGE_OUTPUT)
 	find ./ -type f -name '*.pyc' -delete
 

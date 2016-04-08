@@ -1,0 +1,7 @@
+[run]
+data_file = .coverage
+
+[report]
+omit =
+  */python?.?/*
+  */site-packages/nose/*
