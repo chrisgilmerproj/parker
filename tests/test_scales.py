@@ -62,10 +62,8 @@ class TestDiatonicInterval(unittest.TestCase):
         self.scale = Diatonic('C')
 
     def test_Diatonic_generate_interval_raises(self):
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(0)
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(8)
+        self.assertRaises(Exception, self.scale._generate_intervals, 0)
+        self.assertRaises(Exception, self.scale._generate_intervals, 8)
 
     def test_Diatonic_generate_interval_tonic_I(self):
         out = self.scale._generate_intervals(1)
@@ -98,8 +96,8 @@ class TestDiatonicInterval(unittest.TestCase):
         self.assertEqual(out, expected)
 
     def test_Diatonic_generate_interval_tonic_IV_aug_dim_raises(self):
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(4, aug_dim_cls=[(3, Note)])
+        self.assertRaises(Exception, self.scale._generate_intervals,
+                          4, aug_dim_cls=[(3, Note)])
 
     def test_Diatonic_generate_interval_tonic_V(self):
         out = self.scale._generate_intervals(5)
@@ -136,8 +134,7 @@ class TestScale(TestScaleBase):
         self._scale_tester(scale, in_scale)
 
     def test_constructor_order_raises(self):
-        with self.assertRaises(Exception):
-            Scale('C4', order='not_an_order')
+        self.assertRaises(Exception, Scale, 'C4', order='not_an_order')
 
     def test_Scale_to_str(self):
         self.assertEqual(str(Scale('C4')), 'C4')
@@ -368,10 +365,8 @@ class TestAlteredInterval(unittest.TestCase):
         self.scale = Altered('C')
 
     def test_Altered_generate_interval_raises(self):
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(0)
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(8)
+        self.assertRaises(Exception, self.scale._generate_intervals, 0)
+        self.assertRaises(Exception, self.scale._generate_intervals, 8)
 
     def test_Altered_generate_interval_mode_one(self):
         out = self.scale._generate_intervals(1)
@@ -397,10 +392,8 @@ class TestOctatonicInterval(unittest.TestCase):
         self.scale = Octatonic('C')
 
     def test_Octatonic_generate_interval_raises(self):
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(0)
-        with self.assertRaises(Exception):
-            self.scale._generate_intervals(3)
+        self.assertRaises(Exception, self.scale._generate_intervals, 0)
+        self.assertRaises(Exception, self.scale._generate_intervals, 3)
 
     def test_Octatonic_generate_interval_mode_one(self):
         out = self.scale._generate_intervals(1)

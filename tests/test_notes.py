@@ -73,8 +73,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note(Note('B9')), Note('B9'))
 
     def test_constructor_raises(self):
-        with self.assertRaises(Exception):
-            Note('H$5')
+        self.assertRaises(Exception, Note, 'H$5')
 
     def test_flat_sharp_enharmonics(self):
         self.assertEqual(Note('Cb4'), Note('B3'))
@@ -141,8 +140,7 @@ class TestNote(unittest.TestCase):
 
     def test_set_base_name_raises(self):
         note = Note('C4')
-        with self.assertRaises(Exception):
-            note.base_name = 'H'
+        self.assertRaises(Exception, setattr, note.base_name, 'H')
 
     def test_get_accidentals(self):
         note = Note('C4')
@@ -220,14 +218,12 @@ class TestNote(unittest.TestCase):
     def test_set_octave_from_bad_value(self):
         n = Note('C4')
         self.assertEqual(n.octave, 4)
-        with self.assertRaises(Exception):
-            n.octave = '3b'
+        self.assertRaises(Exception, setattr, n.octave, '3b')
 
     def test_set_octave_from_int_outside_range(self):
         n = Note('C4')
         self.assertEqual(n.octave, 4)
-        with self.assertRaises(Exception):
-            n.octave = 12
+        self.assertRaises(Exception, setattr, n.octave, 12)
 
     def test_transpose(self):
         n = Note('C4')
@@ -490,13 +486,11 @@ class TestNote(unittest.TestCase):
 
     def test_set_transpose_letters_raises(self):
         n = Note(60)
-        with self.assertRaises(Exception):
-            n.set_transpose('C')
+        self.assertRaises(Exception, n.set_transpose, 'C')
 
     def test_set_transpose_raises(self):
         n = Note(60)
-        with self.assertRaises(Exception):
-            n.set_transpose(set(5))
+        self.assertRaises(Exception, n.set_transpose, set([5]))
 
     def test_augment(self):
         n = Note('C4')
@@ -623,8 +617,7 @@ class TestNoteGroup(unittest.TestCase):
                          "[Note('C4'), Note('C4'), Note('C4')]")
 
     def test_constructor_raises(self):
-        with self.assertRaises(Exception):
-            NoteGroup({'C': 4})
+        self.assertRaises(Exception, NoteGroup, {'C': 4})
 
     def test_add(self):
         n1 = Note('C4')

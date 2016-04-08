@@ -34,12 +34,10 @@ class TestChord(unittest.TestCase):
         self._chord_tester(Chord('C-7', octave=3), ['C3', 'Eb3', 'G3', 'Bb3'])
 
     def test_constructor_raises_with_no_input(self):
-        with self.assertRaises(Exception):
-            Chord()
+        self.assertRaises(Exception, Chord)
 
     def test_constructor_raises_with_bad_chord(self):
-        with self.assertRaises(Exception):
-            Chord('_C%G6')
+        self.assertRaises(Exception, Chord, '_C%G6')
 
     def test_Chord_to_str(self):
         self.assertEqual(str(Chord('Cmaj7')), 'Cmaj7')
@@ -61,12 +59,10 @@ class TestChord(unittest.TestCase):
         self.assertFalse(Chord('D') == Chord('F'))
 
     def test_get_intervals_raises(self):
-        with self.assertRaises(Exception):
-            Chord._get_intervals('fail')
+        self.assertRaises(Exception, Chord._get_intervals, 'fail')
 
     def test_get_scale_cls_raises(self):
-        with self.assertRaises(Exception):
-            Chord._get_scale_cls('fail')
+        self.assertRaises(Exception, Chord._get_scale_cls, 'fail')
 
     def test_major_triad(self):
         chord = Chord('CM')

@@ -15,23 +15,19 @@ class TestAugmentDiminishMixin(unittest.TestCase):
 
     def test_set_augment_raises(self):
         ad = AugmentDiminishMixin()
-        with self.assertRaises(NotImplementedError):
-            ad.set_augment()
+        self.assertRaises(NotImplementedError, ad.set_augment)
 
     def test_augment_raises(self):
         ad = AugmentDiminishMixin()
-        with self.assertRaises(NotImplementedError):
-            ad.augment()
+        self.assertRaises(NotImplementedError, ad.augment)
 
     def test_set_diminish_raises(self):
         ad = AugmentDiminishMixin()
-        with self.assertRaises(NotImplementedError):
-            ad.set_diminish()
+        self.assertRaises(NotImplementedError, ad.set_diminish)
 
     def test_diminish_raises(self):
         ad = AugmentDiminishMixin()
-        with self.assertRaises(NotImplementedError):
-            ad.diminish()
+        self.assertRaises(NotImplementedError, ad.diminish)
 
 
 class TestAug(unittest.TestCase):
@@ -126,8 +122,7 @@ class TestNotesMixin(unittest.TestCase):
 
     def test_get_notes_raises(self):
         nm = NotesMixin()
-        with self.assertRaises(NotImplementedError):
-            nm.get_notes()
+        self.assertRaises(NotImplementedError, nm.get_notes)
 
     def test_lowest_note(self):
         self.assertEqual(self.nn.lowest_note(), 'C4')
@@ -144,18 +139,15 @@ class TestTransposeMixin(unittest.TestCase):
 
     def test_set_transpose_raises(self):
         tm = TransposeMixin()
-        with self.assertRaises(NotImplementedError):
-            tm.set_transpose(7)
+        self.assertRaises(NotImplementedError, tm.set_transpose, 7)
 
     def test_transpose_raises(self):
         tm = TransposeMixin()
-        with self.assertRaises(NotImplementedError):
-            tm.transpose(7)
+        self.assertRaises(NotImplementedError, tm.transpose, 7)
 
     def test_transpose_list_raises(self):
         tm = TransposeMixin()
-        with self.assertRaises(NotImplementedError):
-            tm.transpose_list([0, 3, 5, 7])
+        self.assertRaises(NotImplementedError, tm.transpose_list, [0, 3, 5, 7])
 
 
 class TestOctaveMixin(unittest.TestCase):

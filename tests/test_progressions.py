@@ -111,8 +111,7 @@ class TestProgressions(unittest.TestCase):
         self.assertEquals(out, expected)
 
     def test_from_string_raises(self):
-        with self.assertRaises(Exception):
-            self.p.from_string('+viii')
+        self.assertRaises(Exception, self.p.from_string, '+viii')
 
     def test_from_string_flat(self):
         out = self.p.from_string('bii')
