@@ -20,6 +20,4 @@ script:
   - tox -e $TOX_ENV
 after_success:
   - ls -alh .coverage
-  - coverage combine
-  - coveralls debug
   - coveralls -v
