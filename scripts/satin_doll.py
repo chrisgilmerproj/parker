@@ -19,12 +19,13 @@ PROGRESSIONS = [(1, ['ii7', 'V7', 'iii7', 'vi7']),
 def main():
     last_ch_notes = set()
     last_sc_notes = set()
-    song_key = Major('D')
+    song_key = Major(KEY)
     for scale_int, phrase in PROGRESSIONS:
         scale = song_key.notes[scale_int - 1]
         p = Progression(scale)
         chord_list = p.from_list(phrase)
         print('-' * 80)
+        print('Musical Key: {}'.format(scale))
         print('Musical Phrase: {}'.format(phrase))
         print('Musical Chords: {}'.format([str(c) for c in chord_list]))
         print('-' * 80)
