@@ -16,6 +16,7 @@ class TestProgressionMethods(unittest.TestCase):
         self.assertTrue(is_valid_progression('biii'))
         self.assertTrue(is_valid_progression('IV7'))
         self.assertTrue(is_valid_progression('Vdim'))
+        self.assertTrue(is_valid_progression('#VI'))
 
     def test_is_not_valid_progression(self):
         self.assertFalse(is_valid_progression('c'))

@@ -165,7 +165,7 @@ SEMITONE_TO_INTERVAL = {
 
 # Progression Formats
 # TODO: Don't match ivx
-PROG_MATCHER = re.compile("^(b?)([IV]{1,3}|[iv]{1,3})([^IVX]*)$")
+PROG_MATCHER = re.compile("^([#|b]?)([IV]{1,3}|[iv]{1,3})([^IVX]*)$")
 PROG_LOOKUP = {
     'I': 0,
     'II': 1,

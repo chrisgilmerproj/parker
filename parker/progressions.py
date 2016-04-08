@@ -1,5 +1,7 @@
 from .constants import PROG_MATCHER
 from .constants import PROG_LOOKUP
+from .constants import SIGN_FLAT
+from .constants import SIGN_SHARP
 from .notes import Note
 from .chords import Chord
 from .scales import Major
@@ -42,15 +44,17 @@ class Progression(object):
         """
         return self.from_string(progression)
 
-    def _get_chord(self, lookup, extension='', flat=False):
+    def _get_chord(self, lookup, extension='', accidental=None):
         """
         Get chord for progression from a lookup index number.
 
         The extension helps determine the format.
         """
         note = self.scale.notes[lookup]
-        if flat:
+        if accidental == SIGN_FLAT:
             note.set_diminish()
+        elif accidental == SIGN_SHARP:
+            note.set_augment()
         ch_str = '{}{}'.format(note.generalize(), extension)
         return Chord(ch_str)
 
@@ -79,7 +83,7 @@ class Progression(object):
         if not m:
             msg = "Progression '{}' not recognized".format(progression)
             raise Exception(msg)
-        flat, prog, extension = m.groups()
+        accidental, prog, extension = m.groups()
 
         index = PROG_LOOKUP[prog.upper()]
         ch_type = ''
@@ -90,7 +94,7 @@ class Progression(object):
         elif prog.islower():
             ch_type = 'm'
         ch_str = '{}{}'.format(ch_type, extension)
-        return self._get_chord(index, ch_str, flat=True if flat else False)
+        return self._get_chord(index, ch_str, accidental=accidental)
 
     def from_list(self, progression_list):
         return [self.from_string(prog) for prog in progression_list]
