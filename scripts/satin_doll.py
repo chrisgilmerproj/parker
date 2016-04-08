@@ -4,6 +4,10 @@ from parker.progressions import Progression
 from parker.scales import Major
 
 
+# The Key is what needs to be changed to change everything in the song
+# Progressions are tuples where the first half of the tuple is the distance
+# from the main Key where 1 is ionic and the second half of the tuple is
+# the phrase with the chord progressions.
 KEY = 'D'
 PROGRESSIONS = [(1, ['ii7', 'V7', 'iii7', 'vi7']),
                 (1, ['II7', 'bII7', 'I7', 'IV7', 'iii7', 'vi7']),
