@@ -20,6 +20,7 @@ Tutorial
    tutorial/chords.rst
    tutorial/scales.rst
    tutorial/keys.rst
+   tutorial/progressions.rst
 
 
 API Docs
@@ -32,6 +33,7 @@ API Docs
    api/chords.rst
    api/scales.rst
    api/keys.rst
+   api/progressions.rst
 
 Indices and tables
 ==================

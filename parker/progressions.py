@@ -5,6 +5,9 @@ from .scales import Major
 
 
 class Progression(object):
+    """
+    Reference: https://en.wikipedia.org/wiki/Roman_numeral_analysis
+    """
 
     def __init__(self, scale):
         self.scale = Major(scale)
