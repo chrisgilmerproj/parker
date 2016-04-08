@@ -2,9 +2,27 @@ import unittest
 
 from parker.chords import Chord
 from parker.notes import Note
+from parker.progressions import is_valid_progression
 from parker.progressions import Progression
 from parker.scales import Major
 from parker.scales import Minor
+
+
+class TestProgressionMethods(unittest.TestCase):
+
+    def test_is_valid_progression(self):
+        self.assertTrue(is_valid_progression('I'))
+        self.assertTrue(is_valid_progression('ii'))
+        self.assertTrue(is_valid_progression('biii'))
+        self.assertTrue(is_valid_progression('IV7'))
+        self.assertTrue(is_valid_progression('Vdim'))
+
+    def test_is_not_valid_progression(self):
+        self.assertFalse(is_valid_progression('c'))
+        self.assertFalse(is_valid_progression('b7'))
+        self.assertFalse(is_valid_progression('VIII'))
+        self.assertFalse(is_valid_progression('IX'))
+        self.assertFalse(is_valid_progression('x'))
 
 
 class TestProgressions(unittest.TestCase):

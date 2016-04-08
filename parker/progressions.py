@@ -1,20 +1,18 @@
-import re
-
+from .constants import PROG_MATCHER
+from .constants import PROG_LOOKUP
 from .notes import Note
 from .chords import Chord
 from .scales import Major
 
 
-PROG_MATCHER = re.compile("^(b?)([IV]{1,3}|[iv]{1,3})(.*)$")
-PROG_LOOKUP = {
-    'I': 0,
-    'II': 1,
-    'III': 2,
-    'IV': 3,
-    'V': 4,
-    'VI': 5,
-    'VII': 6,
-}
+def is_valid_progression(note):
+    """
+    Determine if a progression is valid from a given string representation.
+    """
+    m = PROG_MATCHER.match(note)
+    if m is not None:
+        return True
+    return False
 
 
 class Progression(object):
@@ -84,9 +82,11 @@ class Progression(object):
         flat, prog, extension = m.groups()
 
         index = PROG_LOOKUP[prog.upper()]
-        ch_type = 'M'
+        ch_type = ''
         if prog in ['VII', 'vii']:
             ch_type = 'dim'
+        elif prog.isupper():
+            ch_type = 'M'
         elif prog.islower():
             ch_type = 'm'
         ch_str = '{}{}'.format(ch_type, extension)

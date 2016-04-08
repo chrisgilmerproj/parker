@@ -162,3 +162,16 @@ SEMITONE_TO_INTERVAL = {
     24: '15',
     25: '15#',
 }
+
+# Progression Formats
+# TODO: Don't match ivx
+PROG_MATCHER = re.compile("^(b?)([IV]{1,3}|[iv]{1,3})([^IVX]*)$")
+PROG_LOOKUP = {
+    'I': 0,
+    'II': 1,
+    'III': 2,
+    'IV': 3,
+    'V': 4,
+    'VI': 5,
+    'VII': 6,
+}
