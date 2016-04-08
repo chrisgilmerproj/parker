@@ -156,3 +156,6 @@ class Progression(object):
 
     def from_string(self, progression):
         return getattr(self, progression)()
+
+    def from_list(self, progression_list):
+        return [self.from_string(prog) for prog in progression_list]

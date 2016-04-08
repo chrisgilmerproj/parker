@@ -71,3 +71,9 @@ class TestProgressions(unittest.TestCase):
         out = self.p.from_string('ii')
         expected = Chord('Em')
         self.assertEquals(out, expected)
+
+    def test_from_list(self):
+        prog_list = ['ii7', 'V7', 'iii7', 'vi7']
+        out = self.p.from_list(prog_list)
+        expected = [Chord('Em7'), Chord('AM7'), Chord('F#m7'), Chord('Bm7')]
+        self.assertEquals(out, expected)
