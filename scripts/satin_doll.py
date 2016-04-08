@@ -1,17 +1,7 @@
 #! /usr/bin/python
 
-from parker.chords import Chord
 from parker.progressions import Progression
 
-CHANGES = [['Em7', 'A7', 'F#m7', 'B7'],
-           ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7'],
-           ['Em7', 'A7', 'F#m7', 'B7'],
-           ['E7', 'Eb7', 'DM7', 'DM7'],
-           ['Am7', 'D7', 'GM7', 'GM7'],
-           ['Bm7', 'E7', 'Em7', 'A7'],
-           ['Em7', 'A7', 'F#m7', 'B7'],
-           ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7'],
-           ]
 
 PROGRESSIONS = [('D', ['ii7', 'V7', 'iii7', 'vi7']),
                 ('D', ['II7', 'bII7', 'I7', 'IV7', 'iii7', 'vi7']),
@@ -25,21 +15,17 @@ PROGRESSIONS = [('D', ['ii7', 'V7', 'iii7', 'vi7']),
 
 
 def main():
-    for scale, phrase in PROGRESSIONS:
-        p = Progression(scale)
-        print(p.from_list(phrase))
-
-
-def main2():
     last_ch_notes = set()
     last_sc_notes = set()
-    for phrase in CHANGES:
+    for scale, phrase in PROGRESSIONS:
+        p = Progression(scale)
+        chord_list = p.from_list(phrase)
         print('-' * 80)
         print('Musical Phrase: {}'.format(phrase))
+        print('Musical Chords: {}'.format([str(c) for c in chord_list]))
         print('-' * 80)
         print('')
-        for chord in phrase:
-            ch = Chord(chord)
+        for ch in chord_list:
             ch_notes = [n.normalize() for n in ch.notes]
             sc = ch.get_scale()
 
