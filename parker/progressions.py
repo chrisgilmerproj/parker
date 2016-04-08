@@ -126,35 +126,16 @@ class Progression(object):
                 }
 
     def all_progressions(self):
-        return {'I': self.I(),
-                'II': self.II(),
-                'III': self.III(),
-                'IV': self.IV(),
-                'V': self.V(),
-                'VI': self.VI(),
-                'VII': self.VII(),
-                'I7': self.I7(),
-                'II7': self.II7(),
-                'III7': self.III7(),
-                'IV7': self.IV7(),
-                'V7': self.V7(),
-                'VI7': self.VI7(),
-                'VII7': self.VII7(),
-                'i': self.i(),
-                'ii': self.ii(),
-                'iii': self.iii(),
-                'iv': self.iv(),
-                'v': self.v(),
-                'vi': self.vi(),
-                'vii': self.vii(),
-                'i7': self.i7(),
-                'ii7': self.ii7(),
-                'iii7': self.iii7(),
-                'iv7': self.iv7(),
-                'v7': self.v7(),
-                'vi7': self.vi7(),
-                'vii7': self.vii7(),
-                }
+        p_types = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
+        extensions = ['', '7']
+        progressions = {}
+        for p in p_types:
+            for ext in extensions:
+                prog_str = '{}{}'.format(p, ext)
+                progressions[prog_str] = self.from_string(prog_str)
+                prog_str = prog_str.lower()
+                progressions[prog_str] = self.from_string(prog_str)
+        return progressions
 
     def from_string(self, progression):
         flat = False
