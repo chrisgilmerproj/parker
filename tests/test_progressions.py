@@ -1,8 +1,10 @@
 import unittest
 
 from parker.chords import Chord
+from parker.notes import Note
 from parker.progressions import Progression
 from parker.scales import Major
+from parker.scales import Minor
 
 
 class TestProgressions(unittest.TestCase):
@@ -11,7 +13,24 @@ class TestProgressions(unittest.TestCase):
         self.p = Progression('D')
 
     def test_progression_scale(self):
+        self.assertEqual(self.p.root, Note('D4'))
         self.assertEqual(self.p.scale, Major('D4'))
+        self.assertEqual(self.p.scale_cls, Major)
+
+    def test_Progression_to_str(self):
+        self.assertEqual(str(Progression('D4')), 'D4')
+
+    def test_Progression_to_repr(self):
+        self.assertEqual(repr(Progression('D4')), "Progression('D4')")
+
+    def test_Progression_to_repr_with_scale_cls(self):
+        p = Progression('D4', scale_cls=Minor)
+        self.assertEqual(repr(p), "Progression('D4', scale_cls=Minor)")
+
+    def test_Progression_call(self):
+        out = self.p('ii')
+        expected = Chord('Em')
+        self.assertEquals(out, expected)
 
     def test_standard_triads(self):
         out = self.p.standard_triads()
@@ -71,6 +90,10 @@ class TestProgressions(unittest.TestCase):
         out = self.p.from_string('ii')
         expected = Chord('Em')
         self.assertEquals(out, expected)
+
+    def test_from_string_raises(self):
+        with self.assertRaises(Exception):
+            self.p.from_string('+viii')
 
     def test_from_string_flat(self):
         out = self.p.from_string('bii')
