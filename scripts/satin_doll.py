@@ -34,7 +34,7 @@ def main():
         print('Musical Chords: {}'.format([str(c) for c in chord_list]))
         print('-' * 80)
         print('')
-        for ch in chord_list:
+        for prog, ch in zip(phrase, chord_list):
             ch_notes = [n.normalize() for n in ch.notes]
             sc = ch.get_scale()
 
@@ -48,8 +48,9 @@ def main():
             last_ch_notes = set(ch_notes)
             last_sc_notes = set(sc_notes)
 
-            print('{} - {}'.format(repr(ch), repr(sc)))
-            print('Chord Notes: {}'.format(ch_notes))
+            print('{}'.format(prog))
+            print('{}: {}'.format(repr(ch), ch_notes))
+            print('{}: {}'.format(repr(sc), sc_notes))
             print('Common with last chord: {}'.format(common_notes_last_chord))
             print('Common with last scale: {}'.format(common_notes_last_scale))
             print('')
