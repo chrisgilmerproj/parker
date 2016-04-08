@@ -72,6 +72,11 @@ class TestProgressions(unittest.TestCase):
         expected = Chord('Em')
         self.assertEquals(out, expected)
 
+    def test_from_string_flat(self):
+        out = self.p.from_string('bii')
+        expected = Chord('Ebm')
+        self.assertEquals(out, expected)
+
     def test_from_list(self):
         prog_list = ['ii7', 'V7', 'iii7', 'vi7']
         out = self.p.from_list(prog_list)

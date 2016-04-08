@@ -1,7 +1,7 @@
 #! /usr/bin/python
 
 from parker.chords import Chord
-
+from parker.progressions import Progression
 
 CHANGES = [['Em7', 'A7', 'F#m7', 'B7'],
            ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7'],
@@ -13,10 +13,24 @@ CHANGES = [['Em7', 'A7', 'F#m7', 'B7'],
            ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7'],
            ]
 
-PROGRESSIONS = []
+PROGRESSIONS = [('D', ['ii7', 'V7', 'iii7', 'vi7']),
+                ('D', ['II7', 'bII7', 'I7', 'IV7', 'iii7', 'vi7']),
+                ('D', ['ii7', 'V7', 'iii7', 'vi7']),
+                ('D', ['II7', 'bII7', 'I7', 'I7']),
+                ('G', ['ii7', 'V7', 'I7', 'I7']),
+                ('A', ['ii7', 'V7', 'v7', 'I7']),
+                ('D', ['ii7', 'V7', 'iii7', 'vi7']),
+                ('D', ['II7', 'bII7', 'I7', 'IV7', 'iii7', 'vi7']),
+                ]
 
 
 def main():
+    for scale, phrase in PROGRESSIONS:
+        p = Progression(scale)
+        print(p.from_list(phrase))
+
+
+def main2():
     last_ch_notes = set()
     last_sc_notes = set()
     for phrase in CHANGES:
