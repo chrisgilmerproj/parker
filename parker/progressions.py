@@ -60,11 +60,11 @@ class Progression(object):
 
     def standard_triads(self):
         prog_list = ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii']
-        return dict(zip(prog_list, self.from_list(prog_list)))
+        return self.from_list(prog_list, as_map=True)
 
     def standard_sevenths(self):
         prog_list = ['I7', 'ii7', 'iii7', 'IV7', 'V7', 'vi7', 'vii7']
-        return dict(zip(prog_list, self.from_list(prog_list)))
+        return self.from_list(prog_list, as_map=True)
 
     def all_progressions(self):
         p_types = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
@@ -79,6 +79,10 @@ class Progression(object):
         return progressions
 
     def from_string(self, progression):
+        """
+        Take a string representation of a progression and return the chord
+        that it represents.
+        """
         m = PROG_MATCHER.match(progression)
         if not m:
             msg = "Progression '{0}' not recognized".format(progression)
@@ -100,5 +104,14 @@ class Progression(object):
         ch_str = '{0}{1}'.format(ch_type, extension)
         return self._get_chord(index, ch_str, accidental=accidental)
 
-    def from_list(self, progression_list):
-        return [self.from_string(prog) for prog in progression_list]
+    def from_list(self, prog_list, as_map=False):
+        """
+        Take a list of progressions and return the list of chords.
+
+        Setting `as_map` to True will return the progressions as a dictionary
+        where the keys are the progressions passed in and the values are the
+        chords.
+        """
+        if as_map:
+            return dict(zip(prog_list, self.from_list(prog_list)))
+        return [self.from_string(prog) for prog in prog_list]
