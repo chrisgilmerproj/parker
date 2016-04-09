@@ -2,6 +2,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/chrisgilmerproj/parker/badge.svg?branch=master)](https://coveralls.io/github/chrisgilmerproj/parker?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/parker/badge/?version=latest)](http://parker.readthedocs.org/en/latest/?badge=latest)
 [![LGPL License](https://img.shields.io/badge/license-LGPL-blue.svg)](https://github.com/chrisgilmerproj/parker/blob/master/LICENSE)
+[![Github Issues](http://githubbadges.herokuapp.com/chrisgilmerproj/parker/issues.svg?style=plastic)](https://github.com/chrisgilmerproj/parker/issues)
+[![Pending Pull-Requests](http://githubbadges.herokuapp.com/chrisgilmerproj/parker/pulls.svg?style=plastic)](https://github.com/chrisgilmerproj/parker/pulls)
 
 # Parker
 
