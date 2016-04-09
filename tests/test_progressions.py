@@ -29,7 +29,8 @@ class TestProgressionMethods(unittest.TestCase):
 class TestProgressions(unittest.TestCase):
 
     def setUp(self):
-        self.p = Progression('D')
+        self.root = 'D'
+        self.p = Progression(self.root)
 
     def test_progression_scale(self):
         self.assertEqual(self.p.root, Note('D4'))
@@ -128,3 +129,29 @@ class TestProgressions(unittest.TestCase):
         out = self.p.from_list(prog_list)
         expected = [Chord('Em7'), Chord('A7'), Chord('F#m7'), Chord('B7')]
         self.assertEquals(out, expected)
+
+    def test_satin_doll(self):
+        PROGRESSIONS = [(1, ['ii7', 'V7', 'iii7', 'VI7'],
+                            ['Em7', 'A7', 'F#m7', 'B7']),
+                        (1, ['II7', 'bII7', 'IM7', 'IV7', 'iii7', 'VI7'],
+                            ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7']),
+                        (1, ['ii7', 'V7', 'iii7', 'VI7'],
+                            ['Em7', 'A7', 'F#m7', 'B7']),
+                        (1, ['II7', 'bII7', 'IM7', 'IM7'],
+                            ['E7', 'Eb7', 'DM7', 'DM7']),
+                        (4, ['ii7', 'V7', 'IM7', 'IM7'],
+                            ['Am7', 'D7', 'GM7', 'GM7']),
+                        (5, ['ii7', 'V7', 'v7', 'I7'],
+                            ['Bm7', 'E7', 'Em7', 'A7']),
+                        (1, ['ii7', 'V7', 'iii7', 'VI7'],
+                            ['Em7', 'A7', 'F#m7', 'B7']),
+                        (1, ['II7', 'bII7', 'IM7', 'IV7', 'iii7', 'VI7'],
+                            ['E7', 'Eb7', 'DM7', 'G7', 'F#m7', 'B7']),
+                        ]
+        song_key = Major(self.root)
+        for scale_int, phrase, expected in PROGRESSIONS:
+            scale = song_key.notes[scale_int - 1]
+            p = Progression(scale)
+            chord_list = p.from_list(phrase)
+            out = [str(ch) for ch in chord_list]
+            self.assertEquals(out, expected)
