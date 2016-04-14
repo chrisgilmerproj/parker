@@ -59,6 +59,26 @@ class Note(TransposeMixin, CommonEqualityMixin,
             return True
         return False
 
+    def __le__(self, other):
+        if int(self) <= int(other):
+            return True
+        return False
+
+    def __lt__(self, other):
+        if int(self) < int(other):
+            return True
+        return False
+
+    def __ge__(self, other):
+        if int(self) >= int(other):
+            return True
+        return False
+
+    def __gt__(self, other):
+        if int(self) > int(other):
+            return True
+        return False
+
     def __add__(self, other):
         """
         Addition is a function of semitones and simply returns the sum

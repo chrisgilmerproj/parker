@@ -4,12 +4,13 @@ from .constants import ORDER_OF_FLATS
 from .constants import ORDER_OF_SHARPS
 from .constants import SIGN_FLAT
 from .constants import SIGN_SHARP
+from .mixins import CommonEqualityMixin
 from .notes import Note
 from .scales import Major
 from .scales import Minor
 
 
-class Key(object):
+class Key(CommonEqualityMixin):
     """
     Reference: https://en.wikipedia.org/wiki/Key_(music)
     """

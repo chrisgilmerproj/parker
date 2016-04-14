@@ -117,6 +117,30 @@ class TestNote(unittest.TestCase):
     def test_Note_inequality(self):
         self.assertTrue(Note('C4') != Note('F4'))
 
+    def test_Note_lt(self):
+        self.assertTrue(Note('C4') < Note('F4'))
+
+    def test_Note_lt_false(self):
+        self.assertFalse(Note('C4') > Note('F4'))
+
+    def test_Note_le(self):
+        self.assertTrue(Note('C4') <= Note('F4'))
+
+    def test_Note_le_false(self):
+        self.assertFalse(Note('C4') >= Note('F4'))
+
+    def test_Note_gt(self):
+        self.assertTrue(Note('F4') > Note('C4'))
+
+    def test_Note_gt_false(self):
+        self.assertFalse(Note('F4') < Note('C4'))
+
+    def test_Note_ge(self):
+        self.assertTrue(Note('F4') >= Note('C4'))
+
+    def test_Note_ge_false(self):
+        self.assertFalse(Note('F4') <= Note('C4'))
+
     def test_Note_addition(self):
         self.assertEquals(Note('C5') + Note('A4'), 141)
 
