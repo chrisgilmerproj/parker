@@ -1,5 +1,4 @@
 
-
 from .notes import Note
 from .keys import Key
 
@@ -29,9 +28,9 @@ class Instrument(object):
     """
     name = 'Instrument'
     _note_range = (Note('C0'), Note('C8'))
+    _dist_to_c = 0
     clef = CLEF_TREBLE
     key = Key('C')
-    dist_to_c = -9
 
     def __str__(self):
         return self.name
@@ -55,20 +54,21 @@ class Instrument(object):
     def in_range(self, note):
         return self.note_range[0] <= Note(note) <= self.note_range[1]
 
+    def transpose_note(self, note, key=None):
+        if not key:
+            key = Key('C')
+        note_to_c = Note(note).transpose(self._dist_to_c)
+        note_to_key = note_to_c.transpose(Note('C4') - Note(key.key))
+        print(note, note_to_c, self._dist_to_c, Note('C4') - Note(key.key))
+        return note_to_key
 
-class BbInstrument(Instrument):
-    name = 'BbInstrument'
-    key = Key('Bb')
+    def transpose_to_c(self):
+        return [note.transpose(self._dist_to_c) for note in self.note_range]
 
 
-class EbInstrument(Instrument):
-    name = 'EbInstrument'
-    key = Key('Eb')
-
-
-class FInstrument(Instrument):
-    name = 'FInstrument'
-    key = Key('F')
+class TrebleClefInstrument(Instrument):
+    name = 'TrebleClefInstrument'
+    clef = CLEF_TREBLE
 
 
 class BassClefInstrument(Instrument):
@@ -76,6 +76,44 @@ class BassClefInstrument(Instrument):
     clef = CLEF_BASS
 
 
+class CInstrument(TrebleClefInstrument):
+    name = 'CInstrument'
+
+
+class BbInstrument(TrebleClefInstrument):
+    name = 'BbInstrument'
+    key = Key('Bb')
+
+
+class EbInstrument(TrebleClefInstrument):
+    name = 'EbInstrument'
+    key = Key('Eb')
+
+
+class FInstrument(TrebleClefInstrument):
+    name = 'FInstrument'
+    key = Key('F')
+
+
+class SopranoSaxophone(BbInstrument):
+    name = 'SopranoSaxophone'
+    _dist_to_c = -2
+    _note_range = (Note('Bb2'), Note('F#5'))
+
+
+class AltoSaxophone(EbInstrument):
+    name = 'AltoSaxophone'
+    _dist_to_c = -9
+    _note_range = (Note('Bb3'), Note('F5'))
+
+
 class TenorSaxophone(BbInstrument):
     name = 'TenorSaxophone'
+    _dist_to_c = -14
+    _note_range = (Note('Bb2'), Note('F#5'))
+
+
+class BaritoneSaxophone(EbInstrument):
+    name = 'BaritoneSaxophone'
+    _dist_to_c = -20
     _note_range = (Note('Bb2'), Note('F#5'))
