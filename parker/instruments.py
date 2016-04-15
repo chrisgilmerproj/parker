@@ -59,7 +59,6 @@ class Instrument(object):
             key = Key('C')
         note_to_c = Note(note).transpose(self._dist_to_c)
         note_to_key = note_to_c.transpose(Note('C4') - Note(key.key))
-        print(note, note_to_c, self._dist_to_c, Note('C4') - Note(key.key))
         return note_to_key
 
     def transpose_to_c(self):
