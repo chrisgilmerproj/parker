@@ -5,6 +5,11 @@ parker.notes
 
 .. automethod:: parker.notes.note_from_frequency
 
+.. autoclass:: parker.notes.Accidental
+   :members:
+   :undoc-members:
+   :inherited-members:
+
 .. autoclass:: parker.notes.Note
    :members:
    :undoc-members:

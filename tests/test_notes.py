@@ -2,10 +2,50 @@ import unittest
 
 from parker.mixins import Aug
 from parker.mixins import Dim
+from parker.notes import Accidental
 from parker.notes import Note
 from parker.notes import NoteGroup
 from parker.notes import is_valid_note
 from parker.notes import note_from_frequency
+
+
+class TestAccidentalMethods(unittest.TestCase):
+
+    def _test_accidental(self, acc, expected):
+        acc = Accidental(acc)
+        self.assertEqual(acc.name, expected[0])
+        self.assertEqual(acc.alter, expected[1])
+
+    def test_Accidental_constructor(self):
+        self._test_accidental('#', ('#', 1.0))
+
+    def test_Accidental_str(self):
+        acc = Accidental('#')
+        self.assertEqual(str(acc), '#')
+
+    def test_Accidental_repr(self):
+        acc = Accidental('#')
+        self.assertEqual(repr(acc), "Accidental('#')")
+
+    def test_multiple_signs(self):
+        expected = {'': ('', 0.0),
+                    '#': ('#', 1.0),
+                    '##': ('##', 2.0),
+                    '###': ('###', 3.0),
+                    '####': ('####', 4.0),
+                    'b': ('b', -1.0),
+                    'bb': ('bb', -2.0),
+                    'bbb': ('bbb', -3.0),
+                    'bbbb': ('bbbb', -4.0),
+                    '~': ('~', 0.5),
+                    '`': ('`', -0.5),
+                    '#~': ('#~', 1.5),
+                    'b`': ('b`', -1.5),
+                    '#b#bb##b##bb': ('', 0.0),
+                    '#b~`': ('', 0.0),
+                    }
+        for acc, exp in expected.items():
+            self._test_accidental(acc, exp)
 
 
 class TestNoteMethods(unittest.TestCase):

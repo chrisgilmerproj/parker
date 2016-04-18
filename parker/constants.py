@@ -8,6 +8,8 @@ VALID_NOTES = 'ABCDEFG'
 # Signs for sharps and flats
 SIGN_DOUBLE_SHARP = 'x'
 SIGN_FLAT = 'b'
+SIGN_HALF_FLAT = '`'
+SIGN_HALF_SHARP = '~'
 SIGN_SHARP = '#'
 
 # Reference: https://en.wikipedia.org/wiki/Scientific_pitch_notation
@@ -15,12 +17,12 @@ SIGN_SHARP = '#'
 # The first group is the note, always capitalized from A to G
 # The second group is the accidentals, any number of # or b symbols
 # The third group is the octave, which must be a digit between 0 and 9
-NOTE_MATCHER = re.compile("^([A|B|C|D|E|F|G]{1})([#|b]*)(-?[0-9]*)$")
+NOTE_MATCHER = re.compile("^([A|B|C|D|E|F|G]{1})([#|b|`|~]*)(-?[0-9]*)$")
 
 # Chords are formatted like notes but exclude the octave like in Scientific
 # Pitch Notation and instead include a trailing group which defines the
 # type of chord
-CHORD_MATCHER = re.compile("^([A|B|C|D|E|F|G]{1}[#|b]*)(.*)$")
+CHORD_MATCHER = re.compile("^([A|B|C|D|E|F|G]{1}[#|b|`|~]*)(.*)$")
 
 #
 NOTE_OFFSETS = {
@@ -164,7 +166,7 @@ SEMITONE_TO_INTERVAL = {
 
 # Progression Formats
 # TODO: Don't match ivx
-PROG_MATCHER = re.compile("^([#|b]?)([IV]{1,3}|[iv]{1,3})([^IVX]*)$")
+PROG_MATCHER = re.compile("^([#|b|`|~]?)([IV]{1,3}|[iv]{1,3})([^IVX]*)$")
 PROG_LOOKUP = {
     'I': 0,
     'II': 1,

@@ -1,10 +1,12 @@
-from math import log
+import math
 
 from .constants import LOOKUP_FLATS
 from .constants import LOOKUP_SHARPS
 from .constants import NOTE_MATCHER
 from .constants import NOTE_OFFSETS
 from .constants import SIGN_FLAT
+from .constants import SIGN_HALF_FLAT
+from .constants import SIGN_HALF_SHARP
 from .constants import SIGN_SHARP
 from .constants import VALID_NOTES
 from .mixins import AugmentDiminishMixin
@@ -23,6 +25,59 @@ def is_valid_note(note):
     if m is not None:
         return True
     return False
+
+
+class Accidental(CommonEqualityMixin):
+
+    def __init__(self, acc):
+        self._name = ''
+        self._alter = 0.0
+        self.set_accidental(acc)
+
+    def set_accidental(self, acc):
+        for char in acc:
+            if char == SIGN_SHARP:
+                self.alter += 1.0
+            elif char == SIGN_FLAT:
+                self.alter -= 1.0
+            elif char == SIGN_HALF_SHARP:
+                self.alter += 0.5
+            elif char == SIGN_HALF_FLAT:
+                self.alter -= 0.5
+        full = ''
+        if self.alter > 0:
+            full = SIGN_SHARP * int(abs(math.floor(self.alter)))
+        else:
+            full = SIGN_FLAT * int(abs(math.ceil(self.alter)))
+        half = ''
+        if self._alter % 1:
+            half = (SIGN_HALF_SHARP if self.alter > 0 else SIGN_HALF_FLAT)
+        self.name = '{0}{1}'.format(full, half)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return "{0}('{1}')".format(type(self).__name__, str(self))
+
+    def __float__(self):
+        return self._alter
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def alter(self):
+        return self._alter
+
+    @alter.setter
+    def alter(self, value):
+        self._alter = value
 
 
 class Note(TransposeMixin, CommonEqualityMixin,
@@ -320,7 +375,7 @@ def note_from_frequency(freq):
     reference = Note('A4')
     ref_freq = reference.get_frequency()
     a = 2.0 ** (1.0 / 12.0)
-    steps = log(freq / ref_freq) / log(a)
+    steps = math.log(freq / ref_freq) / math.log(a)
     steps = int(round(steps))
     note_int = reference + steps
     return Note(note_int)
