@@ -27,6 +27,14 @@ class TestAccidentalMethods(unittest.TestCase):
         acc = Accidental('#')
         self.assertEqual(repr(acc), "Accidental('#')")
 
+    def test_Accidental_int(self):
+        acc = Accidental('#')
+        self.assertEqual(int(acc), 1)
+
+    def test_Accidental_float(self):
+        acc = Accidental('#')
+        self.assertEqual(float(acc), 1.0)
+
     def test_multiple_signs(self):
         expected = {'': ('', 0.0),
                     '#': ('#', 1.0),
@@ -46,6 +54,20 @@ class TestAccidentalMethods(unittest.TestCase):
                     }
         for acc, exp in expected.items():
             self._test_accidental(acc, exp)
+
+    def test_set_augment(self):
+        acc = Accidental('#')
+        self.assertEquals(acc.alter, 1.0)
+        acc.set_augment()
+        self.assertEquals(acc.name, '##')
+        self.assertEquals(acc.alter, 2.0)
+
+    def test_set_diminish(self):
+        acc = Accidental('#')
+        self.assertEquals(acc.alter, 1.0)
+        acc.set_diminish()
+        self.assertEquals(acc.name, '')
+        self.assertEquals(acc.alter, 0.0)
 
 
 class TestNoteMethods(unittest.TestCase):
@@ -208,20 +230,20 @@ class TestNote(unittest.TestCase):
 
     def test_get_accidentals(self):
         note = Note('C4')
-        self.assertEquals(note.accidentals, 0)
+        self.assertEquals(int(note.accidentals), 0)
 
     def test_set_accidentals(self):
         note = Note('C4')
         note.accidentals = 2
-        self.assertEquals(note.accidentals, 2)
+        self.assertEquals(int(note.accidentals), 2)
         self.assertEquals(str(note), 'C##4')
 
     def test__get_accidentals_as_string(self):
         note = Note('Cbb4')
-        self.assertEquals(note.accidentals, -2)
+        self.assertEquals(int(note.accidentals), -2)
         self.assertEquals(note._get_accidentals_as_string(), 'bb')
         note = Note('C###4')
-        self.assertEquals(note.accidentals, 3)
+        self.assertEquals(int(note.accidentals), 3)
         self.assertEquals(note._get_accidentals_as_string(), '###')
 
     def test_get_frequency(self):
@@ -558,29 +580,29 @@ class TestNote(unittest.TestCase):
 
     def test_augment(self):
         n = Note('C4')
-        self.assertEqual(n._accidentals, 0)
+        self.assertEqual(int(n._accidentals), 0)
         n2 = n.augment()
-        self.assertEqual(n._accidentals, 0)
-        self.assertEqual(n2._accidentals, 1)
+        self.assertEqual(int(n._accidentals), 0)
+        self.assertEqual(int(n2._accidentals), 1)
 
     def test_set_augment(self):
         n = Note('C4')
-        self.assertEqual(n._accidentals, 0)
+        self.assertEqual(int(n._accidentals), 0)
         n.set_augment()
-        self.assertEqual(n._accidentals, 1)
+        self.assertEqual(int(n._accidentals), 1)
 
     def test_diminish(self):
         n = Note('C4')
-        self.assertEqual(n._accidentals, 0)
+        self.assertEqual(int(n._accidentals), 0)
         n2 = n.diminish()
-        self.assertEqual(n._accidentals, 0)
-        self.assertEqual(n2._accidentals, -1)
+        self.assertEqual(int(n._accidentals), 0)
+        self.assertEqual(int(n2._accidentals), -1)
 
     def test_set_diminish(self):
         n = Note('C4')
-        self.assertEqual(n._accidentals, 0)
+        self.assertEqual(int(n._accidentals), 0)
         n.set_diminish()
-        self.assertEqual(n._accidentals, -1)
+        self.assertEqual(int(n._accidentals), -1)
 
     def test_all_transpositions(self):
         n = Note('C4')

@@ -29,21 +29,26 @@ def is_valid_note(note):
 
 class Accidental(CommonEqualityMixin):
 
-    def __init__(self, acc):
+    def __init__(self, acc=''):
         self._name = ''
         self._alter = 0.0
-        self.set_accidental(acc)
+        self.set_from_str(acc)
 
-    def set_accidental(self, acc):
+    def set_from_str(self, acc):
+        alter = 0.0
         for char in acc:
             if char == SIGN_SHARP:
-                self.alter += 1.0
+                alter += 1.0
             elif char == SIGN_FLAT:
-                self.alter -= 1.0
+                alter -= 1.0
             elif char == SIGN_HALF_SHARP:
-                self.alter += 0.5
+                alter += 0.5
             elif char == SIGN_HALF_FLAT:
-                self.alter -= 0.5
+                alter -= 0.5
+        self.set_from_num(alter)
+
+    def set_from_num(self, alter):
+        self.alter = float(alter)
         full = ''
         if self.alter > 0:
             full = SIGN_SHARP * int(abs(math.floor(self.alter)))
@@ -59,6 +64,9 @@ class Accidental(CommonEqualityMixin):
 
     def __repr__(self):
         return "{0}('{1}')".format(type(self).__name__, str(self))
+
+    def __int__(self):
+        return int(self._alter)
 
     def __float__(self):
         return self._alter
@@ -78,6 +86,16 @@ class Accidental(CommonEqualityMixin):
     @alter.setter
     def alter(self, value):
         self._alter = value
+
+    def set_augment(self):
+        alter = self.alter + 1
+        self.set_from_num(alter)
+        return self
+
+    def set_diminish(self):
+        alter = self.alter - 1
+        self.set_from_num(alter)
+        return self
 
 
 class Note(TransposeMixin, CommonEqualityMixin,
@@ -100,7 +118,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
     def __int__(self):
         result = (int(self._octave) + 1) * 12
         result += NOTE_OFFSETS[self._base_name]
-        result += self._accidentals
+        result += int(self.accidentals)
         return int(result)
 
     def __eq__(self, other):
@@ -177,7 +195,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         # The lookup table only works from 0 - 11, so make sure
         # that the offset matches
         offset = offset % 12
-        self._base_name, self._accidentals = lookup[offset]
+        self._base_name, self.accidentals = lookup[offset]
 
     def _set_from_string(self, note):
         """
@@ -199,8 +217,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                 self._octave = int(octave)
             except (NameError, ValueError):
                 self._octave = 4
-            self._accidentals = sum(1 if acc == SIGN_SHARP else -1
-                                    for acc in accidentals)
+            self.accidentals = accidentals
             return
         raise Exception("Unknown note format: {0}".format(note))
 
@@ -208,7 +225,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         """Set the Note from a Note object"""
         self._base_name = note._base_name
         self._octave = note._octave
-        self._accidentals = note._accidentals
+        self.accidentals = note.accidentals
 
     @property
     def base_name(self):
@@ -227,11 +244,17 @@ class Note(TransposeMixin, CommonEqualityMixin,
 
     @accidentals.setter
     def accidentals(self, accidentals):
-        self._accidentals = int(accidentals)
+        if isinstance(accidentals, Accidental):
+            self._accidentals = accidentals
+        elif isinstance(accidentals, (int, float)):
+            acc = Accidental()
+            acc.set_from_num(accidentals)
+            self._accidentals = acc
+        else:
+            self._accidentals = Accidental(accidentals)
 
     def _get_accidentals_as_string(self):
-        return (SIGN_SHARP if self._accidentals > 0 else SIGN_FLAT) * \
-            abs(self._accidentals)
+        return str(self.accidentals)
 
     @property
     def octave(self):
@@ -321,7 +344,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
           - https://en.wikipedia.org/wiki/Pitch_class
           - https://en.wikipedia.org/wiki/List_of_chords
         """
-        acc = self._accidentals
         transpose_amount = None
         if isinstance(amount, int):
             transpose_amount = amount
@@ -337,8 +359,9 @@ class Note(TransposeMixin, CommonEqualityMixin,
         else:
             raise Exception("Cannot transpose from '{0}'".format(amount))
         use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
+        acc = int(self.accidentals)
         self._set_from_int(int(self) - acc + transpose_amount, use_sharps)
-        self._accidentals += acc
+        self.accidentals = self.accidentals.alter + acc
 
         # The amount to update could given by a Aug or Dim class
         if isinstance(amount, (Aug, Dim)):
@@ -346,11 +369,11 @@ class Note(TransposeMixin, CommonEqualityMixin,
         return self
 
     def set_augment(self):
-        self._accidentals += 1
+        self.accidentals.set_augment()
         return self
 
     def set_diminish(self):
-        self._accidentals -= 1
+        self.accidentals.set_diminish()
         return self
 
 
