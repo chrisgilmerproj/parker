@@ -124,22 +124,44 @@ class TestNote(unittest.TestCase):
         self.assertEqual(str(Note(61, use_sharps=True)), 'C#4')
         self.assertEqual(str(Note(61, use_sharps=False)), 'Db4')
 
-    def test_half_notes(self):
+    def test_half_sharp_notes(self):
         self.assertEqual(Note('C~4'), Note(60.5))
         self.assertEqual(Note('C#~4'), Note(61.5))
-        self.assertEqual(Note('D4'), Note(62))
-        self.assertEqual(Note('D#4'), Note(63))
-        self.assertEqual(Note('E4'), Note(64))
-        self.assertEqual(Note('F4'), Note(65))
-        self.assertEqual(Note('F#4'), Note(66))
-        self.assertEqual(Note('G4'), Note(67))
-        self.assertEqual(Note('G#4'), Note(68))
-        self.assertEqual(Note('A4'), Note(69))
-        self.assertEqual(Note('A#4'), Note(70))
-        self.assertEqual(Note('B4'), Note(71))
-        self.assertEqual(Note('C5'), Note(72))
-        self.assertEqual(Note('C6'), Note(84))
-        self.assertEqual(Note('C7'), Note(96))
+        self.assertEqual(Note('D~4'), Note(62.5))
+        self.assertEqual(Note('D#~4'), Note(63.5))
+        self.assertEqual(Note('E~4'), Note(64.5))
+        self.assertEqual(Note('E#~4'), Note(65.5))
+        self.assertEqual(Note('F~4'), Note(65.5))
+        self.assertEqual(Note('F#~4'), Note(66.5))
+        self.assertEqual(Note('G~4'), Note(67.5))
+        self.assertEqual(Note('G#~4'), Note(68.5))
+        self.assertEqual(Note('A~4'), Note(69.5))
+        self.assertEqual(Note('A#~4'), Note(70.5))
+        self.assertEqual(Note('B~4'), Note(71.5))
+        self.assertEqual(Note('B#~4'), Note(72.5))
+        self.assertEqual(Note('C~5'), Note(72.5))
+        self.assertEqual(Note('C~6'), Note(84.5))
+        self.assertEqual(Note('C~7'), Note(96.5))
+
+    def test_half_flat_notes(self):
+        self.assertEqual(Note('Cb`3'), Note(58.5))
+        self.assertEqual(Note('C`4'), Note(59.5))
+        self.assertEqual(Note('Db`4'), Note(60.5))
+        self.assertEqual(Note('D`4'), Note(61.5))
+        self.assertEqual(Note('Eb`4'), Note(62.5))
+        self.assertEqual(Note('E`4'), Note(63.5))
+        self.assertEqual(Note('Fb`4'), Note(63.5))
+        self.assertEqual(Note('F`4'), Note(64.5))
+        self.assertEqual(Note('Gb`4'), Note(65.5))
+        self.assertEqual(Note('G`4'), Note(66.5))
+        self.assertEqual(Note('Ab`4'), Note(67.5))
+        self.assertEqual(Note('A`4'), Note(68.5))
+        self.assertEqual(Note('Bb`4'), Note(69.5))
+        self.assertEqual(Note('B`4'), Note(70.5))
+        self.assertEqual(Note('Cb`4'), Note(70.5))
+        self.assertEqual(Note('C`5'), Note(71.5))
+        self.assertEqual(Note('C`6'), Note(83.5))
+        self.assertEqual(Note('C`7'), Note(95.5))
 
     def test_constructor_from_num_negative_octave(self):
         self.assertEqual(int(Note('B-1')), int(Note(11)))
@@ -564,12 +586,19 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.set_transpose(-10), Note(55))
         self.assertEqual(n, Note(55))
 
-    def test_set_transpose_half_notes(self):
+    def test_set_transpose_half_sharp_notes(self):
         n = Note('C~4')
         self.assertEqual(n, Note(60.5))
         self.assertEqual(n.set_transpose(5), Note(65.5))
         self.assertEqual(n.set_transpose(-10), Note(55.5))
         self.assertEqual(n, Note(55.5))
+
+    def test_set_transpose_half_flat_notes(self):
+        n = Note('C`4')
+        self.assertEqual(n, Note(59.5))
+        self.assertEqual(n.set_transpose(5), Note(64.5))
+        self.assertEqual(n.set_transpose(-10), Note(54.5))
+        self.assertEqual(n, Note(54.5))
 
     def test_set_transpose_Aug_and_Dim(self):
         n = Note(60)
