@@ -78,7 +78,7 @@ a private method:
 
 
 >>> n = Note('C#4')
->>> n._get_accidentals_as_string()
+>>> str(n.accidentals)
 '#'
 
 
