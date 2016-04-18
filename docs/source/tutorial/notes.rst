@@ -82,20 +82,20 @@ a private method:
 '#'
 
 
-Notes as Integers
+Notes as Numbers
 -----------------
 
-Notes can also be represented as integers:
+Notes can also be represented as numbers:
 
 
->>> int(Note('C4'))
-60
+>>> float(Note('C4'))
+60.0
 
 
-Or constructed from integers:
+Or constructed from numbers:
 
 
->>> Note(60)
+>>> Note(60.0)
 Note('C4')
 
 
