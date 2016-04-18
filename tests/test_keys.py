@@ -93,12 +93,18 @@ class TestKeys(unittest.TestCase):
 
     def test_accidental_notes_in_C_sharp(self):
         key = Key('C#')
-        scale = key.get_scale()
-        for note in key.get_accidental_notes():
-            self.assertTrue(note in scale.notes)
+        key_notes = [n.normalize(use_sharps=True)
+                     for n in key.get_accidental_notes()]
+        scale_notes = [n.normalize(use_sharps=True)
+                       for n in key.get_scale().notes]
+        for note in key_notes:
+            self.assertTrue(note in scale_notes)
 
     def test_accidental_notes_in_C_flat(self):
         key = Key('Cb')
-        scale = key.get_scale()
-        for note in key.get_accidental_notes():
-            self.assertTrue(note in scale.notes)
+        key_notes = [n.normalize(use_sharps=True)
+                     for n in key.get_accidental_notes()]
+        scale_notes = [n.normalize(use_sharps=True)
+                       for n in key.get_scale().notes]
+        for note in key_notes:
+            self.assertTrue(note in scale_notes)

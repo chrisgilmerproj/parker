@@ -291,14 +291,14 @@ class TestChord(unittest.TestCase):
                                            Note('Db5'),
                                            Note('F5'),
                                            Note('Ab5'),
-                                           Note('Cb6'),
+                                           Note('Cb5'),
                                            Note('C6'),
                                            Note('Eb6'),
                                            Note('E6'),
                                            Note('A6'),
                                            Note('C7')])
         self._chord_tester(new_chord, ['Gb4', 'G4', 'Db5', 'F5', 'Ab5',
-                                       'Cb6', 'C6', 'Eb6', 'E6', 'A6', 'C7'])
+                                       'Cb5', 'C6', 'Eb6', 'E6', 'A6', 'C7'])
 
 
 class TestAllChords(unittest.TestCase):

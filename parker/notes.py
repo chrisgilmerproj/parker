@@ -109,17 +109,23 @@ class Note(TransposeMixin, CommonEqualityMixin,
         self._set_note(note, use_sharps=use_sharps)
 
     def __str__(self):
-        accidentals = self._get_accidentals_as_string()
-        return "{0}{1}{2:d}".format(self._base_name, accidentals, self._octave)
+        return "{0}{1}{2:d}".format(self._base_name,
+                                    self.accidentals,
+                                    self._octave)
 
     def __repr__(self):
         return "{0}('{1}')".format(type(self).__name__, str(self))
 
     def __int__(self):
-        result = (int(self._octave) + 1) * 12
-        result += NOTE_OFFSETS[self._base_name]
-        result += int(self.accidentals)
-        return int(result)
+        return int(float(self))
+
+    def __float__(self):
+        result = (float(self._octave) + 1) * 12
+        result += float(NOTE_OFFSETS[self._base_name])
+        if self._base_name == 'C' and int(self.accidentals) == -1:
+            result += 12
+        result += float(self.accidentals)
+        return result
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
@@ -128,27 +134,27 @@ class Note(TransposeMixin, CommonEqualityMixin,
             return True
         # Notes are identical if their integer value is the same regardless
         # of the base_name, accidentals, and octave.
-        if int(self) == int(other):
+        if float(self) == float(other):
             return True
         return False
 
     def __le__(self, other):
-        if int(self) <= int(other):
+        if float(self) <= float(other):
             return True
         return False
 
     def __lt__(self, other):
-        if int(self) < int(other):
+        if float(self) < float(other):
             return True
         return False
 
     def __ge__(self, other):
-        if int(self) >= int(other):
+        if float(self) >= float(other):
             return True
         return False
 
     def __gt__(self, other):
-        if int(self) > int(other):
+        if float(self) > float(other):
             return True
         return False
 
@@ -157,18 +163,18 @@ class Note(TransposeMixin, CommonEqualityMixin,
         Addition is a function of semitones and simply returns the sum
         of the semitones of each Note object.
         """
-        return int(self) + int(other)
+        return float(self) + float(other)
 
     def __sub__(self, other):
         """
         Addition is a function of semitones and simply returns the difference
         of the semitones of each Note object.
         """
-        return int(self) - int(other)
+        return float(self) - float(other)
 
     def _set_note(self, note, use_sharps):
-        if isinstance(note, int):
-            self._set_from_int(note, use_sharps)
+        if isinstance(note, (int, float)):
+            self._set_from_num(note, use_sharps)
         elif isinstance(note, str):
             self._set_from_string(note)
         elif isinstance(note, Note):
@@ -176,7 +182,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         elif note is None:
             self._set_from_string('A4')
 
-    def _set_from_int(self, note, use_sharps=True):
+    def _set_from_num(self, note, use_sharps=True):
         """
         Set the Note from an integer representation
 
@@ -194,8 +200,10 @@ class Note(TransposeMixin, CommonEqualityMixin,
 
         # The lookup table only works from 0 - 11, so make sure
         # that the offset matches
-        offset = offset % 12
-        self._base_name, self.accidentals = lookup[offset]
+        offset_remainder = offset % 1
+        offset = math.floor(offset % 12)
+        self._base_name, acc_lookup = lookup[offset]
+        self.accidentals = acc_lookup + offset_remainder
 
     def _set_from_string(self, note):
         """
@@ -253,9 +261,6 @@ class Note(TransposeMixin, CommonEqualityMixin,
         else:
             self._accidentals = Accidental(accidentals)
 
-    def _get_accidentals_as_string(self):
-        return str(self.accidentals)
-
     @property
     def octave(self):
         return self._octave
@@ -310,8 +315,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                  Cbb4  -> Cbb
                  C###4 -> C###
         """
-        accidentals = self._get_accidentals_as_string()
-        return "{0}{1}".format(self._base_name, accidentals)
+        return "{0}{1}".format(self._base_name, self.accidentals)
 
     def normalize(self, use_sharps=None):
         """
@@ -330,7 +334,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
                 use_sharps = False
             else:
                 use_sharps = True
-        return Note(int(self), use_sharps).generalize()
+        return Note(float(self), use_sharps).generalize()
 
     def set_transpose(self, amount):
         """
@@ -345,7 +349,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
           - https://en.wikipedia.org/wiki/List_of_chords
         """
         transpose_amount = None
-        if isinstance(amount, int):
+        if isinstance(amount, (int, float)):
             transpose_amount = amount
         elif isinstance(amount, str):
             if amount in 'tA':
@@ -359,9 +363,7 @@ class Note(TransposeMixin, CommonEqualityMixin,
         else:
             raise Exception("Cannot transpose from '{0}'".format(amount))
         use_sharps = transpose_amount % 12 in [0, 2, 4, 7, 9, 11]
-        acc = int(self.accidentals)
-        self._set_from_int(int(self) - acc + transpose_amount, use_sharps)
-        self.accidentals = self.accidentals.alter + acc
+        self._set_from_num(float(self) + transpose_amount, use_sharps)
 
         # The amount to update could given by a Aug or Dim class
         if isinstance(amount, (Aug, Dim)):
@@ -416,7 +418,7 @@ class NotesParser(object):
             return [notes.clone()]
         elif isinstance(notes, NoteGroup):
             return notes.clone().notes
-        elif isinstance(notes, (int, str)):
+        elif isinstance(notes, (int, float, str)):
             return [Note(notes)]
         elif isinstance(notes, (list, tuple, set)):
             result = []
@@ -449,7 +451,7 @@ class NoteGroupBase(TransposeMixin, CommonEqualityMixin,
         return self.walk(lambda n: n.set_diminish())
 
     def get_notes(self):
-        return sorted(self.notes, key=int)
+        return sorted(self.notes, key=float)
 
     def __getitem__(self, key):
         return self.notes[key]
