@@ -120,10 +120,17 @@ class Note(TransposeMixin, CommonEqualityMixin,
         return int(float(self))
 
     def __float__(self):
+        """
+        Return the SPN number related to this note.
+
+        B# and Cb follow SPN rules such that B# is always in the octave below
+        Cb and Cb is always in the octave above B#.
+
+        Reference:
+          - https://en.wikipedia.org/wiki/Scientific_pitch_notation
+        """
         result = (float(self._octave) + 1) * 12
         result += float(NOTE_OFFSETS[self._base_name])
-        if self._base_name == 'C' and int(self.accidentals) == -1:
-            result += 12
         result += float(self.accidentals)
         return result
 
@@ -203,6 +210,8 @@ class Note(TransposeMixin, CommonEqualityMixin,
         offset_remainder = offset % 1
         offset = math.floor(offset % 12)
         self._base_name, acc_lookup = lookup[offset]
+        if offset == 11 and self._base_name == 'C':
+            self._octave += 1
         self.accidentals = acc_lookup + offset_remainder
 
     def _set_from_string(self, note):

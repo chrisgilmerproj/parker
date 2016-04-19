@@ -239,7 +239,7 @@ class TestDiatonicScale(TestScaleBase):
 
     def test_MedievalLydian_on_F4(self):
         scale = MedievalLydian(Note('F4'))
-        in_scale = ['F4', 'G4', 'A4', 'Cb4', 'C5', 'D5', 'E5', 'F5']
+        in_scale = ['F4', 'G4', 'A4', 'Cb5', 'C5', 'D5', 'E5', 'F5']
         self._scale_tester(scale, in_scale)
         self.assertEqual(repr(scale), "MedievalLydian('F4')")
 

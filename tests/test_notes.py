@@ -115,7 +115,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('A4'), Note(69))
         self.assertEqual(Note('A#4'), Note(70))
         self.assertEqual(Note('B4'), Note(71))
-        self.assertEqual(Note('Cb4'), Note(71))
+        self.assertEqual(Note('Cb5'), Note(71))
         self.assertEqual(Note('C5'), Note(72))
         self.assertEqual(Note('C6'), Note(84))
         self.assertEqual(Note('C7'), Note(96))
@@ -144,7 +144,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('C~7'), Note(96.5))
 
     def test_half_flat_notes(self):
-        self.assertEqual(Note('Cb`3'), Note(58.5))
+        self.assertEqual(Note('Cb`4'), Note(58.5))
         self.assertEqual(Note('C`4'), Note(59.5))
         self.assertEqual(Note('Db`4'), Note(60.5))
         self.assertEqual(Note('D`4'), Note(61.5))
@@ -158,7 +158,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('A`4'), Note(68.5))
         self.assertEqual(Note('Bb`4'), Note(69.5))
         self.assertEqual(Note('B`4'), Note(70.5))
-        self.assertEqual(Note('Cb`4'), Note(70.5))
+        self.assertEqual(Note('Cb`5'), Note(70.5))
         self.assertEqual(Note('C`5'), Note(71.5))
         self.assertEqual(Note('C`6'), Note(83.5))
         self.assertEqual(Note('C`7'), Note(95.5))
@@ -177,8 +177,12 @@ class TestNote(unittest.TestCase):
     def test_constructor_raises(self):
         self.assertRaises(Exception, Note, 'H$5')
 
+    def test_scientific_pitch_notation(self):
+        self.assertEqual(Note('B#4'), Note(72))
+        self.assertEqual(Note('Cb5'), Note(71))
+
     def test_flat_sharp_enharmonics(self):
-        self.assertEqual(Note('Cb3'), Note('B3'))
+        self.assertEqual(Note('Cb4'), Note('B3'))
         self.assertEqual(Note('C4'), Note('B#3'))
         self.assertEqual(Note('Db4'), Note('C#4'))
         self.assertEqual(Note('Eb4'), Note('D#4'))
@@ -362,8 +366,8 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.perfect_fourth_down(), Note('G###3'))
 
         n = Note('Cb4')
-        self.assertEqual(n.perfect_fourth_up(), Note('Fb5'))
-        self.assertEqual(n.perfect_fourth_down(), Note('Gb4'))
+        self.assertEqual(n.perfect_fourth_up(), Note('E4'))
+        self.assertEqual(n.perfect_fourth_down(), Note('F#3'))
 
         n = Note('Cbb4')
         self.assertEqual(n.perfect_fourth_up(), Note('Fbb4'))
@@ -374,7 +378,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(n.perfect_fourth_down(), Note('Gbbb3'))
 
     def test_transpose_up_no_accidentals_Bb4(self):
-        self.assertEqual(Note('Bb4').minor_second_up(), Note('Cb4'))
+        self.assertEqual(Note('Bb4').minor_second_up(), Note('Cb5'))
         self.assertEqual(Note('Bb4').major_second_up(), Note('C5'))
         self.assertEqual(Note('Bb4').minor_third_up(), Note('Db5'))
         self.assertEqual(Note('Bb4').major_third_up(), Note('D5'))
@@ -431,7 +435,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('F4').minor_third_up(), Note('Ab4'))
         self.assertEqual(Note('F4').major_third_up(), Note('A4'))
         self.assertEqual(Note('F4').major_fourth_up(), Note('Bb4'))
-        self.assertEqual(Note('F4').minor_fifth_up(), Note('Cb4'))
+        self.assertEqual(Note('F4').minor_fifth_up(), Note('Cb5'))
         self.assertEqual(Note('F4').major_fifth_up(), Note('C5'))
         self.assertEqual(Note('F4').perfect_fifth_up(), Note('C5'))
         self.assertEqual(Note('F4').minor_sixth_up(), Note('Db5'))
@@ -467,7 +471,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('Bb4').minor_sixth_down(), Note('D4'))
         self.assertEqual(Note('Bb4').major_sixth_down(), Note('Db4'))
         self.assertEqual(Note('Bb4').minor_seventh_down(), Note('C4'))
-        self.assertEqual(Note('Bb4').major_seventh_down(), Note('Cb3'))
+        self.assertEqual(Note('Bb4').major_seventh_down(), Note('Cb4'))
         self.assertEqual(Note('Bb4').octave_down(), Note('Bb3'))
 
     def test_transpose_down_no_accidentals_C4(self):
@@ -513,7 +517,7 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('F4').minor_third_down(), Note('D4'))
         self.assertEqual(Note('F4').major_third_down(), Note('Db4'))
         self.assertEqual(Note('F4').major_fourth_down(), Note('C4'))
-        self.assertEqual(Note('F4').minor_fifth_down(), Note('Cb3'))
+        self.assertEqual(Note('F4').minor_fifth_down(), Note('Cb4'))
         self.assertEqual(Note('F4').major_fifth_down(), Note('Bb3'))
         self.assertEqual(Note('F4').perfect_fifth_down(), Note('Bb3'))
         self.assertEqual(Note('F4').minor_sixth_down(), Note('A3'))
@@ -552,18 +556,18 @@ class TestNote(unittest.TestCase):
         self.assertEqual(Note('C#4').octave_up(), Note('C#5'))
 
     def test_transpose_up_flat(self):
-        self.assertEqual(Note('Cb3').minor_second_up(), Note('Dbb4'))
-        self.assertEqual(Note('Cb3').major_second_up(), Note('Db4'))
-        self.assertEqual(Note('Cb3').minor_third_up(), Note('Ebb4'))
-        self.assertEqual(Note('Cb3').major_third_up(), Note('Eb4'))
-        self.assertEqual(Note('Cb3').major_fourth_up(), Note('Fb4'))
-        self.assertEqual(Note('Cb3').minor_fifth_up(), Note('Gbb4'))
-        self.assertEqual(Note('Cb3').major_fifth_up(), Note('Gb4'))
-        self.assertEqual(Note('Cb3').minor_sixth_up(), Note('Abb4'))
-        self.assertEqual(Note('Cb3').major_sixth_up(), Note('Ab4'))
-        self.assertEqual(Note('Cb3').minor_seventh_up(), Note('Bbb4'))
-        self.assertEqual(Note('Cb3').major_seventh_up(), Note('Bb4'))
-        self.assertEqual(Note('Cb3').octave_up(), Note('Cb4'))
+        self.assertEqual(Note('Cb4').minor_second_up(), Note('Dbb4'))
+        self.assertEqual(Note('Cb4').major_second_up(), Note('Db4'))
+        self.assertEqual(Note('Cb4').minor_third_up(), Note('Ebb4'))
+        self.assertEqual(Note('Cb4').major_third_up(), Note('Eb4'))
+        self.assertEqual(Note('Cb4').major_fourth_up(), Note('Fb4'))
+        self.assertEqual(Note('Cb4').minor_fifth_up(), Note('Gbb4'))
+        self.assertEqual(Note('Cb4').major_fifth_up(), Note('Gb4'))
+        self.assertEqual(Note('Cb4').minor_sixth_up(), Note('Abb4'))
+        self.assertEqual(Note('Cb4').major_sixth_up(), Note('Ab4'))
+        self.assertEqual(Note('Cb4').minor_seventh_up(), Note('Bbb4'))
+        self.assertEqual(Note('Cb4').major_seventh_up(), Note('Bb4'))
+        self.assertEqual(Note('Cb4').octave_up(), Note('B4'))
 
     def test_transpose_by_int(self):
         self.assertEqual(Note('C4').transpose(0), Note('C4'))
