@@ -1,9 +1,9 @@
 import unittest
 
-from parker.notes import Note
-from parker.keys import Key
 from parker.keys import ORDER_OF_FLATS
 from parker.keys import ORDER_OF_SHARPS
+from parker.keys import Key
+from parker.notes import Note
 from parker.scales import Major
 from parker.scales import Minor
 

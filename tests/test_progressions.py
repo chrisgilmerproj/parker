@@ -2,8 +2,8 @@ import unittest
 
 from parker.chords import Chord
 from parker.notes import Note
-from parker.progressions import is_valid_progression
 from parker.progressions import Progression
+from parker.progressions import is_valid_progression
 from parker.scales import Major
 from parker.scales import Minor
 

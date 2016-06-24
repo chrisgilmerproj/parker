@@ -1,6 +1,5 @@
 import unittest
 
-from parker.notes import Note
 from parker.instruments import CLEF_TREBLE
 from parker.instruments import AltoSaxophone
 from parker.instruments import BaritoneSaxophone
@@ -8,6 +7,7 @@ from parker.instruments import Instrument
 from parker.instruments import SopranoSaxophone
 from parker.instruments import TenorSaxophone
 from parker.keys import Key
+from parker.notes import Note
 
 
 class TestInstruments(unittest.TestCase):

@@ -38,12 +38,12 @@ from parker.scales import _scale_creator
 from parker.scales import circle_of_fifths
 from parker.scales import circle_of_fourths
 from parker.scales import dorian_scales
-from parker.scales import major_scales
 from parker.scales import major_blues_scales
 from parker.scales import major_pentatonic_scales
-from parker.scales import minor_scales
+from parker.scales import major_scales
 from parker.scales import minor_blues_scales
 from parker.scales import minor_pentatonic_scales
+from parker.scales import minor_scales
 from parker.scales import mixolydian_scales
 
 

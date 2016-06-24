@@ -1,7 +1,6 @@
 
-from .notes import Note
 from .keys import Key
-
+from .notes import Note
 
 # Reference: https://en.wikipedia.org/wiki/Clef
 CLEF_G_TREBLE = 'g_treble'

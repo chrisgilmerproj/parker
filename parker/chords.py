@@ -1,9 +1,9 @@
 from .constants import CHORD_MATCHER
-from .notes import Note
-from .notes import NoteGroupBase
 from .mixins import Aug
 from .mixins import Dim
 from .mixins import OctaveMixin
+from .notes import Note
+from .notes import NoteGroupBase
 from .scales import Dorian
 from .scales import HalfWholeDiminished
 from .scales import HarmonicMinor
@@ -11,7 +11,6 @@ from .scales import Ionian
 from .scales import Lydian
 from .scales import Mixolydian
 from .scales import WholeHalfDiminished
-
 
 # References:
 # - http://www.cs.cmu.edu/~scottd/chords_and_scales/music.html

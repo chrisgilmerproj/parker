@@ -1,7 +1,6 @@
 import random
 import re
 
-
 # Set of valid notes in scale
 VALID_NOTES = 'ABCDEFG'
 

@@ -13,9 +13,9 @@ import random
 
 from parker.scales import dorian_scales
 from parker.scales import major_scales
-from parker.scales import minor_scales
 from parker.scales import minor_blues_scales
 from parker.scales import minor_pentatonic_scales
+from parker.scales import minor_scales
 from parker.scales import mixolydian_scales
 
 

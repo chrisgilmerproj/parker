@@ -1,12 +1,12 @@
 import unittest
 
-from parker.mixins import AugmentDiminishMixin
 from parker.mixins import Aug
-from parker.mixins import Dim
+from parker.mixins import AugmentDiminishMixin
 from parker.mixins import CloneMixin
 from parker.mixins import CommonEqualityMixin
-from parker.mixins import OctaveMixin
+from parker.mixins import Dim
 from parker.mixins import NotesMixin
+from parker.mixins import OctaveMixin
 from parker.mixins import TransposeMixin
 from parker.notes import Note
 

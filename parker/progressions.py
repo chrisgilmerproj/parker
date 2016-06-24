@@ -1,9 +1,9 @@
-from .constants import PROG_MATCHER
+from .chords import Chord
 from .constants import PROG_LOOKUP
+from .constants import PROG_MATCHER
 from .constants import SIGN_FLAT
 from .constants import SIGN_SHARP
 from .notes import Note
-from .chords import Chord
 from .scales import Major
 
 

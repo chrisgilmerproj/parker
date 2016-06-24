@@ -9,10 +9,10 @@ from .constants import SIGN_HALF_FLAT
 from .constants import SIGN_HALF_SHARP
 from .constants import SIGN_SHARP
 from .constants import VALID_NOTES
-from .mixins import AugmentDiminishMixin
 from .mixins import Aug
-from .mixins import Dim
+from .mixins import AugmentDiminishMixin
 from .mixins import CommonEqualityMixin
+from .mixins import Dim
 from .mixins import NotesMixin
 from .mixins import TransposeMixin
 
